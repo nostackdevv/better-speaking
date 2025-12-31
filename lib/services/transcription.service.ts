@@ -1,4 +1,4 @@
-import { TranscribeResponse } from "@/types/api";
+import { TranscribeResponse } from "@/types/audio";
 import { transcribeAudio } from "./deepgram.service";
 import { detectFillers } from "./filler-detection.service";
 import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
@@ -9,7 +9,7 @@ export async function processAudioTranscription(
   audioFile: Blob
 ): Promise<TranscribeResponse> {
   // Step 1: Validate audio file
-  validateAudioFile(audioFile);
+  // validateAudioFile(audioFile);
 
   // Step 2: Convert to buffer
   const buffer = Buffer.from(await audioFile.arrayBuffer());
