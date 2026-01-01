@@ -59,7 +59,7 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
 
       <div
         aria-live="polite"
-        className="text-6xl font-bold text-slate-900 tabular-nums mb-8"
+        className="text-5xl font-bold text-slate-900 tabular-nums mb-6"
       >
         {formatSecondsToTimestamp(duration)}
       </div>
@@ -67,20 +67,20 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
       {status === "idle" ? (
         <button
           onClick={startRecording}
-          className="w-24 h-24 rounded-full bg-linear-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 flex items-center justify-center cursor-pointer transition-all shadow-xl shadow-orange-500/30 hover:scale-105"
+          className="w-20 h-20 rounded-full bg-linear-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 flex items-center justify-center cursor-pointer transition-all shadow-lg shadow-orange-500/30 hover:scale-105"
         >
-          <Mic className="w-10 h-10 text-white" />
+          <Mic className="w-8 h-8 text-white" />
         </button>
       ) : (
         <button
           onClick={stopRecording}
-          className="w-24 h-24 rounded-full bg-slate-900 hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-all shadow-xl hover:scale-105"
+          className="w-20 h-20 rounded-full bg-slate-900 hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-all shadow-lg hover:scale-105"
         >
-          <Square className="w-8 h-8 text-white fill-white" />
+          <Square className="w-7 h-7 text-white fill-white" />
         </button>
       )}
 
-      <p className="text-sm text-slate-400 mt-6">
+      <p className="text-sm text-slate-400 mt-4">
         {status === "idle" ? "Tap to start recording" : "Tap to stop"}
       </p>
     </div>

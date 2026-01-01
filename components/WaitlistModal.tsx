@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Crown, Check, Mail, Loader2, Bell, AlertCircle } from "lucide-react";
+import { Crown, Check, Mail, Loader2, Bell, AlertCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useWaitlist } from "@/hooks/useWaitlist";
@@ -44,8 +44,23 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl">
+    <div
+      className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+      onClick={handleClose}
+    >
+      <div
+        className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* X Close Button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+          disabled={status === "loading"}
+        >
+          <X className="w-5 h-5" />
+        </button>
+
         {status === "success" ? (
           // Success State
           <div className="p-8 text-center">
@@ -59,7 +74,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               We&apos;ll email you when Pro is ready. Get excited for unlimited
               sessions, detailed analytics, and more.
             </p>
-            <Button variant="primary" className="w-full" onClick={handleClose}>
+            <Button className="w-full" onClick={handleClose}>
               Got it!
             </Button>
           </div>

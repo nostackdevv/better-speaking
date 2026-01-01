@@ -24,16 +24,16 @@ export function AudioInput({
   };
 
   return (
-    <Card className="p-5">
+    <Card className="p-6">
       {/* Mode Toggle */}
       <div
         aria-label="Audio input method"
-        className="flex gap-2 mb-8 bg-slate-100 p-1.5 rounded-xl max-w-xs mx-auto"
+        className="flex gap-2 mb-6 bg-slate-100 p-1.5 rounded-xl max-w-xs mx-auto"
         role="tablist"
       >
         <button
           aria-selected={mode === "record"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
+          className={`flex-1 cursor-pointer px-4 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             mode === "record"
               ? "bg-white text-slate-900 shadow-sm"
               : "text-slate-500 hover:text-slate-700"
@@ -45,7 +45,7 @@ export function AudioInput({
         </button>
         <button
           aria-selected={mode === "upload"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
+          className={`flex-1 cursor-pointer px-4 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             mode === "upload"
               ? "bg-white text-slate-900 shadow-sm"
               : "text-slate-500 hover:text-slate-700"
