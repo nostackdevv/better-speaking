@@ -84,21 +84,25 @@ export function AudioFileUpload({
       <div
         aria-label="Upload audio file"
         className={cn(
-          "flex flex-col items-center p-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors",
-          "border-gray-300 hover:border-gray-400"
+          "group flex flex-col items-center py-16 px-8 border-2 border-dashed rounded-2xl cursor-pointer transition-all",
+          "border-slate-300 hover:border-orange-400 hover:bg-orange-50/30"
         )}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         role="button"
         tabIndex={0}
       >
-        <Upload
-          aria-hidden="true"
-          className={cn("w-10 h-10 mb-3 transition-colors", "text-gray-400")}
-        />
-        <p className="font-medium text-gray-700">Drop your audio file here </p>
-        <p className="text-sm text-gray-500 mt-1">or click to browse</p>
-        <p className="text-xs text-gray-400 mt-3">MP3, WAV, M4A • Max 10MB</p>
+        <div className="w-20 h-20 rounded-2xl bg-slate-100 group-hover:bg-orange-100 flex items-center justify-center mb-4 transition-colors">
+          <Upload
+            aria-hidden="true"
+            className="w-10 h-10 text-slate-400 group-hover:text-orange-500 transition-colors"
+          />
+        </div>
+        <p className="font-semibold text-slate-700 mb-1 text-lg">Drop your audio file here</p>
+        <p className="text-slate-500 mb-4">or click to browse</p>
+        <p className="text-xs text-slate-400 bg-white px-3 py-1.5 rounded-full border border-slate-200">
+          MP3, WAV, M4A • Max 10MB
+        </p>
 
         <input
           accept={accept}

@@ -17,21 +17,21 @@ export const CustomTabs = ({
   tabs,
 }: CustomTabsProps) => {
   return (
-    <div className="flex border-b border-gray-200 mb-4">
+    <div className="flex border-b border-slate-100 mb-4">
       {tabs.map((tab) => (
         <button
           className={cn(
-            "flex-1 py-3 text-sm font-medium transition-colors cursor-pointer relative",
+            "flex-1 py-4 text-sm font-medium transition-colors cursor-pointer relative",
             activeTab === tab.id
-              ? "text-gray-900"
-              : "text-gray-500 hover:text-gray-700"
+              ? "text-slate-900"
+              : "text-slate-500 hover:text-slate-700"
           )}
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
         >
           {tab.label}
           {activeTab === tab.id && (
-            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />
+            <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-orange-500" />
           )}
         </button>
       ))}

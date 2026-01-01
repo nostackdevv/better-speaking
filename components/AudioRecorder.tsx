@@ -59,26 +59,30 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
 
       <div
         aria-live="polite"
-        className="text-4xl font-semibold text-gray-900 tabular-nums"
+        className="text-6xl font-bold text-slate-900 tabular-nums mb-8"
       >
         {formatSecondsToTimestamp(duration)}
       </div>
 
       {status === "idle" ? (
-        <Button onClick={startRecording}>
-          <span className="flex items-center justify-center gap-2">
-            <Mic className="w-5 h-5" />
-            Start Recording
-          </span>
-        </Button>
+        <button
+          onClick={startRecording}
+          className="w-24 h-24 rounded-full bg-linear-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 flex items-center justify-center cursor-pointer transition-all shadow-xl shadow-orange-500/30 hover:scale-105"
+        >
+          <Mic className="w-10 h-10 text-white" />
+        </button>
       ) : (
-        <Button onClick={stopRecording} variant="secondary">
-          <span className="flex items-center justify-center gap-2">
-            <Square className="w-4 h-4 fill-current" />
-            Stop Recording
-          </span>
-        </Button>
+        <button
+          onClick={stopRecording}
+          className="w-24 h-24 rounded-full bg-slate-900 hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-all shadow-xl hover:scale-105"
+        >
+          <Square className="w-8 h-8 text-white fill-white" />
+        </button>
       )}
+
+      <p className="text-sm text-slate-400 mt-6">
+        {status === "idle" ? "Tap to start recording" : "Tap to stop"}
+      </p>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Mic, Upload } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { AudioFileUpload } from "./AudioFileUpload";
 import { AudioRecorder } from "./AudioRecorder";
@@ -27,32 +28,32 @@ export function AudioInput({
       {/* Mode Toggle */}
       <div
         aria-label="Audio input method"
-        className="flex gap-2 mb-5"
+        className="flex gap-2 mb-8 bg-slate-100 p-1.5 rounded-xl max-w-xs mx-auto"
         role="tablist"
       >
         <button
           aria-selected={mode === "record"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             mode === "record"
-              ? "bg-slate-900 border-slate-900 text-white shadow-sm"
-              : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
           }`}
           onClick={() => setMode("record")}
           role="tab"
         >
-          Record Audio
+          <Mic className="w-4 h-4" /> Record
         </button>
         <button
           aria-selected={mode === "upload"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
+          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
             mode === "upload"
-              ? "bg-slate-900 border-slate-900 text-white shadow-sm"
-              : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300"
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500 hover:text-slate-700"
           }`}
           onClick={() => setMode("upload")}
           role="tab"
         >
-          Upload File
+          <Upload className="w-4 h-4" /> Upload
         </button>
       </div>
 

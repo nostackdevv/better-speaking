@@ -2,6 +2,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AudioInput } from "@/components/AudioInput";
+import { Navbar } from "@/components/Navbar";
 
 import { useState } from "react";
 import { useTranscribeAudio } from "@/hooks/queries/useTranscribeAudio";
@@ -21,6 +22,12 @@ export default function Home() {
     data: transcriptResponse,
     reset: resetTranscription,
   } = useTranscribeAudio();
+
+  const mockUser = {
+    name: "Sam",
+    streak: 7,
+    plan: "free" as const,
+  };
 
   const handleUpload = async (file: File | Blob) => {
     if (!file) return;
@@ -44,9 +51,23 @@ export default function Home() {
     setShowConfirmModal(false);
   };
 
+  const handleHistoryClick = () => {
+    console.log("History clicked");
+  };
+
+  const handleUpgradeClick = () => {
+    console.log("Upgrade clicked");
+  };
+
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
-      <div className="max-w-xl mx-auto px-4 py-6">
+      <Navbar
+        user={mockUser}
+        onHistoryClick={handleHistoryClick}
+        onUpgradeClick={handleUpgradeClick}
+      />
+
+      <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
         <Header />
 
         <main>

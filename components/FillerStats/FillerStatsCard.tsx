@@ -10,10 +10,10 @@ type FillerStatCardProps = {
 }
 
 const variantStyles = {
-  default: "text-gray-900",
+  default: "text-slate-900",
   positive: "text-green-600",
   negative: "text-red-500",
-  muted: "text-gray-400",
+  muted: "text-slate-300",
 };
 
 export function FillerStatCard({
@@ -23,17 +23,17 @@ export function FillerStatCard({
   variant = "default",
 }: FillerStatCardProps) {
   return (
-    <Card className="p-4 text-center">
+    <Card className="p-5 text-center">
       <p
         className={cn(
-          "text-2xl font-bold flex items-center justify-center gap-1",
+          "text-3xl font-bold flex items-center justify-center gap-1",
           variantStyles[variant]
         )}
       >
         {Icon && <Icon className="w-5 h-5" />}
         {value}
       </p>
-      <p className="text-xs text-gray-500 mt-1">{label}</p>
+      <p className="text-xs text-slate-500 mt-1">{label}</p>
     </Card>
   );
 }
