@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-linear-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600 shadow-lg shadow-orange-500/20 focus-visible:ring-orange-500",
+          "bg-linear-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600 shadow-lg focus-visible:ring-orange-500",
         secondary:
           "bg-slate-800 text-white hover:bg-slate-700 focus-visible:ring-slate-800",
         outline:

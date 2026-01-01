@@ -52,9 +52,11 @@ export const FillerStats = ({
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
         <div className="relative">
           <p className="text-orange-200 mb-2">Your top filler word</p>
-          <h2 className="text-5xl font-bold mb-2">&quot;{topFiller.text}&quot;</h2>
+          <h2 className="text-5xl font-bold mb-2">
+            &quot;{topFiller.text}&quot;
+          </h2>
           <p className="text-orange-100 text-lg">
-            used {topFiller.count} times in {formatDuration(duration)}
+            was used {topFiller.count} time{topFiller.count !== 1 ? "s" : ""}
           </p>
         </div>
       </div>

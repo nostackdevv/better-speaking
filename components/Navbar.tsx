@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mic, History, Crown, User, Settings, CreditCard, LogOut, Flame } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
 
 type NavbarProps = {
   user: {
@@ -11,10 +11,10 @@ type NavbarProps = {
     plan: "free" | "pro";
   };
   onHistoryClick?: () => void;
-  onUpgradeClick?: () => void;
+  onWaitlistClick?: () => void;
 };
 
-export function Navbar({ user, onHistoryClick, onUpgradeClick }: NavbarProps) {
+export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
@@ -22,7 +22,7 @@ export function Navbar({ user, onHistoryClick, onUpgradeClick }: NavbarProps) {
       <div className="max-w-6xl mx-auto h-full px-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-linear-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-lg shadow-orange-500/20">
+          <div className="w-10 h-10 rounded-xl bg-linear-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-lg ">
             <Mic className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-xl text-slate-900">SpeakClear</span>
@@ -31,34 +31,35 @@ export function Navbar({ user, onHistoryClick, onUpgradeClick }: NavbarProps) {
         {/* Right side */}
         <div className="flex items-center gap-2">
           {/* Streak */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 rounded-full mr-2">
+          {/* <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 rounded-full mr-2">
             <Flame className="w-4 h-4 text-amber-500" />
             <span className="text-sm font-semibold text-amber-700">{user.streak}</span>
-          </div>
+          </div> */}
 
           {/* History */}
-          <button
+          {/* <button
             onClick={onHistoryClick}
             className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
           >
             <History className="w-5 h-5" />
-          </button>
+          </button> */}
 
-          {/* Upgrade */}
+          {/* Upgrade - Changed to Waitlist */}
           {user.plan === "free" && (
-            <Button
-              variant="accent"
-              size="sm"
-              onClick={onUpgradeClick}
-              className="hidden sm:flex"
+            <button
+              onClick={onWaitlistClick}
+              className="hidden sm:flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
             >
-              <Crown className="w-4 h-4" />
-              Upgrade
-            </Button>
+              <Crown className="w-4 h-4 text-amber-500" />
+              <span className="text-sm font-semibold text-slate-700">Pro</span>
+              <Badge variant="comingSoon" className="text-[10px] px-1.5 py-0.5">
+                SOON
+              </Badge>
+            </button>
           )}
 
           {/* User menu */}
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="w-10 h-10 rounded-full bg-linear-to-br from-orange-400 to-rose-500 flex items-center justify-center text-white font-semibold cursor-pointer hover:shadow-lg transition-shadow"
@@ -84,6 +85,21 @@ export function Navbar({ user, onHistoryClick, onUpgradeClick }: NavbarProps) {
                     <button className="w-full px-4 py-2.5 text-left text-sm text-slate-600 hover:bg-slate-50 flex items-center gap-3 cursor-pointer">
                       <CreditCard className="w-4 h-4" /> Billing
                     </button>
+                    {user.plan === "free" && (
+                      <button
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          onWaitlistClick?.();
+                        }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-slate-600 hover:bg-slate-50 flex items-center gap-3 cursor-pointer"
+                      >
+                        <Crown className="w-4 h-4 text-amber-500" />
+                        Join Pro Waitlist
+                        <Badge variant="comingSoon" className="text-[10px] px-1.5 py-0.5 ml-auto">
+                          SOON
+                        </Badge>
+                      </button>
+                    )}
                   </div>
                   <div className="border-t border-slate-100 py-1">
                     <button className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 cursor-pointer">
@@ -93,7 +109,7 @@ export function Navbar({ user, onHistoryClick, onUpgradeClick }: NavbarProps) {
                 </div>
               </>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>
