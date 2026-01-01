@@ -11,15 +11,16 @@ export const TranscriptDisplay = ({ chunks }: TranscriptDisplayProps) => {
   }
 
   return (
-    <p className="leading-relaxed text-gray-600">
+    <p className="leading-relaxed text-slate-700">
       {chunks.map((chunk, chunkIdx) => (
-        <span
-          className={cn(
-            chunk.type === "filler" && "bg-yellow-200 rounded px-0.5"
-          )}
-          key={chunkIdx}
-        >
-          {chunk.words.map(({ displayText }) => displayText).join(" ")}
+        <span key={chunkIdx}>
+          <span
+            className={cn(
+              chunk.type === "filler" && "bg-orange-100 text-orange-700 rounded px-0.5"
+            )}
+          >
+            {chunk.words.map(({ displayText }) => displayText).join(" ")}
+          </span>
           {chunkIdx < chunks.length - 1 && " "}
         </span>
       ))}

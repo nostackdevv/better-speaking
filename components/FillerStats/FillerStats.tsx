@@ -1,5 +1,4 @@
 import { TrendingDown, TrendingUp, Check } from "lucide-react";
-import { formatDuration } from "@/utils/formatters";
 import { FillerStatsType } from "@/types/domain";
 import { FillerStatCard } from "./FillerStatsCard";
 
@@ -13,7 +12,6 @@ type FillerStatsProps = {
 
 export const FillerStats = ({
   fillerStats,
-  duration,
   previousSession,
 }: FillerStatsProps) => {
   const { totalFillers, fillersPerMinute, topFillers } = fillerStats;
@@ -36,7 +34,7 @@ export const FillerStats = ({
           </div>
           <h2 className="text-3xl font-bold mb-2">Perfect!</h2>
           <p className="text-green-100 text-lg">
-            No filler words in {formatDuration(duration)}
+            No filler words detected in your speech
           </p>
         </div>
       </div>

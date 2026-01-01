@@ -74,8 +74,14 @@ export default function Home() {
 
   const handleNewPrompt = () => {
     // Generate a new random prompt from any category
-    const categories = ["interview", "presentation", "social", "impromptu"] as const;
-    const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+    const categories = [
+      "interview",
+      "presentation",
+      "social",
+      "impromptu",
+    ] as const;
+    const randomCategory =
+      categories[Math.floor(Math.random() * categories.length)];
     // This will be handled by the ChallengePrompts component
     setActivePrompt(null);
   };
@@ -95,12 +101,12 @@ export default function Home() {
           {!transcriptResponse && (
             <>
               {/* Active Prompt Card */}
-              {activePrompt && (
+              {/* {activePrompt && (
                 <PromptCard
                   prompt={activePrompt}
                   onNewPrompt={handleNewPrompt}
                 />
-              )}
+              )} */}
 
               <AudioInput onUpload={handleUpload} />
 
@@ -121,7 +127,8 @@ export default function Home() {
                     <div className="flex items-center gap-3">
                       <MessageCircle className="w-5 h-5 text-teal-600" />
                       <p className="text-sm text-teal-700">
-                        <span className="font-medium">Prompt:</span> {activePrompt}
+                        <span className="font-medium">Prompt:</span>{" "}
+                        {activePrompt}
                       </p>
                     </div>
                   </Card>

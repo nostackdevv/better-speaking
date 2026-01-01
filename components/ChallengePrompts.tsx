@@ -49,8 +49,12 @@ type ChallengePromptsProps = {
   onWaitlistClick?: () => void;
 };
 
-export function ChallengePrompts({ onSelectPrompt, onWaitlistClick }: ChallengePromptsProps) {
-  const [activeCategory, setActiveCategory] = useState<keyof typeof questionPrompts>("interview");
+export function ChallengePrompts({
+  onSelectPrompt,
+  onWaitlistClick,
+}: ChallengePromptsProps) {
+  const [activeCategory, setActiveCategory] =
+    useState<keyof typeof questionPrompts>("interview");
 
   const categories = [
     { id: "interview" as const, label: "Interview", icon: Target },
@@ -78,16 +82,18 @@ export function ChallengePrompts({ onSelectPrompt, onWaitlistClick }: ChallengeP
               <Zap className="w-5 h-5 text-amber-500" />
               Challenge Mode
             </h3>
-            <p className="text-sm text-slate-500">Practice with real-world prompts</p>
+            <p className="text-sm text-slate-500">
+              Practice with real-world prompts
+            </p>
           </div>
           <button
-            onClick={onWaitlistClick}
             className="flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer"
+            onClick={onWaitlistClick}
           >
             <Badge variant="pro">
               <Crown className="w-3 h-3" /> Pro
             </Badge>
-            <Badge variant="comingSoon" className="text-[10px]">
+            <Badge className="text-[10px]" variant="comingSoon">
               SOON
             </Badge>
           </button>
@@ -97,14 +103,14 @@ export function ChallengePrompts({ onSelectPrompt, onWaitlistClick }: ChallengeP
         <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
           {categories.map((cat) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2",
                 activeCategory === cat.id
                   ? "bg-slate-900 text-white"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               )}
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
             >
               <cat.icon className="w-4 h-4" />
               {cat.label}
@@ -120,7 +126,7 @@ export function ChallengePrompts({ onSelectPrompt, onWaitlistClick }: ChallengeP
         </div>
 
         {/* Action */}
-        <Button variant="accent" className="w-full" onClick={handleGetPrompt}>
+        <Button className="w-full" onClick={onWaitlistClick} variant="accent">
           <Shuffle className="w-4 h-4" />
           Get Random Prompt & Record
         </Button>
