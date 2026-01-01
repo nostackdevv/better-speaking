@@ -19,6 +19,13 @@ export interface TranscribeResponse {
   createdAt: string;
 }
 
+export interface WaitlistResponse {
+  success: boolean;
+  message: string;
+}
+
 export interface ApiError {
   error: string;
+  message?: string;
+  retryAfter?: number;
 }

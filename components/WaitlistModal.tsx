@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Crown, Check, Mail, Loader2, Bell, AlertCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useWaitlist } from "@/hooks/useWaitlist";
+import { useJoinWaitlist } from "@/hooks/queries/useJoinWaitlist";
 import { cn } from "@/lib/utils";
 
 type WaitlistModalProps = {
@@ -19,7 +19,9 @@ function isValidEmail(email: string): boolean {
 export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [email, setEmail] = useState("");
   const [localError, setLocalError] = useState("");
-  const { joinWaitlist, status, errorMessage, reset } = useWaitlist();
+  const { mutate: joinWaitlist, isPending, isSuccess, error, reset } = useJoinWaitlist();
+
+  const errorMessage = error?.message || error?.error || "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +33,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     }
 
     setLocalError("");
-    await joinWaitlist(email);
+    joinWaitlist(email);
   };
 
   const handleClose = () => {
@@ -54,14 +56,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       >
         {/* X Close Button */}
         <button
-          onClick={handleClose}
           className="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-          disabled={status === "loading"}
+          disabled={isPending}
+          onClick={handleClose}
         >
           <X className="w-5 h-5" />
         </button>
 
-        {status === "success" ? (
+        {isSuccess ? (
           // Success State
           <div className="p-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -82,12 +84,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
           // Form State
           <>
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-white text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <div className="w-16 h-16 bg-linear-to-br from-amber-400 to-orange-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <Crown className="w-8 h-8 text-white" />
               </div>
               <div className="flex items-center justify-center gap-2 mb-2">
                 <h2 className="text-2xl font-bold">Pro Coming Soon</h2>
-                <Badge variant="comingSoon" className="text-[10px] px-2 py-0.5">
+                <Badge className="text-[10px] px-2 py-0.5" variant="comingSoon">
                   COMING SOON
                 </Badge>
               </div>
@@ -106,7 +108,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   "Progress tracking & improvement trends",
                   "Personalized feedback & recommendations",
                 ].map((feature, i) => (
-                  <div key={i} className="flex items-center gap-3">
+                  <div className="flex items-center gap-3" key={i}>
                     <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                       <Check className="w-3 h-3 text-green-600" />
                     </div>
@@ -116,18 +118,11 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               </div>
 
               {/* Email Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                     <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        setLocalError("");
-                      }}
-                      placeholder="Enter your email"
                       className={cn(
                         "w-full pl-12 pr-4 py-3.5 rounded-xl border-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 transition-colors",
                         (localError || errorMessage)
@@ -135,6 +130,13 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                           : "border-slate-200"
                       )}
                       disabled={status === "loading"}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setLocalError("");
+                      }}
+                      placeholder="Enter your email"
+                      type="email"
+                      value={email}
                     />
                   </div>
                   {(localError || errorMessage) && (
@@ -146,12 +148,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 </div>
 
                 <Button
-                  type="submit"
                   className="w-full"
+                  disabled={isPending || !email.trim()}
                   size="lg"
-                  disabled={status === "loading" || !email.trim()}
+                  type="submit"
                 >
-                  {status === "loading" ? (
+                  {isPending ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       Joining...
@@ -166,9 +168,9 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               </form>
 
               <button
-                onClick={handleClose}
                 className="w-full py-3 mt-3 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors"
-                disabled={status === "loading"}
+                disabled={isPending}
+                onClick={handleClose}
               >
                 Maybe later
               </button>
