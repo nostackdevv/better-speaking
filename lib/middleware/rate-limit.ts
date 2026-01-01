@@ -21,6 +21,13 @@ const successRatelimit = new Ratelimit({
   prefix: "@ratelimit/transcribe-success",
 });
 
+const waitlistRatelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(3, "1 h"),
+  analytics: true,
+  prefix: "@ratelimit/waitlist",
+});
+
 export interface RateLimitResult {
   success: boolean;
   limit: number;
@@ -124,6 +131,54 @@ export async function checkSuccessLimit(
         {
           error: "Daily transcription limit exceeded",
           message: `You have reached your daily limit of ${limit} transcriptions. Please try again tomorrow.`,
+          retryAfter,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": retryAfter.toString(),
+            "X-RateLimit-Limit": limit.toString(),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": new Date(reset).toISOString(),
+          },
+        }
+      ),
+    };
+  }
+
+  return {
+    success: true,
+    limit,
+    remaining,
+    reset,
+  };
+}
+
+/**
+ * Check rate limit for waitlist submissions
+ * Allows 3 submissions per hour per IP
+ * @param request - Next.js request object
+ * @returns Rate limit result for waitlist submissions
+ */
+export async function checkWaitlistRateLimit(
+  request: NextRequest
+): Promise<RateLimitResult> {
+  const ip = getClientIP(request);
+  const { success, limit, remaining, reset } = await waitlistRatelimit.limit(ip);
+
+  if (!success) {
+    const retryAfter = Math.ceil((reset - Date.now()) / 1000);
+    const retryMinutes = Math.ceil(retryAfter / 60);
+
+    return {
+      success: false,
+      limit,
+      remaining,
+      reset,
+      response: NextResponse.json(
+        {
+          error: "Too many waitlist submissions",
+          message: `Please wait ${retryMinutes} minute${retryMinutes !== 1 ? 's' : ''} before trying again.`,
           retryAfter,
         },
         {
