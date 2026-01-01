@@ -1,4 +1,4 @@
-import { Mic, Square, AlertCircle } from "lucide-react";
+import { Mic, Square, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WaveForm } from "./WaveForm";
 import { formatSecondsToTimestamp } from "@/utils/formatters";
@@ -6,10 +6,11 @@ import { useAudioRecorder } from "@/hooks/ui/useAudioRecorder";
 import { AudioItemCard } from "@/components/ui/AudioItemCard";
 
 type AudioRecorderProps = {
+  isAnalyzing?: boolean;
   onAnalyze: (blob: Blob) => void;
 };
 
-export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
+export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderProps) => {
   const {
     status,
     duration,
@@ -65,8 +66,15 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
           </div>
         )}
 
-        <Button disabled={!isValidDuration} onClick={handleAnalyze}>
-          Analyze Recording
+        <Button disabled={!isValidDuration || isAnalyzing} onClick={handleAnalyze}>
+          {isAnalyzing ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Analyzing...
+            </>
+          ) : (
+            "Analyze Recording"
+          )}
         </Button>
       </div>
     );

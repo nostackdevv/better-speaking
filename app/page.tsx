@@ -89,9 +89,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
       <Navbar
-        user={mockUser}
         onHistoryClick={handleHistoryClick}
         onWaitlistClick={handleWaitlistClick}
+        user={mockUser}
       />
 
       <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
@@ -108,7 +108,7 @@ export default function Home() {
                 />
               )} */}
 
-              <AudioInput onUpload={handleUpload} />
+              <AudioInput isAnalyzing={isTranscribing} onUpload={handleUpload} />
 
               {/* Challenge Prompts Section */}
               <ChallengePrompts

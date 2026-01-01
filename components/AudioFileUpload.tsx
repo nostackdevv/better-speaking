@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Upload, FileAudio, Trash, AlertCircle } from "lucide-react";
+import { Upload, FileAudio, Trash, AlertCircle, Loader2 } from "lucide-react";
 import { formatBytesToSize } from "@/utils/formatters";
 import {
   validateClientAudioFile,
@@ -10,12 +10,14 @@ import { Button } from "@/components/ui/Button";
 import { AudioItemCard } from "@/components/ui/AudioItemCard";
 
 type AudioFileUploadProps = {
+  isAnalyzing?: boolean;
   onAnalyze?: (file: File) => void;
   accept?: string;
   maxSize?: number;
 }
 
 export function AudioFileUpload({
+  isAnalyzing = false,
   onAnalyze,
   accept = ".mp3,.wav,.m4a",
   maxSize = MAX_FILE_SIZE,
@@ -123,8 +125,17 @@ export function AudioFileUpload({
           </div>
         )}
 
-        <Button onClick={() => onAnalyze?.(selectedFile)} disabled={!isValidDuration || isLoadingDuration}>
-          {isLoadingDuration ? "Checking duration..." : "Analyze Recording"}
+        <Button onClick={() => onAnalyze?.(selectedFile)} disabled={!isValidDuration || isLoadingDuration || isAnalyzing}>
+          {isAnalyzing ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Analyzing...
+            </>
+          ) : isLoadingDuration ? (
+            "Checking duration..."
+          ) : (
+            "Analyze Recording"
+          )}
         </Button>
       </div>
     );

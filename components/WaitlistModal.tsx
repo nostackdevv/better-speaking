@@ -101,10 +101,10 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               <div className="space-y-3 mb-6">
                 {[
                   "Unlimited practice sessions",
-                  "All challenge categories",
-                  "Advanced analytics & trends",
-                  "Export & share results",
-                  "Priority support",
+                  "Challenge modes like interview, student, creator and more...",
+                  "Advanced analytics, trends & behavior insights",
+                  "Progress tracking & improvement trends",
+                  "Personalized feedback & recommendations",
                 ].map((feature, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">

@@ -7,8 +7,10 @@ import { AudioFileUpload } from "./AudioFileUpload";
 import { AudioRecorder } from "./AudioRecorder";
 
 export function AudioInput({
+  isAnalyzing = false,
   onUpload,
 }: {
+  isAnalyzing?: boolean;
   onUpload?: (file: File | Blob) => void;
 }) {
   const [mode, setMode] = useState<"record" | "upload">("record");
@@ -58,11 +60,12 @@ export function AudioInput({
       </div>
 
       {/* Record Mode */}
-      {mode === "record" && <AudioRecorder onAnalyze={handleAnalyze} />}
+      {mode === "record" && <AudioRecorder isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />}
 
       {/* Upload Mode */}
       {mode === "upload" && (
         <AudioFileUpload
+          isAnalyzing={isAnalyzing}
           onAnalyze={handleAnalyze}
         />
       )}
