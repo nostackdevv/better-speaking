@@ -12,7 +12,7 @@ const TABS = [
   // { id: "history", label: "History" },
 ];
 
-interface TabbedResultsProps {
+type TabbedResultsProps = {
   fillerStats: FillerStatsType;
   fillers: Filler[];
   onSeekAudio: (timestamp: number) => void;

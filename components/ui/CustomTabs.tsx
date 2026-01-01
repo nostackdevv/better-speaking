@@ -5,7 +5,7 @@ interface Tab {
   label: string;
 }
 
-interface CustomTabsProps {
+type CustomTabsProps = {
   activeTab: string;
   onTabChange: (id: string) => void;
   tabs: Tab[];

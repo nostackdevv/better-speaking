@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/Card";
-import { chunkTranscript } from "@/utils/filler-helpers";
+import { splitTranscriptIntoChunks } from "@/utils/transcript/chunking";
 import { Filler } from "@/schema/filler";
 import { NormalizedWord } from "@/types/domain";
 import { TranscriptDisplay } from "./TranscriptDisplay";
@@ -19,7 +19,7 @@ export const Transcript = ({
   transcriptText,
 }: TranscriptProps) => {
   const chunks = useMemo(
-    () => chunkTranscript(words, fillers),
+    () => splitTranscriptIntoChunks(words, fillers),
     [words, fillers]
   );
 

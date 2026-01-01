@@ -1,4 +1,5 @@
-import { cn, formatDuration } from "@/utils/helpers";
+import { cn } from "@/lib/utils";
+import { formatDuration } from "@/utils/formatters";
 
 interface Session {
   date: string;
@@ -8,7 +9,7 @@ interface Session {
   trend: number;
 }
 
-interface SessionItemProps {
+type SessionItemProps = {
   session: Session;
   showBorder?: boolean;
 }

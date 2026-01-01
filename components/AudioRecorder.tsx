@@ -1,7 +1,7 @@
 import { X, Mic, Square, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WaveForm } from "./WaveForm";
-import { formatTime } from "@/utils/helpers";
+import { formatSecondsToTimestamp } from "@/utils/formatters";
 import { useAudioRecorder } from "@/hooks/ui/useAudioRecorder";
 
 type AudioRecorderProps = {
@@ -35,7 +35,7 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900">Recording</p>
-            <p className="text-xs text-gray-500">{formatTime(duration)}</p>
+            <p className="text-xs text-gray-500">{formatSecondsToTimestamp(duration)}</p>
           </div>
           <button
             aria-label="Discard recording"
@@ -70,7 +70,7 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
         aria-live="polite"
         className="text-4xl font-semibold text-gray-900 tabular-nums"
       >
-        {formatTime(duration)}
+        {formatSecondsToTimestamp(duration)}
       </div>
 
       {status === "idle" ? (

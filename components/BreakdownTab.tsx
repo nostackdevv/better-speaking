@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import type { FillerStatsType } from "@/types/domain";
 
-interface BreakdownTabProps {
+type BreakdownTabProps = {
   fillerStats: FillerStatsType;
 }
 

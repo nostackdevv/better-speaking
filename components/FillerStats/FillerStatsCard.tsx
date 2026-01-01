@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
-interface FillerStatCardProps {
+type FillerStatCardProps = {
   value: string | number;
   label: string;
   icon?: LucideIcon;

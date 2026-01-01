@@ -1,16 +1,10 @@
 import { Pause, Play } from "lucide-react";
-import { ChangeEvent, useEffect, useMemo } from "react";
+import { ChangeEvent, useMemo } from "react";
 import { useAudioPlayer } from "@/hooks/ui/useAudioPlayer";
+import { formatSecondsToTimestamp } from "@/utils/formatters";
 
 type AudioPlayerProps = {
   src: string | Blob | File;
-};
-export const formatTime = (seconds: number): string => {
-  if (!isFinite(seconds) || seconds < 0) return "0:00";
-
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
 export const AudioPlayer = ({ src }: AudioPlayerProps) => {
@@ -30,17 +24,8 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
       return src;
     }
     const url = URL.createObjectURL(src);
-    // console.log("Created blob URL:", url);
-    // console.log("From file:", src?.name, src.size, src.type);
     return url;
   }, [src]);
-
-  //   Clean up object URL when component unmounts or src changes
-//   useEffect(() => {
-//     if (typeof src !== "string") {
-//       return () => URL.revokeObjectURL(audioSrc);
-//     }
-//   }, [src, audioSrc]);
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
@@ -81,7 +66,7 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
 
       <div className="flex items-center justify-between">
         <span className="min-w-10 text-sm text-gray-500">
-          {formatTime(currentTime)}
+          {formatSecondsToTimestamp(currentTime)}
         </span>
 
         <button
@@ -99,7 +84,7 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
         </button>
 
         <span className="min-w-10 text-right text-sm text-gray-500">
-          {formatTime(duration)}
+          {formatSecondsToTimestamp(duration)}
         </span>
       </div>
     </div>

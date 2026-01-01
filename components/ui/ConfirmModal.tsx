@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { AlertCircle } from "lucide-react";
 import { Button } from "./Button";
 
-interface ConfirmModalProps {
+type ConfirmModalProps = {
   isOpen: boolean;
   onConfirm: () => void;
   onCancel: () => void;

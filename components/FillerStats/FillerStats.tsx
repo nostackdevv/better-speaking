@@ -1,5 +1,5 @@
 import { TrendingDown, TrendingUp, Check } from "lucide-react";
-import { formatDuration } from "@/utils/helpers";
+import { formatDuration } from "@/utils/formatters";
 import { FillerStatsType } from "@/types/domain";
 import { FillerStatCard } from "./FillerStatsCard";
 

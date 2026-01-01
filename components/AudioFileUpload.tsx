@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Upload, FileAudio, Trash } from "lucide-react";
+import { formatBytesToSize } from "@/utils/formatters";
 import {
-  formatFileSize,
-  validateAudioFile,
+  validateClientAudioFile,
   MAX_FILE_SIZE,
-} from "@/utils/helpers";
+} from "@/utils/audio/validators";
 import { Button } from "@/components/ui/Button";
 
-interface AudioFileUploadProps {
+type AudioFileUploadProps = {
   onAnalyze?: (file: File) => void;
   accept?: string;
   maxSize?: number;
@@ -24,7 +24,7 @@ export function AudioFileUpload({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleAudioFileUpload = (file: File) => {
-    const validationError = validateAudioFile(file, maxSize);
+    const validationError = validateClientAudioFile(file, maxSize);
     if (validationError) {
       setError(validationError);
       return;
@@ -71,7 +71,7 @@ export function AudioFileUpload({
               {selectedFile.name}
             </p>
             <p className="text-xs text-gray-500">
-              {formatFileSize(selectedFile.size)}
+              {formatBytesToSize(selectedFile.size)}
             </p>
           </div>
           <button

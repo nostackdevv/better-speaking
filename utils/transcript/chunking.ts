@@ -2,7 +2,7 @@ import { Filler } from "@/schema/filler";
 import { NormalizedWord } from "@/types/domain";
 import { Chunk } from "@/types/ui";
 
-export function chunkTranscript(
+export function splitTranscriptIntoChunks(
   words: NormalizedWord[],
   fillers: Filler[]
 ): Chunk[] {
