@@ -5,6 +5,8 @@ import {
   checkSuccessLimit,
   addRateLimitHeaders,
 } from "@/lib/middleware/rate-limit";
+import { TRANSCRIPT_DUMMY } from "@/dummy";
+import { computeFillerStats } from "@/lib/filler/filler-stats";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const rateLimitResult = await checkRateLimit(request);
@@ -12,19 +14,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return rateLimitResult.response;
   }
 
-  // Development mode: return dummy data
-  // if (TRANSCRIPT_DUMMY) {
-  //   const response = NextResponse.json({
-  //     ...TRANSCRIPT_DUMMY,
-  //     fillerStats: computeFillerStats({
-  //       fillers: TRANSCRIPT_DUMMY.fillers,
-  //       words: TRANSCRIPT_DUMMY.words,
-  //       duration: TRANSCRIPT_DUMMY.duration,
-  //     }),
-  //     createdAt: new Date().toISOString(),
-  //   });
-  //   return applyRateLimitHeaders(response, rateLimitResult);
-  // }
+  if (TRANSCRIPT_DUMMY) {
+    const response = NextResponse.json({
+      ...TRANSCRIPT_DUMMY,
+      fillerStats: computeFillerStats({
+        fillers: TRANSCRIPT_DUMMY.fillers,
+        words: TRANSCRIPT_DUMMY.words,
+        duration: TRANSCRIPT_DUMMY.duration,
+      }),
+      createdAt: new Date().toISOString(),
+    });
+    return response;
+  }
 
   try {
     const formData = await request.formData();

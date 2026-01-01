@@ -2,23 +2,24 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AudioInput } from "@/components/AudioInput";
-import { Transcript } from "@/components/Transcript/Transcript";
 
 import { useState } from "react";
-import { TranscribeResponse } from "@/types/api";
 import { useTranscribeAudio } from "@/hooks/queries/useTranscribeAudio";
 import { FillerStats } from "@/components/FillerStats/FillerStats";
 import { Button } from "@/components/ui/Button";
 import { Share2 } from "lucide-react";
 import { TabbedResults } from "@/components/TabbedResults";
 import { AudioPlayer } from "@/components/ui/AudioPlayer";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 export default function Home() {
   const [audioFile, setAudioFile] = useState<File | Blob>();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const {
     mutate: transcribeAudio,
     isPending: isTranscribing,
     data: transcriptResponse,
+    reset: resetTranscription,
   } = useTranscribeAudio();
 
   const handleUpload = async (file: File | Blob) => {
@@ -27,6 +28,20 @@ export default function Home() {
     transcribeAudio(file, {
       onSuccess: () => {},
     });
+  };
+
+  const handleTryAgain = () => {
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmReset = () => {
+    setShowConfirmModal(false);
+    setAudioFile(undefined);
+    resetTranscription();
+  };
+
+  const handleCancelReset = () => {
+    setShowConfirmModal(false);
   };
 
   return (
@@ -38,12 +53,6 @@ export default function Home() {
           {!transcriptResponse && <AudioInput onUpload={handleUpload} />}
           {transcriptResponse && (
             <>
-              {/* <Transcript
-                duration={transcriptResponse.duration}
-                fillers={transcriptResponse.fillers}
-                transcriptText={transcriptResponse.transcript}
-                words={transcriptResponse.words}
-              /> */}
               <div className="pb-32">
                 <FillerStats
                   duration={transcriptResponse.duration}
@@ -61,7 +70,7 @@ export default function Home() {
                     <Share2 className="w-4 h-4" />
                     Share
                   </Button>
-                  <Button className="flex-1" onClick={() => {}}>
+                  <Button className="flex-1" onClick={handleTryAgain}>
                     Try Again
                   </Button>
                 </div>
@@ -88,6 +97,14 @@ export default function Home() {
 
         <Footer />
       </div>
+
+      {showConfirmModal && (
+        <ConfirmModal
+          isOpen={showConfirmModal}
+          onCancel={handleCancelReset}
+          onConfirm={handleConfirmReset}
+        />
+      )}
     </div>
   );
 }

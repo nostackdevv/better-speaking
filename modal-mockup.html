@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try Again Modal - Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Modal Mockup Preview</h1>
+        <p class="text-gray-600 mb-4">Click the button below to see the modal:</p>
+
+        <button onclick="showModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            Show Modal
+        </button>
+
+        <!-- Modal Backdrop -->
+        <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <!-- Modal Content -->
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 animate-fadeIn">
+                <!-- Icon -->
+                <div class="flex justify-center mb-4">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <h2 class="text-xl font-semibold text-gray-900 text-center mb-2">
+                    Start a New Session?
+                </h2>
+
+                <!-- Description -->
+                <p class="text-gray-600 text-center mb-6">
+                    Your current progress and results will be cleared. This action cannot be undone.
+                </p>
+
+                <!-- Buttons -->
+                <div class="flex gap-3">
+                    <button onclick="hideModal()" class="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors">
+                        Cancel
+                    </button>
+                    <button onclick="confirmAction()" class="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors">
+                        Clear & Start Over
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alternative Design -->
+        <div class="mt-12 pt-8 border-t border-gray-300">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Alternative Design Options:</h2>
+
+            <div class="space-y-4">
+                <button onclick="showModalAlt1()" class="block w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700">
+                    Option 2: Minimal Design
+                </button>
+
+                <button onclick="showModalAlt2()" class="block w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                    Option 3: With Save Option
+                </button>
+            </div>
+        </div>
+
+        <!-- Alternative Modal 1: Minimal -->
+        <div id="modalAlt1" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-3">
+                    Clear current session?
+                </h2>
+                <p class="text-gray-600 text-sm mb-5">
+                    This will reset your results and let you start fresh.
+                </p>
+                <div class="flex gap-3 justify-end">
+                    <button onclick="hideModalAlt1()" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded font-medium">
+                        Cancel
+                    </button>
+                    <button onclick="confirmAction()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium">
+                        Clear Session
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alternative Modal 2: With Save Option -->
+        <div id="modalAlt2" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+                <div class="flex justify-center mb-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-semibold text-gray-900 text-center mb-2">
+                    Start a New Session?
+                </h2>
+
+                <p class="text-gray-600 text-center mb-6">
+                    Save your current results before starting over?
+                </p>
+
+                <div class="space-y-3">
+                    <button onclick="confirmAction()" class="w-full px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors">
+                        Save & Start New
+                    </button>
+                    <button onclick="confirmAction()" class="w-full px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium transition-colors">
+                        Clear Without Saving
+                    </button>
+                    <button onclick="hideModalAlt2()" class="w-full px-4 py-2.5 text-gray-600 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.2s ease-out;
+        }
+    </style>
+
+    <script>
+        function showModal() {
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function hideModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        function showModalAlt1() {
+            document.getElementById('modalAlt1').classList.remove('hidden');
+        }
+
+        function hideModalAlt1() {
+            document.getElementById('modalAlt1').classList.add('hidden');
+        }
+
+        function showModalAlt2() {
+            document.getElementById('modalAlt2').classList.remove('hidden');
+        }
+
+        function hideModalAlt2() {
+            document.getElementById('modalAlt2').classList.add('hidden');
+        }
+
+        function confirmAction() {
+            alert('Action confirmed! In the real app, this would clear results and return to recording.');
+            hideModal();
+            hideModalAlt1();
+            hideModalAlt2();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = ['modal', 'modalAlt1', 'modalAlt2'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
