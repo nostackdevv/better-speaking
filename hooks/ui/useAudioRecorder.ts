@@ -118,7 +118,14 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
       setRecordedBlob(null);
 
       timerRef.current = setInterval(() => {
-        setDuration((d) => d + 1);
+        setDuration((d) => {
+          const newDuration = d + 1;
+          // Auto-stop at 5 minutes (300 seconds)
+          if (newDuration >= 300) {
+            stopRecording();
+          }
+          return newDuration;
+        });
       }, 1000);
     } catch (err) {
       const message =

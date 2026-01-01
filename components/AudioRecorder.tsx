@@ -28,6 +28,10 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
   };
 
   if (status === "recorded") {
+    const isValidDuration = duration >= 20 && duration <= 300;
+    const isTooShort = duration < 20;
+    const isTooLong = duration > 300;
+
     return (
       <div className="flex flex-col gap-3">
         <AudioItemCard
@@ -38,7 +42,32 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
           title="Recording"
         />
         {audioUrl && <audio className="w-full" controls src={audioUrl} />}
-        <Button onClick={handleAnalyze}>Analyze Recording</Button>
+
+        {isTooShort && (
+          <div
+            className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg"
+            role="alert"
+          >
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>
+              Recording must be at least 20 seconds (currently {duration}s)
+            </span>
+          </div>
+        )}
+
+        {isTooLong && (
+          <div
+            className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg"
+            role="alert"
+          >
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>Recording exceeds maximum length of 5 minutes</span>
+          </div>
+        )}
+
+        <Button disabled={!isValidDuration} onClick={handleAnalyze}>
+          Analyze Recording
+        </Button>
       </div>
     );
   }
@@ -66,15 +95,15 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
 
       {status === "idle" ? (
         <button
-          onClick={startRecording}
           className="w-20 h-20 rounded-full bg-linear-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 flex items-center justify-center cursor-pointer transition-all shadow-lg shadow-orange-500/30 hover:scale-105"
+          onClick={startRecording}
         >
           <Mic className="w-8 h-8 text-white" />
         </button>
       ) : (
         <button
-          onClick={stopRecording}
           className="w-20 h-20 rounded-full bg-slate-900 hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-all shadow-lg hover:scale-105"
+          onClick={stopRecording}
         >
           <Square className="w-7 h-7 text-white fill-white" />
         </button>

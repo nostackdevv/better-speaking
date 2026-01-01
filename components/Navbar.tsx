@@ -47,12 +47,12 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
           {/* Upgrade - Changed to Waitlist */}
           {user.plan === "free" && (
             <button
+              className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
               onClick={onWaitlistClick}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
             >
               <Crown className="w-4 h-4 text-amber-500" />
               <span className="text-sm font-semibold text-slate-700">Pro</span>
-              <Badge variant="comingSoon" className="text-[10px] px-1.5 py-0.5">
+              <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
                 SOON
               </Badge>
             </button>

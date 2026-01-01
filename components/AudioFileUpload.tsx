@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Upload, FileAudio, Trash } from "lucide-react";
+import { Upload, FileAudio, Trash, AlertCircle } from "lucide-react";
 import { formatBytesToSize } from "@/utils/formatters";
 import {
   validateClientAudioFile,
@@ -22,7 +22,39 @@ export function AudioFileUpload({
 }: AudioFileUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [duration, setDuration] = useState<number>(0);
+  const [isLoadingDuration, setIsLoadingDuration] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Get audio duration when file is selected
+  useEffect(() => {
+    if (!selectedFile) {
+      setDuration(0);
+      return;
+    }
+
+    setIsLoadingDuration(true);
+    const audio = new Audio();
+    const url = URL.createObjectURL(selectedFile);
+
+    audio.addEventListener("loadedmetadata", () => {
+      setDuration(Math.floor(audio.duration));
+      setIsLoadingDuration(false);
+      URL.revokeObjectURL(url);
+    });
+
+    audio.addEventListener("error", () => {
+      setError("Unable to read audio file duration");
+      setIsLoadingDuration(false);
+      URL.revokeObjectURL(url);
+    });
+
+    audio.src = url;
+
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [selectedFile]);
 
   const handleAudioFileUpload = (file: File) => {
     const validationError = validateClientAudioFile(file, maxSize);
@@ -61,6 +93,10 @@ export function AudioFileUpload({
   };
 
   if (selectedFile) {
+    const isValidDuration = duration >= 20 && duration <= 300;
+    const isTooShort = duration > 0 && duration < 20;
+    const isTooLong = duration > 300;
+
     return (
       <div className="flex flex-col gap-3">
         <AudioItemCard
@@ -72,8 +108,23 @@ export function AudioFileUpload({
           title={selectedFile.name}
           truncateTitle
         />
-        <Button onClick={() => onAnalyze?.(selectedFile)}>
-          Analyze Recording
+
+        {isTooShort && !isLoadingDuration && (
+          <div className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg" role="alert">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>Audio must be at least 20 seconds (currently {duration}s)</span>
+          </div>
+        )}
+
+        {isTooLong && !isLoadingDuration && (
+          <div className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg" role="alert">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>Audio exceeds maximum length of 5 minutes</span>
+          </div>
+        )}
+
+        <Button onClick={() => onAnalyze?.(selectedFile)} disabled={!isValidDuration || isLoadingDuration}>
+          {isLoadingDuration ? "Checking duration..." : "Analyze Recording"}
         </Button>
       </div>
     );
