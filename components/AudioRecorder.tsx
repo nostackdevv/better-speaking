@@ -1,8 +1,9 @@
-import { X, Mic, Square, AlertCircle } from "lucide-react";
+import { Mic, Square, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WaveForm } from "./WaveForm";
 import { formatSecondsToTimestamp } from "@/utils/formatters";
 import { useAudioRecorder } from "@/hooks/ui/useAudioRecorder";
+import { AudioItemCard } from "@/components/ui/AudioItemCard";
 
 type AudioRecorderProps = {
   onAnalyze: (blob: Blob) => void;
@@ -29,23 +30,13 @@ export const AudioRecorder = ({ onAnalyze }: AudioRecorderProps) => {
   if (status === "recorded") {
     return (
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-          <div className="flex items-center justify-center w-10 h-10 bg-indigo-100 rounded-lg">
-            <Mic aria-hidden="true" className="w-5 h-5 text-indigo-600" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900">Recording</p>
-            <p className="text-xs text-gray-500">{formatSecondsToTimestamp(duration)}</p>
-          </div>
-          <button
-            aria-label="Discard recording"
-            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-md transition-colors cursor-pointer"
-            onClick={resetRecording}
-            type="button"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
+        <AudioItemCard
+          icon={Mic}
+          onRemove={resetRecording}
+          removeLabel="Discard recording"
+          subtitle={formatSecondsToTimestamp(duration)}
+          title="Recording"
+        />
         {audioUrl && <audio className="w-full" controls src={audioUrl} />}
         <Button onClick={handleAnalyze}>Analyze Recording</Button>
       </div>
