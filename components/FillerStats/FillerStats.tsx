@@ -30,13 +30,13 @@ export const FillerStats = ({
   if (totalFillers === 0) {
     return (
       <div className="space-y-3">
-        <div className="bg-linear-to-r from-green-500 to-emerald-500 rounded-xl p-6 text-white text-center">
-          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="w-8 h-8" />
+        <div className="bg-linear-to-br from-green-500 to-emerald-500 rounded-2xl p-8 text-white text-center border-0 shadow-lg">
+          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Check className="w-10 h-10" />
           </div>
-          <p className="text-2xl font-bold mb-1">Perfect! No filler words</p>
-          <p className="text-green-100">
-            You spoke clearly for {formatDuration(duration)}
+          <h2 className="text-3xl font-bold mb-2">Perfect!</h2>
+          <p className="text-green-100 text-lg">
+            No filler words in {formatDuration(duration)}
           </p>
         </div>
       </div>
@@ -48,14 +48,15 @@ export const FillerStats = ({
   // Normal state - fillers detected
   return (
     <div className="space-y-3">
-      <div className="bg-linear-to-r from-indigo-500 to-purple-500 rounded-xl p-5 text-white text-center">
-        <p className="text-indigo-100 text-sm mb-1">
-          Your most used filler word is
-        </p>
-        <p className="text-4xl font-bold">&quot;{topFiller.text}&quot;</p>
-        {/* <p className="text-indigo-100 mt-1">
-          It was used {topFiller.count} times
-        </p> */}
+      <div className="bg-linear-to-br from-orange-500 via-rose-500 to-pink-500 rounded-2xl p-8 text-white text-center border-0 shadow-lg relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
+        <div className="relative">
+          <p className="text-orange-200 mb-2">Your top filler word</p>
+          <h2 className="text-5xl font-bold mb-2">&quot;{topFiller.text}&quot;</h2>
+          <p className="text-orange-100 text-lg">
+            used {topFiller.count} times in {formatDuration(duration)}
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">

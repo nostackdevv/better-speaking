@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
       <div className="max-w-xl mx-auto px-4 py-6">
         <Header />
 

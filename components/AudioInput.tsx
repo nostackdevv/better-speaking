@@ -32,10 +32,10 @@ export function AudioInput({
       >
         <button
           aria-selected={mode === "record"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-lg border transition-colors ${
+          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
             mode === "record"
-              ? "bg-gray-900 border-gray-900 text-white"
-              : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
+              ? "bg-slate-900 border-slate-900 text-white shadow-sm"
+              : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300"
           }`}
           onClick={() => setMode("record")}
           role="tab"
@@ -44,10 +44,10 @@ export function AudioInput({
         </button>
         <button
           aria-selected={mode === "upload"}
-          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-lg border transition-colors ${
+          className={`flex-1 cursor-pointer px-4 py-2.5 text-sm font-medium rounded-xl border-2 transition-all ${
             mode === "upload"
-              ? "bg-gray-900 border-gray-900 text-white"
-              : "bg-white border-gray-200 text-gray-500 hover:bg-gray-50"
+              ? "bg-slate-900 border-slate-900 text-white shadow-sm"
+              : "bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300"
           }`}
           onClick={() => setMode("upload")}
           role="tab"
