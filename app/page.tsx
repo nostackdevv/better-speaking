@@ -1,20 +1,20 @@
 "use client";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { AudioInput } from "@/components/AudioInput";
-import { Navbar } from "@/components/Navbar";
-import { ChallengePrompts } from "@/components/ChallengePrompts";
-import { PromptCard } from "@/components/PromptCard";
-import { HistoryPanel } from "@/components/HistoryPanel";
-import { WaitlistModal } from "@/components/WaitlistModal";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { AudioInput } from "@/components/audio/AudioInput";
+import { Navbar } from "@/components/layout/Navbar";
+import { ChallengePrompts } from "@/components/challenges/ChallengePrompts";
+import { PromptCard } from "@/components/challenges/PromptCard";
+import { HistoryPanel } from "@/components/history/HistoryPanel";
+import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
 
 import { useState } from "react";
 import { useTranscribeAudio } from "@/hooks/queries/useTranscribeAudio";
-import { FillerStats } from "@/components/FillerStats/FillerStats";
+import { FillerStats } from "@/components/analysis/FillerStats";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";
-import { TabbedResults } from "@/components/TabbedResults";
-import { AudioPlayer } from "@/components/ui/AudioPlayer";
+import { TabbedResults } from "@/components/analysis/TabbedResults";
+import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { Card } from "@/components/ui/Card";
 

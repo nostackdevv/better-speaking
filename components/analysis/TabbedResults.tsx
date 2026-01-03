@@ -2,9 +2,9 @@ import { Filler } from "@/schema/filler";
 import type { FillerStatsType, NormalizedWord } from "@/types/domain";
 import { useState } from "react";
 import { CustomTabs } from "@/components/ui/CustomTabs";
-import { Transcript } from "./Transcript/Transcript";
+import { Transcript } from "@/components/transcription/Transcript";
 import { BreakdownTab } from "./BreakdownTab";
-import { HistoryTab } from "./HistoryTab";
+import { HistoryTab } from "@/components/history/HistoryTab";
 
 const TABS = [
   { id: "breakdown", label: "Breakdown" },

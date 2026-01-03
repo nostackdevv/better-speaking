@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FeedbackModal } from "./FeedbackModal";
+import { FeedbackModal } from "@/components/feedback/FeedbackModal";
 
 export function Footer() {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);

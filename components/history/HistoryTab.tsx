@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/Card";
-import { SessionItem } from "@/components/ui/SessionItem";
+import { SessionItem } from "./SessionItem";
 
 const mockSessionHistory = [
   {

@@ -7,7 +7,7 @@ import {
   MAX_FILE_SIZE,
 } from "@/utils/audio/validators";
 import { Button } from "@/components/ui/Button";
-import { AudioItemCard } from "@/components/ui/AudioItemCard";
+import { AudioItemCard } from "@/components/history/AudioItemCard";
 
 type AudioFileUploadProps = {
   isAnalyzing?: boolean;
