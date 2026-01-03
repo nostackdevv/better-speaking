@@ -4,6 +4,7 @@ import { WaveForm } from "./WaveForm";
 import { formatSecondsToTimestamp } from "@/utils/formatters";
 import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
 import { AudioItemCard } from "@/components/history/AudioItemCard";
+import { PromptSelector } from "./PromptSelector";
 
 type AudioRecorderProps = {
   isAnalyzing?: boolean;
@@ -120,6 +121,8 @@ export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderP
       <p className="text-sm text-slate-400 mt-4">
         {status === "idle" ? "Tap to start recording" : "Tap to stop"}
       </p>
+
+      {status === "idle" && <PromptSelector className="mt-6" />}
     </div>
   );
 };

@@ -108,7 +108,10 @@ export default function Home() {
                 />
               )} */}
 
-              <AudioInput isAnalyzing={isTranscribing} onUpload={handleUpload} />
+              <AudioInput
+                isAnalyzing={isTranscribing}
+                onUpload={handleUpload}
+              />
 
               {/* Challenge Prompts Section */}
               <ChallengePrompts
@@ -198,12 +201,12 @@ export default function Home() {
         }}
       />
 
-      {/* Waitlist Modal */}
-      <WaitlistModal
-        isOpen={showUpgrade}
-        onClose={() => setShowUpgrade(false)}
-      />
-
+      {showUpgrade && (
+        <WaitlistModal
+          isOpen={showUpgrade}
+          onClose={() => setShowUpgrade(false)}
+        />
+      )}
       {showConfirmModal && (
         <ConfirmModal
           isOpen={showConfirmModal}
