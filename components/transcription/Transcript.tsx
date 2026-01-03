@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/Card";
-import { splitTranscriptIntoChunks } from "@/utils/transcript/chunking";
+import { splitTranscriptIntoChunks } from "@/utils/transcription/chunking";
 import { Filler } from "@/schema/filler";
 import { NormalizedWord } from "@/types/domain";
 import { TranscriptDisplay } from "./TranscriptDisplay";

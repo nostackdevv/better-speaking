@@ -2,7 +2,7 @@ import { Mic, Square, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WaveForm } from "./WaveForm";
 import { formatSecondsToTimestamp } from "@/utils/formatters";
-import { useAudioRecorder } from "@/hooks/ui/useAudioRecorder";
+import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
 import { AudioItemCard } from "@/components/history/AudioItemCard";
 
 type AudioRecorderProps = {

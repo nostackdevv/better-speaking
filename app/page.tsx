@@ -9,7 +9,7 @@ import { HistoryPanel } from "@/components/history/HistoryPanel";
 import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
 
 import { useState } from "react";
-import { useTranscribeAudio } from "@/hooks/queries/useTranscribeAudio";
+import { useTranscribeAudio } from "@/hooks/transcription/useTranscribeAudio";
 import { FillerStats } from "@/components/analysis/FillerStats";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Crown, Check, Mail, Loader2, Bell, AlertCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useJoinWaitlist } from "@/hooks/queries/useJoinWaitlist";
+import { useJoinWaitlist } from "@/hooks/waitlist/useJoinWaitlist";
 import { cn } from "@/lib/utils";
 
 type WaitlistModalProps = {

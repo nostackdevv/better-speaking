@@ -1,6 +1,6 @@
 import { Pause, Play } from "lucide-react";
 import { ChangeEvent, useMemo } from "react";
-import { useAudioPlayer } from "@/hooks/ui/useAudioPlayer";
+import { useAudioPlayer } from "@/hooks/audio/useAudioPlayer";
 import { formatSecondsToTimestamp } from "@/utils/formatters";
 
 type AudioPlayerProps = {
