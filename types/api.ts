@@ -8,7 +8,7 @@
  */
 
 import { Filler } from "@/schema/filler";
-import { NormalizedWord, FillerStatsType } from "./domain";
+import { NormalizedWord, FillerStatsType, ClarityResult } from "./domain";
 
 export interface TranscribeResponse {
   transcript: string;
@@ -16,6 +16,7 @@ export interface TranscribeResponse {
   duration: number;
   fillers: Filler[];
   fillerStats: FillerStatsType;
+  clarityScore: ClarityResult | null;
   createdAt: string;
 }
 

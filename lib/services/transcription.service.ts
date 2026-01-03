@@ -4,6 +4,7 @@ import { detectFillers } from "./filler-detection.service";
 import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { validateAudioFile } from "@/lib/utils/validators";
+import { calculateClarityScore } from "@/lib/filler/clarity-score";
 
 export async function processAudioTranscription(
   audioFile: Blob
@@ -36,12 +37,16 @@ export async function processAudioTranscription(
     duration,
   });
 
+  // Step 7: Calculate clarity score
+  const clarityScore = calculateClarityScore(fillerStats, duration);
+
   return {
     transcript,
     words: normalizedWords,
     duration,
     fillers,
     fillerStats,
+    clarityScore,
     createdAt: new Date().toISOString(),
   };
 }

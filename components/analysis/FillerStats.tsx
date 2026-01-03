@@ -1,9 +1,11 @@
 import { TrendingDown, TrendingUp, Check } from "lucide-react";
-import { FillerStatsType } from "@/types/domain";
+import { FillerStatsType, ClarityResult } from "@/types/domain";
 import { FillerStatCard } from "./FillerStatsCard";
+import { Card } from "@/components/ui/Card";
 
 type FillerStatsProps = {
   fillerStats: FillerStatsType;
+  clarityScore: ClarityResult | null;
   duration: number;
   previousSession: {
     fillerCount: number;
@@ -12,9 +14,10 @@ type FillerStatsProps = {
 
 export const FillerStats = ({
   fillerStats,
+  clarityScore,
   previousSession,
 }: FillerStatsProps) => {
-  const { totalFillers, fillersPerMinute, topFillers } = fillerStats;
+  const { totalFillers, fillersPerMinute } = fillerStats;
 
   const improvement = previousSession
     ? Math.round(
@@ -41,12 +44,52 @@ export const FillerStats = ({
     );
   }
 
-  const topFiller = topFillers[0];
+  // const topFiller = topFillers[0];
+
+  // Grade color mapping
+  const gradeColors = {
+    A: "#22c55e",
+    B: "#3b82f6",
+    C: "#eab308",
+    D: "#f97316",
+    F: "#ef4444",
+  };
+
+  // Grade label mapping
+  const gradeLabels = {
+    A: "Excellent",
+    B: "Clear",
+    C: "Good",
+    D: "Fair",
+    F: "Keep Practicing",
+  };
 
   // Normal state - fillers detected
   return (
     <div className="space-y-3">
-      <div className="bg-linear-to-br from-orange-500 via-rose-500 to-pink-500 rounded-2xl p-8 text-white text-center border-0 shadow-lg relative overflow-hidden">
+      {/* Clarity Score Card */}
+      {clarityScore && (
+        <Card className="p-8 text-center bg-linear-to-br from-slate-900 to-slate-800 border-0">
+          <p className="text-sm font-medium text-slate-400 uppercase tracking-wide mb-2">
+            Clarity Score (out of 100)
+          </p>
+          <p className="text-7xl font-bold text-white mb-3">
+            {clarityScore.score}
+          </p>
+          <div
+            className="inline-flex px-4 py-1.5 rounded-full text-sm font-semibold"
+            style={{
+              backgroundColor: gradeColors[clarityScore.grade],
+              color: "#fff",
+            }}
+          >
+            {clarityScore.grade} · {gradeLabels[clarityScore.grade]}
+          </div>
+        </Card>
+      )}
+
+      {/* Old Top Filler Card - Commented Out */}
+      {/* <div className="bg-linear-to-br from-orange-500 via-rose-500 to-pink-500 rounded-2xl p-8 text-white text-center border-0 shadow-lg relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
         <div className="relative">
           <p className="text-orange-200 mb-2">Your top filler word</p>
@@ -57,7 +100,7 @@ export const FillerStats = ({
             was used {topFiller.count} time{topFiller.count !== 1 ? "s" : ""}
           </p>
         </div>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-3 gap-3">
         <FillerStatCard label="Total fillers" value={totalFillers} />

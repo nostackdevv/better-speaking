@@ -138,6 +138,7 @@ export default function Home() {
                 )}
 
                 <FillerStats
+                  clarityScore={transcriptResponse.clarityScore}
                   duration={transcriptResponse.duration}
                   fillerStats={transcriptResponse.fillerStats}
                   previousSession={null}

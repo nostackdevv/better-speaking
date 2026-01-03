@@ -7,6 +7,7 @@ import {
 } from "@/lib/middleware/rate-limit";
 import { TRANSCRIPT_DUMMY } from "@/dummy";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
+import { calculateClarityScore } from "@/lib/filler/clarity-score";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const rateLimitResult = await checkRateLimit(request);
@@ -15,13 +16,26 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   if (TRANSCRIPT_DUMMY) {
+    const fillerStats = computeFillerStats({
+      fillers: [
+        {
+          displayText: "you know",
+          startIndex: 10,
+          endIndex: 11,
+          confidence: 1,
+        },
+      ],
+      words: TRANSCRIPT_DUMMY.words,
+      duration: TRANSCRIPT_DUMMY.duration,
+    });
+    const clarityScore = calculateClarityScore(
+      fillerStats,
+      TRANSCRIPT_DUMMY.duration
+    );
     const response = NextResponse.json({
       ...TRANSCRIPT_DUMMY,
-      fillerStats: computeFillerStats({
-        fillers: TRANSCRIPT_DUMMY.fillers,
-        words: TRANSCRIPT_DUMMY.words,
-        duration: TRANSCRIPT_DUMMY.duration,
-      }),
+      fillerStats,
+      clarityScore,
       createdAt: new Date().toISOString(),
     });
     return response;
