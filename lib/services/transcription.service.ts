@@ -1,4 +1,4 @@
-import { TranscribeResponse } from "@/types/audio";
+import { TranscribeResponse } from "@/types/api";
 import { transcribeAudio } from "./deepgram.service";
 import { detectFillers } from "./filler-detection.service";
 import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
