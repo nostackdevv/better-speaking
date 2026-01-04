@@ -17,21 +17,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (TRANSCRIPT_DUMMY) {
     const fillerStats = computeFillerStats({
-      fillers: [
-        {
-          displayText: "you know",
-          startIndex: 10,
-          endIndex: 11,
-          confidence: 1,
-        },
-      ],
+      fillers: TRANSCRIPT_DUMMY.fillers,
       words: TRANSCRIPT_DUMMY.words,
       duration: TRANSCRIPT_DUMMY.duration,
     });
-    const clarityScore = calculateClarityScore(
-      fillerStats,
-      TRANSCRIPT_DUMMY.duration
-    );
+    const clarityScore = calculateClarityScore(fillerStats, TRANSCRIPT_DUMMY.duration);
     const response = NextResponse.json({
       ...TRANSCRIPT_DUMMY,
       fillerStats,

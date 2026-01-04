@@ -1,57 +1,38 @@
 "use client";
 
-import { X, MessageCircle } from "lucide-react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { formatDuration } from "@/utils/formatters";
-
-type SessionHistoryItem = {
-  id: number;
-  date: string;
-  time: string;
-  duration: number;
-  fillerCount: number;
-  trend: number;
-  prompt: string | null;
-};
-
-const mockSessionHistory: SessionHistoryItem[] = [
-  {
-    id: 1,
-    date: "Today",
-    time: "2:34 PM",
-    duration: 45,
-    fillerCount: 8,
-    trend: -23,
-    prompt: "Tell me about yourself",
-  },
-  {
-    id: 2,
-    date: "Yesterday",
-    time: "10:15 AM",
-    duration: 62,
-    fillerCount: 12,
-    trend: -5,
-    prompt: null,
-  },
-  {
-    id: 3,
-    date: "Dec 24",
-    time: "4:22 PM",
-    duration: 38,
-    fillerCount: 6,
-    trend: -13,
-    prompt: "Pitch a product idea",
-  },
-];
+import { StoredSession } from "@/types/domain";
+import { getScoreGradient } from "@/utils/scoreGradient";
 
 type HistoryPanelProps = {
   isOpen: boolean;
   onClose: () => void;
-  onSelectSession?: (session: SessionHistoryItem) => void;
+  sessions: StoredSession[];
 };
 
-export function HistoryPanel({ isOpen, onClose, onSelectSession }: HistoryPanelProps) {
+function formatDate(isoDate: string): string {
+  const date = new Date(isoDate);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function formatTime24(isoDate: string): string {
+  const date = new Date(isoDate);
+  return date.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+}
+
+export function HistoryPanel({ isOpen, onClose, sessions }: HistoryPanelProps) {
   if (!isOpen) return null;
+
+  const sortedSessions = [...sessions].reverse(); // Most recent first
 
   return (
     <>
@@ -63,52 +44,80 @@ export function HistoryPanel({ isOpen, onClose, onSelectSession }: HistoryPanelP
         <div className="flex items-center justify-between p-4 border-b border-slate-100">
           <h2 className="text-lg font-bold text-slate-900">Session History</h2>
           <button
+            className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer rounded-lg hover:bg-slate-100 transition-colors"
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-3">
-          {mockSessionHistory.map((session) => (
-            <div
-              key={session.id}
-              onClick={() => {
-                onSelectSession?.(session);
-                onClose();
-              }}
-              className="p-4 bg-slate-50 hover:bg-slate-100 rounded-xl cursor-pointer transition-colors"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-slate-900">{session.date}</span>
-                  <span className="text-slate-400">·</span>
-                  <span className="text-sm text-slate-500">{session.time}</span>
-                </div>
-                <span
-                  className={cn(
-                    "text-sm font-semibold",
-                    session.trend < 0 ? "text-green-600" : "text-red-500"
-                  )}
-                >
-                  {session.trend < 0
-                    ? `↓${Math.abs(session.trend)}%`
-                    : `↑${session.trend}%`}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 text-sm text-slate-500">
-                <span>{formatDuration(session.duration)}</span>
-                <span>{session.fillerCount} fillers</span>
-              </div>
-              {session.prompt && (
-                <p className="mt-2 text-sm text-teal-600 truncate">
-                  <MessageCircle className="w-3 h-3 inline mr-1" />
-                  {session.prompt}
-                </p>
-              )}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {sortedSessions.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-slate-400">No sessions yet</p>
+              <p className="text-sm text-slate-300 mt-2">
+                Complete a practice session to see your history
+              </p>
             </div>
-          ))}
+          ) : (
+            sortedSessions.map((session) => {
+              const clarityScore = session.clarityScore ?? 100;
+              const mostUsedFiller = session.topFiller?.text;
+
+              return (
+                <div
+                  className="bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors p-4"
+                  key={session.id}
+                >
+                  {/* Date and Score */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-semibold text-slate-900">
+                          {formatDate(session.date)}
+                        </span>
+                        <span className="text-xs text-slate-400">
+                          {formatTime24(session.date)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span
+                        className={cn(
+                          "text-3xl font-bold bg-linear-to-r bg-clip-text text-transparent",
+                          getScoreGradient(clarityScore)
+                        )}
+                      >
+                        {clarityScore}
+                      </span>
+                      <span className="text-xs text-slate-400 ml-1">clarity</span>
+                    </div>
+                  </div>
+
+                  {/* Stats Row */}
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-4 text-slate-600">
+                      <span>
+                        <strong>{session.fillerCount}</strong> fillers
+                      </span>
+                      <span>
+                        <strong>{session.wordCount}</strong> words
+                      </span>
+                    </div>
+                    {mostUsedFiller ? (
+                      <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-md text-xs font-semibold">
+                        {mostUsedFiller}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-md text-xs font-semibold">
+                        Perfect! 🎉
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </>

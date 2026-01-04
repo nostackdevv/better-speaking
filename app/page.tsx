@@ -10,6 +10,7 @@ import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
 
 import { useState } from "react";
 import { useTranscribeAudio } from "@/hooks/transcription/useTranscribeAudio";
+import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
 import { FillerStats } from "@/components/analysis/FillerStats";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";
@@ -32,6 +33,9 @@ export default function Home() {
     reset: resetTranscription,
   } = useTranscribeAudio();
 
+  const { sessions, addSession, getPreviousSession } = useSessionHistory();
+  const previousSession = getPreviousSession();
+
   const mockUser = {
     name: "Sam",
     streak: 7,
@@ -42,7 +46,19 @@ export default function Home() {
     if (!file) return;
     setAudioFile(file);
     transcribeAudio(file, {
-      onSuccess: () => {},
+      onSuccess: (data) => {
+        // Save session to localStorage
+        addSession({
+          id: Date.now().toString(),
+          date: new Date().toISOString(),
+          duration: data.duration,
+          fillerCount: data.fillerStats.totalFillers,
+          fillersPerMin: data.fillerStats.fillersPerMinute,
+          clarityScore: data.clarityScore?.score,
+          topFiller: data.fillerStats.topFillers[0],
+          wordCount: data.fillerStats.totalWords,
+        });
+      },
     });
   };
 
@@ -141,7 +157,7 @@ export default function Home() {
                   clarityScore={transcriptResponse.clarityScore}
                   duration={transcriptResponse.duration}
                   fillerStats={transcriptResponse.fillerStats}
-                  previousSession={null}
+                  previousSession={previousSession}
                 />
 
                 {/* Action buttons */}
@@ -196,10 +212,7 @@ export default function Home() {
       <HistoryPanel
         isOpen={showHistory}
         onClose={() => setShowHistory(false)}
-        onSelectSession={() => {
-          // In real app, would load session data
-          console.log("Session selected");
-        }}
+        sessions={sessions}
       />
 
       {showUpgrade && (

@@ -37,12 +37,12 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
           </div> */}
 
           {/* History */}
-          {/* <button
+          <button
             onClick={onHistoryClick}
             className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
           >
             <History className="w-5 h-5" />
-          </button> */}
+          </button>
 
           {/* Upgrade - Changed to Waitlist */}
           {user.plan === "free" && (

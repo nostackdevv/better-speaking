@@ -1,7 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Crown, Check, Mail, Loader2, Bell, AlertCircle, X } from "lucide-react";
+import {
+  Crown,
+  Check,
+  Mail,
+  Loader2,
+  Bell,
+  AlertCircle,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { useJoinWaitlist } from "@/hooks/waitlist/useJoinWaitlist";
@@ -19,7 +27,13 @@ function isValidEmail(email: string): boolean {
 export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
   const [email, setEmail] = useState("");
   const [localError, setLocalError] = useState("");
-  const { mutate: joinWaitlist, isPending, isSuccess, error, reset } = useJoinWaitlist();
+  const {
+    mutate: joinWaitlist,
+    isPending,
+    isSuccess,
+    error,
+    reset,
+  } = useJoinWaitlist();
 
   const errorMessage = error?.message || error?.error || "";
 
@@ -102,17 +116,37 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
               {/* Features List */}
               <div className="space-y-3 mb-6">
                 {[
-                  "Unlimited practice sessions",
-                  "Challenge modes like interview, student, creator and more...",
-                  "Advanced analytics, trends & behavior insights",
-                  "Progress tracking & improvement trends",
-                  "Personalized feedback & recommendations",
+                  {
+                    title: "Unlimited Practice",
+                    description:
+                      "Break free from daily limits and speak as much as you need",
+                  },
+                  {
+                    title: "Tailored Feedback",
+                    description:
+                      "Get custom recommendations to reduce your most common filler words",
+                  },
+                  {
+                    title: "Targeted Challenges",
+                    description:
+                      "Access specialized prompts for Interviews, Pitches, and Content",
+                  },
+                  {
+                    title: "Performance Trends",
+                    description:
+                      "Deep-dive into your Clarity Score history to visualize your growth",
+                  },
                 ].map((feature, i) => (
                   <div className="flex items-center gap-3" key={i}>
                     <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                       <Check className="w-3 h-3 text-green-600" />
                     </div>
-                    <span className="text-slate-600 text-sm">{feature}</span>
+                    <span className="text-slate-600 text-sm">
+                      <strong className="font-semibold text-slate-900">
+                        {feature.title}:
+                      </strong>{" "}
+                      {feature.description}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -125,7 +159,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                     <input
                       className={cn(
                         "w-full pl-12 pr-4 py-3.5 rounded-xl border-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 transition-colors",
-                        (localError || errorMessage)
+                        localError || errorMessage
                           ? "border-red-300 bg-red-50"
                           : "border-slate-200"
                       )}
@@ -167,13 +201,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 </Button>
               </form>
 
-              <button
-                className="w-full py-3 mt-3 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors"
-                disabled={isPending}
-                onClick={handleClose}
-              >
-                Maybe later
-              </button>
+              <p className="w-full text-center pt-3 pb-1 mt-3 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors">
+                Join 200+ speakers on the waitlist.
+              </p>
+              <p className="w-full text-center text-xs text-slate-500 hover:text-slate-700 cursor-pointer transition-colors">
+                Get 50% off when Pro launches!
+              </p>
             </div>
           </>
         )}

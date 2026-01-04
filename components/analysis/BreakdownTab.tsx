@@ -4,24 +4,32 @@ import type { FillerStatsType } from "@/types/domain";
 
 type BreakdownTabProps = {
   fillerStats: FillerStatsType;
-}
+};
 
 export const BreakdownTab = ({ fillerStats }: BreakdownTabProps) => {
   const { fillerPercentage, topFillers, totalFillers } = fillerStats;
   const maxCount = topFillers[0]?.count ?? 0;
 
+  const mostUsedFiller = topFillers[0]?.text;
+
   return (
     <div className="space-y-4">
-      <Card className="p-4">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-gray-600">Filler words were</span>
-          <span className="text-lg font-bold text-amber-600">
-            {fillerPercentage.toFixed(1)}%
-          </span>
+      {mostUsedFiller && (
+        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
+          <p className="text-slate-700 leading-relaxed">
+            Watch out for{" "}
+            <span className="px-2 py-0.5 bg-orange-100 text-orange-700 rounded font-semibold">
+              {mostUsedFiller}
+            </span>{" "}
+            — it&apos;s your most common filler.
+            <span className="font-semibold text-slate-900">
+              {" "}
+              {fillerPercentage.toFixed(1)}%
+            </span>{" "}
+            of your total words were fillers
+          </p>
         </div>
-        <ProgressBar value={fillerPercentage} />
-        <p className="text-xs text-gray-400 mt-2">of your total speech</p>
-      </Card>
+      )}
 
       {totalFillers > 0 && (
         <Card className="overflow-hidden">
