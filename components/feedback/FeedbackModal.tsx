@@ -17,7 +17,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const characterCount = message.length;
-  const maxCharacters = 1000;
+  const maxCharacters = 2000;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     }
 
     if (trimmedMessage.length > maxCharacters) {
-      setError("Feedback must be less than 1000 characters");
+      setError("Feedback must be less than 2000 characters");
       return;
     }
 

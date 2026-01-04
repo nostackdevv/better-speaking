@@ -187,6 +187,7 @@ export default function Home() {
 
                 {/* Tabbed content */}
                 <TabbedResults
+                  audioSrc={audioFile}
                   duration={transcriptResponse.duration}
                   fillers={transcriptResponse.fillers}
                   fillerStats={transcriptResponse.fillerStats}
@@ -194,12 +195,6 @@ export default function Home() {
                   transcriptText={transcriptResponse.transcript}
                   words={transcriptResponse.words}
                 />
-
-                <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-4 py-3 z-50">
-                  {transcriptResponse && audioFile && (
-                    <AudioPlayer src={audioFile} />
-                  )}
-                </div>
               </div>
             </>
           )}

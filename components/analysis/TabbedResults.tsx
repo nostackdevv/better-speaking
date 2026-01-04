@@ -19,6 +19,7 @@ type TabbedResultsProps = {
   duration: number;
   transcriptText: string;
   words: NormalizedWord[];
+  audioSrc?: string | Blob | File;
 }
 
 export const TabbedResults = ({
@@ -28,6 +29,7 @@ export const TabbedResults = ({
   duration,
   transcriptText,
   words,
+  audioSrc,
 }: TabbedResultsProps) => {
   const [activeTab, setActiveTab] = useState("breakdown");
 
@@ -46,6 +48,7 @@ export const TabbedResults = ({
           fillers={fillers}
           transcriptText={transcriptText}
           words={words}
+          audioSrc={audioSrc}
         />
       )}
       {/* {activeTab === "history" && <HistoryTab />} */}

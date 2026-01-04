@@ -3,6 +3,7 @@ import { splitTranscriptIntoChunks } from "@/utils/transcription/chunking";
 import { Filler } from "@/schema/filler";
 import { NormalizedWord } from "@/types/domain";
 import { TranscriptDisplay } from "./TranscriptDisplay";
+import { AudioPlayerCompact } from "@/components/audio/AudioPlayerCompact";
 import { useMemo } from "react";
 
 type TranscriptProps = {
@@ -10,6 +11,7 @@ type TranscriptProps = {
   duration: number;
   fillers: Filler[];
   words: NormalizedWord[];
+  audioSrc?: string | Blob | File;
 };
 
 export const Transcript = ({
@@ -17,6 +19,7 @@ export const Transcript = ({
   duration,
   words,
   transcriptText,
+  audioSrc,
 }: TranscriptProps) => {
   const chunks = useMemo(
     () => splitTranscriptIntoChunks(words, fillers),
@@ -26,6 +29,12 @@ export const Transcript = ({
   return (
     <section aria-labelledby="transcript-heading">
       <Card className="p-4">
+        {audioSrc && (
+          <div className="mb-4 pb-4 border-b border-slate-100">
+            <AudioPlayerCompact src={audioSrc} />
+          </div>
+        )}
+
         <div className="max-h-60 overflow-y-auto">
           <TranscriptDisplay chunks={chunks} />
         </div>
