@@ -47,11 +47,11 @@ export const FillerStats = ({
 
   // Grade label mapping
   const gradeLabels = {
-    A: "Excellent",
-    B: "Clear",
-    C: "Good",
-    D: "Fair",
-    F: "Keep Practicing",
+    A: "The Pro Speaker",
+    B: "The Storyteller",
+    C: "The Casual Speaker",
+    D: "The Hesitator",
+    F: "The Mumbler",
   };
 
   // Normal state - fillers detected
@@ -73,7 +73,7 @@ export const FillerStats = ({
               color: "#fff",
             }}
           >
-            {clarityScore.grade} · {gradeLabels[clarityScore.grade]}
+            {gradeLabels[clarityScore.grade]}
           </div>
         </Card>
       )}
@@ -81,8 +81,8 @@ export const FillerStats = ({
       <div className="grid grid-cols-3 gap-3">
         <FillerStatCard label="Total fillers" value={totalFillers} />
         <FillerStatCard
-          label="Per minute"
-          value={fillersPerMinute.toFixed(1)}
+          label="Fillers per minute"
+          value={Math.round(fillersPerMinute)}
         />
         {improvement !== null ? (
           <FillerStatCard

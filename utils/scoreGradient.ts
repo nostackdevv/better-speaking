@@ -9,9 +9,9 @@ export function getScoreGradient(score?: number): string {
 
 export function getScorePillColor(score?: number): string {
   if (!score) return "#64748b"; // slate-500
-  if (score >= 90) return "#22c55e"; // green-500
-  if (score >= 80) return "#3b82f6"; // blue-500
-  if (score >= 70) return "#eab308"; // yellow-500
+  if (score >= 90) return "#16a34a"; // green-600
+  if (score >= 80) return "#2563eb"; // blue-600
+  if (score >= 70) return "#d97706"; // amber-600
   if (score >= 60) return "#f97316"; // orange-500
-  return "#ef4444"; // red-500
+  return "#dc2626"; // red-500
 }

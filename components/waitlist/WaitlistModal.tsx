@@ -102,7 +102,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 <Crown className="w-8 h-8 text-white" />
               </div>
               <div className="flex items-center justify-center gap-2 mb-2">
-                <h2 className="text-2xl font-bold">Pro Coming Soon</h2>
+                <h2 className="text-2xl font-bold">Pro Launch</h2>
                 <Badge className="text-[10px] px-2 py-0.5" variant="comingSoon">
                   COMING SOON
                 </Badge>
@@ -129,12 +129,12 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   {
                     title: "Targeted Challenges",
                     description:
-                      "Access specialized prompts for Interviews, Pitches, and Content",
+                      "Access specialized prompts for interviews, pitches, and others",
                   },
                   {
                     title: "Performance Trends",
                     description:
-                      "Deep-dive into your Clarity Score history to visualize your growth",
+                      "Deep-dive into your clarity score history to visualize your growth",
                   },
                 ].map((feature, i) => (
                   <div className="flex items-center gap-3" key={i}>
@@ -195,14 +195,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   ) : (
                     <>
                       <Bell className="w-5 h-5" />
-                      Join the Waitlist
+                      Notify Me
                     </>
                   )}
                 </Button>
               </form>
 
               <p className="w-full text-center pt-3 pb-1 mt-3 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors">
-                Join 200+ speakers on the waitlist.
+                Join 200+ users on the waitlist.
               </p>
               <p className="w-full text-center text-xs text-slate-500 hover:text-slate-700 cursor-pointer transition-colors">
                 Get 50% off when Pro launches!
