@@ -23,3 +23,20 @@ export interface FillerStatsType {
   fillersPerMinute: number;
   topFillers: { text: string; count: number }[];
 }
+
+export interface ClarityResult {
+  score: number;
+  grade: "A" | "B" | "C" | "D" | "F";
+  version: string;
+}
+
+export interface StoredSession {
+  id: string;
+  date: string;
+  duration: number;
+  fillerCount: number;
+  fillersPerMin: number;
+  clarityScore?: number;
+  topFiller?: { text: string; count: number };
+  wordCount: number;
+}
