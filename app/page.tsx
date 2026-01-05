@@ -14,6 +14,7 @@ import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
 import { FillerStats } from "@/components/analysis/FillerStats";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";
+import { ShareModal } from "@/components/ui/ShareModal";
 import { TabbedResults } from "@/components/analysis/TabbedResults";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
@@ -25,6 +26,7 @@ export default function Home() {
   const [activePrompt, setActivePrompt] = useState<string | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [showUpgrade, setShowUpgrade] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const {
     mutate: transcribeAudio,
@@ -164,7 +166,7 @@ export default function Home() {
                 <div className="flex gap-3 mt-4 mb-6">
                   <Button
                     className="flex-1"
-                    onClick={() => {}}
+                    onClick={() => setShowShareModal(true)}
                     variant="outline"
                   >
                     <Share2 className="w-4 h-4" />
@@ -221,6 +223,17 @@ export default function Home() {
           isOpen={showConfirmModal}
           onCancel={handleCancelReset}
           onConfirm={handleConfirmReset}
+        />
+      )}
+      {showShareModal && transcriptResponse && (
+        <ShareModal
+          data={{
+            duration: transcriptResponse.duration,
+            fillerStats: transcriptResponse.fillerStats,
+            clarityScore: transcriptResponse.clarityScore,
+          }}
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
         />
       )}
     </div>
