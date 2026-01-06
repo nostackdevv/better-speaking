@@ -14,12 +14,12 @@ type AudioFileUploadProps = {
   onAnalyze?: (file: File) => void;
   accept?: string;
   maxSize?: number;
-}
+};
 
 export function AudioFileUpload({
   isAnalyzing = false,
   onAnalyze,
-  accept = ".mp3,.wav,.m4a",
+  accept = ".mp3,.mp4,.mp2,.aac,.wav,.flac,.pcm,.m4a,.ogg,.oga,.opus,.webm",
   maxSize = MAX_FILE_SIZE,
 }: AudioFileUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -112,20 +112,31 @@ export function AudioFileUpload({
         />
 
         {isTooShort && !isLoadingDuration && (
-          <div className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg" role="alert">
+          <div
+            className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg"
+            role="alert"
+          >
             <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>Audio must be at least 20 seconds (currently {duration}s)</span>
+            <span>
+              Audio must be at least 20 seconds (currently {duration}s)
+            </span>
           </div>
         )}
 
         {isTooLong && !isLoadingDuration && (
-          <div className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg" role="alert">
+          <div
+            className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg"
+            role="alert"
+          >
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>Audio exceeds maximum length of 5 minutes</span>
           </div>
         )}
 
-        <Button onClick={() => onAnalyze?.(selectedFile)} disabled={!isValidDuration || isLoadingDuration || isAnalyzing}>
+        <Button
+          onClick={() => onAnalyze?.(selectedFile)}
+          disabled={!isValidDuration || isLoadingDuration || isAnalyzing}
+        >
           {isAnalyzing ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -160,10 +171,12 @@ export function AudioFileUpload({
             className="w-10 h-10 text-slate-400 group-hover:text-orange-500 transition-colors"
           />
         </div>
-        <p className="font-semibold text-slate-700 mb-1 text-lg">Drop your audio file here</p>
+        <p className="font-semibold text-slate-700 mb-1 text-lg">
+          Drop your audio file here
+        </p>
         <p className="text-slate-500 mb-4">or click to browse</p>
         <p className="text-xs text-slate-400 bg-white px-3 py-1.5 rounded-full border border-slate-200">
-          MP3, WAV, M4A • Max 10MB
+          Add any valid audio file • Max 10
         </p>
 
         <input
