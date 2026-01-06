@@ -16,27 +16,21 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // }
 
   if (TRANSCRIPT_DUMMY) {
-    console.time("computeFillerStats");
     const fillerStats = computeFillerStats({
       fillers: TRANSCRIPT_DUMMY.fillers,
       words: TRANSCRIPT_DUMMY.words,
       duration: TRANSCRIPT_DUMMY.duration,
     });
-    console.timeEnd("computeFillerStats");
-    console.time("calculateClarityScore");
     const clarityScore = calculateClarityScore(
       fillerStats,
       TRANSCRIPT_DUMMY.duration
     );
-    console.timeEnd("calculateClarityScore");
-    console.timeEnd("Total dummy response time");
     const response = NextResponse.json({
       ...TRANSCRIPT_DUMMY,
       fillerStats,
       clarityScore,
       createdAt: new Date().toISOString(),
     });
-    console.timeEnd("Total dummy response time");
     return response;
   }
 

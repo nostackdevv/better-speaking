@@ -19,7 +19,6 @@ type AudioFileUploadProps = {
 export function AudioFileUpload({
   isAnalyzing = false,
   onAnalyze,
-  accept = ".mp3,.mp4,.mp2,.aac,.wav,.flac,.pcm,.m4a,.ogg,.oga,.opus,.webm",
   maxSize = MAX_FILE_SIZE,
 }: AudioFileUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -134,8 +133,8 @@ export function AudioFileUpload({
         )}
 
         <Button
-          onClick={() => onAnalyze?.(selectedFile)}
           disabled={!isValidDuration || isLoadingDuration || isAnalyzing}
+          onClick={() => onAnalyze?.(selectedFile)}
         >
           {isAnalyzing ? (
             <>
@@ -180,7 +179,7 @@ export function AudioFileUpload({
         </p>
 
         <input
-          accept={accept}
+          accept="audio/*"
           aria-hidden="true"
           className="hidden"
           onChange={handleInputChange}
