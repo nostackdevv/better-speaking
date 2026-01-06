@@ -10,10 +10,10 @@ import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const rateLimitResult = await checkRateLimit(request);
-  if (!rateLimitResult.success && rateLimitResult.response) {
-    return rateLimitResult.response;
-  }
+  // const rateLimitResult = await checkRateLimit(request);
+  // if (!rateLimitResult.success && rateLimitResult.response) {
+  //   return rateLimitResult.response;
+  // }
 
   if (TRANSCRIPT_DUMMY) {
     const fillerStats = computeFillerStats({
@@ -21,7 +21,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       words: TRANSCRIPT_DUMMY.words,
       duration: TRANSCRIPT_DUMMY.duration,
     });
-    const clarityScore = calculateClarityScore(fillerStats, TRANSCRIPT_DUMMY.duration);
+    const clarityScore = calculateClarityScore(
+      fillerStats,
+      TRANSCRIPT_DUMMY.duration
+    );
     const response = NextResponse.json({
       ...TRANSCRIPT_DUMMY,
       fillerStats,

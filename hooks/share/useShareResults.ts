@@ -16,7 +16,8 @@ interface ShareResultsReturn {
   error: Error | null;
 }
 
-const DEFAULT_CAPTION = "I just tracked my filler words! 🎤 Can you beat my score? Try it at speakclear.app";
+const DEFAULT_CAPTION =
+  "I just tracked how much filler words I use with speakclear.app. Can you beat my score?";
 
 export function useShareResults(): ShareResultsReturn {
   const [error, setError] = useState<Error | null>(null);
@@ -42,7 +43,9 @@ export function useShareResults(): ShareResultsReturn {
       }
 
       const blob = await response.blob();
-      const file = new File([blob], "speakclear-results.png", { type: "image/png" });
+      const file = new File([blob], "speakclear-results.png", {
+        type: "image/png",
+      });
 
       // Mobile: Native share with image + caption
       if (navigator.canShare?.({ files: [file] })) {
