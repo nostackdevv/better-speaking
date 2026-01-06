@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
-import { X, Download, Mic } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, Download, Mic, Share2, Check } from "lucide-react";
 import type { FillerStatsType, ClarityResult } from "@/types/domain";
+import { useShareResults } from "@/hooks/share/useShareResults";
+import { useIsMobile } from "@/hooks/ui/useIsMobile";
+import { is } from "zod/v4/locales";
 
 type ShareModalProps = {
   isOpen: boolean;
@@ -14,22 +17,26 @@ type ShareModalProps = {
   };
 };
 
-export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
-  // Format duration as MM:SS
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
+// Format duration as MM:SS
+const formatDuration = (seconds: number) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
 
-  // Get grade label from score
-  const getGrade = (score: number) => {
-    if (score >= 90) return { letter: "A", label: "Excellent!" };
-    if (score >= 80) return { letter: "B", label: "Great Job!" };
-    if (score >= 70) return { letter: "C", label: "Good Progress" };
-    if (score >= 60) return { letter: "D", label: "Keep Going" };
-    return { letter: "F", label: "Keep Practicing" };
-  };
+// Get grade label from score
+const getGrade = (score: number) => {
+  if (score >= 90) return { letter: "A", label: "Excellent!" };
+  if (score >= 80) return { letter: "B", label: "Great Job!" };
+  if (score >= 70) return { letter: "C", label: "Good Progress" };
+  if (score >= 60) return { letter: "D", label: "Keep Going" };
+  return { letter: "F", label: "Keep Practicing" };
+};
+
+export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
+  const isMobile = useIsMobile();
+  const [toast, setToast] = useState({ message: "", isVisible: false });
+  const { shareResults, isSharing } = useShareResults();
 
   // Get stats from data
   const audioLength = formatDuration(data.duration);
@@ -71,30 +78,55 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
     }
   };
 
-  // Placeholder handlers for actions
+  const showToast = (message: string) => {
+    setToast({ message, isVisible: true });
+    setTimeout(() => setToast({ message: "", isVisible: false }), 3000);
+  };
+
+  // Generate image URL with params
+  const getShareImageUrl = () => {
+    const params = new URLSearchParams({
+      score: clarityScore.toString(),
+      fillers: totalFillers.toString(),
+      words: totalWords.toString(),
+      duration: audioLength,
+      topFiller: mostUsedFiller,
+      grade: `${grade.letter} · ${grade.label}`,
+    });
+    return `/api/share-image?${params.toString()}`;
+  };
+
+  // Main share handler
+  const handleShare = async () => {
+    try {
+      await shareResults({
+        score: clarityScore,
+        fillers: totalFillers,
+        words: totalWords,
+        duration: audioLength,
+        topFiller: mostUsedFiller,
+        grade: `${grade.letter} · ${grade.label}`,
+      });
+
+      // Show toast for desktop (clipboard copy)
+      if (!navigator.canShare) {
+        showToast("Image copied! Paste it anywhere.");
+      }
+    } catch (err) {
+      // Only show error if it's not user cancellation
+      if (err instanceof Error && err.name !== "AbortError") {
+        showToast("Failed to share. Try downloading instead.");
+      }
+    }
+  };
+
+  // Download handler
   const handleDownload = () => {
-    // TODO: Implement image download
-    console.log("Download image");
-  };
-
-  const handleTwitterShare = () => {
-    // TODO: Implement Twitter share
-    console.log("Share to Twitter");
-  };
-
-  const handleInstagramShare = () => {
-    // TODO: Implement Instagram share
-    console.log("Share to Instagram");
-  };
-
-  const handleTikTokShare = () => {
-    // TODO: Implement TikTok share
-    console.log("Share to TikTok");
-  };
-
-  const handleFacebookShare = () => {
-    // TODO: Implement Facebook share
-    console.log("Share to Facebook");
+    const link = document.createElement("a");
+    link.href = getShareImageUrl();
+    link.download = "speakclear-results.png";
+    link.click();
+    showToast("Image saved!");
   };
 
   if (!isOpen) return null;
@@ -119,10 +151,10 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
         </div>
 
         {/* Card */}
-        <div className="bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 relative overflow-hidden">
+        <div className="bg-slate-900 rounded-3xl p-6 relative overflow-hidden">
           {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-orange-500/20 to-rose-500/20 rounded-full blur-2xl" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-linear-to-tr from-orange-500/10 to-transparent rounded-full blur-xl" />
+          <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl" />
+          <div className="absolute bottom-0 left-0 w-24 h-24  rounded-full blur-xl" />
 
           <div className="relative">
             {/* Logo & Branding */}
@@ -191,78 +223,51 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
           </div>
         </div>
 
-        {/* Action icons below card */}
+        {/* Action buttons */}
         <div className="flex items-center justify-center gap-3 mt-4">
-          {/* Save/Download */}
-          <button
-            aria-label="Download image"
-            className="w-11 h-11 bg-slate-700 hover:bg-slate-600 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
-            onClick={handleDownload}
-          >
-            <Download className="w-5 h-5 text-white" />
-          </button>
+          {isMobile && (
+            <>
+              <button
+                aria-label="Share results"
+                className="flex-1 h-11 bg-linear-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl cursor-pointer transition-colors flex items-center justify-center gap-2 text-white font-medium"
+                disabled={isSharing}
+                onClick={handleShare}
+              >
+                <Share2 className="w-5 h-5" />
+                {isSharing ? "Sharing..." : "Share"}
+              </button>
 
-          {/* X (Twitter) */}
-          <button
-            aria-label="Share to Twitter"
-            className="w-11 h-11 bg-black hover:bg-gray-800 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
-            onClick={handleTwitterShare}
-          >
-            <svg
-              className="w-4 h-4 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
+              {/* Download button - Mobile/Tablet */}
+              <button
+                aria-label="Download image"
+                className="w-11 h-11 bg-slate-700 hover:bg-slate-600 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
+                onClick={handleDownload}
+              >
+                <Download className="w-5 h-5 text-white" />
+              </button>
+            </>
+          )}
+          {!isMobile && (
+            /* Save Result button - Desktop only */
+            <button
+              aria-label="Save results"
+              className="w-full h-11 bg-linear-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 rounded-xl cursor-pointer transition-colors flex items-center justify-center gap-2 text-white font-medium"
+              onClick={handleDownload}
             >
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </button>
-
-          {/* Instagram */}
-          <button
-            aria-label="Share to Instagram"
-            className="w-11 h-11 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 hover:opacity-90 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
-            onClick={handleInstagramShare}
-          >
-            <svg
-              className="w-4 h-4 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-            </svg>
-          </button>
-
-          {/* TikTok */}
-          <button
-            aria-label="Share to TikTok"
-            className="w-11 h-11 bg-black hover:bg-gray-800 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
-            onClick={handleTikTokShare}
-          >
-            <svg
-              className="w-4 h-4 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-            </svg>
-          </button>
-
-          {/* Facebook */}
-          <button
-            aria-label="Share to Facebook"
-            className="w-11 h-11 bg-[#1877F2] hover:bg-[#1466d2] rounded-xl cursor-pointer transition-colors flex items-center justify-center"
-            onClick={handleFacebookShare}
-          >
-            <svg
-              className="w-4 h-4 text-white"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
-          </button>
+              <Download className="w-5 h-5" />
+              Save Result
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Toast notification */}
+      {toast.isVisible && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 z-50 animate-fade-in">
+          <Check className="w-4 h-4 text-emerald-400" />
+          <span className="text-sm font-medium">{toast.message}</span>
+        </div>
+      )}
     </div>
   );
 };
