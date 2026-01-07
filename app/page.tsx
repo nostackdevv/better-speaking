@@ -109,7 +109,6 @@ export default function Home() {
       <Navbar
         onHistoryClick={handleHistoryClick}
         onWaitlistClick={handleWaitlistClick}
-        user={mockUser}
       />
 
       <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
