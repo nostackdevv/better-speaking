@@ -124,7 +124,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
   const handleDownload = () => {
     const link = document.createElement("a");
     link.href = getShareImageUrl();
-    link.download = "speakclear-results.png";
+    link.download = "speechdeck-results.png";
     link.click();
     showToast("Image saved!");
   };
@@ -164,7 +164,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
                   <Mic className="w-5 h-5 text-white" />
                 </div>
                 <span className="font-semibold text-white text-lg">
-                  SpeakClear
+                  Speechdeck
                 </span>
               </div>
               <p className="text-slate-400 text-sm mt-1">
@@ -217,7 +217,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
             <div className="pt-4 border-t border-slate-700/50 text-center">
               <p className="text-slate-400 text-xs">Beat my score at</p>
               <p className="text-orange-400 font-semibold text-sm">
-                speakclear.app
+                speechdeck.app
               </p>
             </div>
           </div>

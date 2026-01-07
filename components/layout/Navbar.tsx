@@ -13,18 +13,14 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
+import { ROUTES } from "@/lib/routes";
 
 type NavbarProps = {
-  user: {
-    name: string;
-    streak: number;
-    plan: "free" | "pro";
-  };
   onHistoryClick?: () => void;
   onWaitlistClick?: () => void;
 };
 
-export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
+export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
@@ -35,7 +31,7 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
           <Link
             aria-label="Speechdeck home"
             className="flex items-center gap-3"
-            href="/"
+            href={ROUTES.home}
           >
             <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center shadow-lg ">
               <Mic className="w-5 h-5 text-white" />
@@ -60,19 +56,16 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
             <History className="w-5 h-5" />
           </button>
 
-          {/* Upgrade - Changed to Waitlist */}
-          {user.plan === "free" && (
-            <button
-              className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
-              onClick={onWaitlistClick}
-            >
-              <Crown className="w-4 h-4 text-amber-500" />
-              <span className="text-sm font-semibold text-slate-700">Pro</span>
-              <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
-                SOON
-              </Badge>
-            </button>
-          )}
+          <button
+            className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+            onClick={onWaitlistClick}
+          >
+            <Crown className="w-4 h-4 text-amber-500" />
+            <span className="text-sm font-semibold text-slate-700">Pro</span>
+            <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
+              SOON
+            </Badge>
+          </button>
 
           {/* User menu */}
           {/* <div className="relative">

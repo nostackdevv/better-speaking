@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
                     display: "flex",
                   }}
                 >
-                  SpeakClear
+                  Speechdeck
                 </div>
               </div>
               <div
@@ -330,7 +330,7 @@ export async function GET(request: NextRequest) {
                   display: "flex",
                 }}
               >
-                speakclear.app
+                speechdeck.app
               </div>
             </div>
           </div>

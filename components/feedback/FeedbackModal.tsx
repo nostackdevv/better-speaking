@@ -51,7 +51,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
       const formData = new FormData();
       formData.append("access_key", accessKey);
       formData.append("message", trimmedMessage);
-      formData.append("subject", "Better Speaking - User Feedback");
+      formData.append("subject", "Speechdeck - User Feedback");
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
