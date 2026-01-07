@@ -1,8 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Mic, History, Crown, User, Settings, CreditCard, LogOut, Flame } from "lucide-react";
+import {
+  Mic,
+  History,
+  Crown,
+  User,
+  Settings,
+  CreditCard,
+  LogOut,
+  Flame,
+} from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import Link from "next/link";
 
 type NavbarProps = {
   user: {
@@ -22,10 +32,16 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
       <div className="max-w-6xl mx-auto h-full px-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-linear-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-lg ">
-            <Mic className="w-5 h-5 text-white" />
-          </div>
-          <span className="font-bold text-xl text-slate-900">Speechdeck</span>
+          <Link
+            aria-label="Speechdeck home"
+            className="flex items-center gap-3"
+            href="/"
+          >
+            <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center shadow-lg ">
+              <Mic className="w-5 h-5 text-white" />
+            </div>
+            <span className="font-bold text-xl text-slate-900">Speechdeck</span>
+          </Link>
         </div>
 
         {/* Right side */}
@@ -38,8 +54,8 @@ export function Navbar({ user, onHistoryClick, onWaitlistClick }: NavbarProps) {
 
           {/* History */}
           <button
-            onClick={onHistoryClick}
             className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+            onClick={onHistoryClick}
           >
             <History className="w-5 h-5" />
           </button>

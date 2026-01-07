@@ -104,7 +104,7 @@ export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderP
 
       {status === "idle" ? (
         <button
-          className="w-20 h-20 rounded-full bg-linear-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 flex items-center justify-center cursor-pointer transition-all shadow-lg shadow-orange-500/30 hover:scale-105"
+          className="w-20 h-20 rounded-full bg-orange-600 hover:bg-orange-500 flex items-center justify-center cursor-pointer transition-all shadow-lg shadow-orange-500/30 hover:scale-105"
           onClick={startRecording}
         >
           <Mic className="w-8 h-8 text-white" />

@@ -23,7 +23,7 @@ export const PromptSelector = ({ className = "" }: PromptSelectorProps) => {
   };
 
   const handleShuffle = () => {
-    setSelectedPrompt(getNextPrompt());
+    setSelectedPrompt(getRandomPrompt());
   };
 
   return (
