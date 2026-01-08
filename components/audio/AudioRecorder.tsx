@@ -11,7 +11,10 @@ type AudioRecorderProps = {
   onAnalyze: (blob: Blob) => void;
 };
 
-export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderProps) => {
+export const AudioRecorder = ({
+  isAnalyzing = false,
+  onAnalyze,
+}: AudioRecorderProps) => {
   const {
     status,
     duration,
@@ -67,7 +70,10 @@ export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderP
           </div>
         )}
 
-        <Button disabled={!isValidDuration || isAnalyzing} onClick={handleAnalyze}>
+        <Button
+          disabled={!isValidDuration || isAnalyzing}
+          onClick={handleAnalyze}
+        >
           {isAnalyzing ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -92,6 +98,8 @@ export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderP
           <span>{error}</span>
         </div>
       )}
+
+      <PromptSelector className="" />
 
       <WaveForm isRecording={status === "recording"} />
 
@@ -121,8 +129,6 @@ export const AudioRecorder = ({ isAnalyzing = false, onAnalyze }: AudioRecorderP
       <p className="text-sm text-slate-400 mt-4">
         {status === "idle" ? "Tap to start recording" : "Tap to stop"}
       </p>
-
-      {status === "idle" && <PromptSelector className="mt-6" />}
     </div>
   );
 };

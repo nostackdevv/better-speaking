@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
                   marginTop: "4px",
                 }}
               >
-                I just tracked how much I use filler words
+                I just tracked how much filler words I use 
               </div>
             </div>
 

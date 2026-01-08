@@ -168,7 +168,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
                 </span>
               </div>
               <p className="text-slate-400 text-sm mt-1">
-                I just tracked how much I use filler words
+                I just tracked how much filler words I use
               </p>
             </div>
 
