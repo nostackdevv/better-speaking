@@ -51,7 +51,7 @@ export const FillerStats = ({
     B: "The Storyteller",
     C: "The Casual Speaker",
     D: "The Hesitator",
-    F: "The Mumbler",
+    E: "The Mumbler",
   };
 
   // Normal state - fillers detected

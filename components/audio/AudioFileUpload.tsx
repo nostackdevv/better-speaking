@@ -5,6 +5,7 @@ import { formatBytesToSize } from "@/utils/formatters";
 import {
   validateClientAudioFile,
   MAX_FILE_SIZE,
+  AUDIO_ACCEPT_STRING,
 } from "@/utils/audio/validators";
 import { Button } from "@/components/ui/Button";
 import { AudioItemCard } from "@/components/history/AudioItemCard";
@@ -179,7 +180,7 @@ export function AudioFileUpload({
         </p>
 
         <input
-          accept="audio/*"
+          accept={AUDIO_ACCEPT_STRING}
           aria-hidden="true"
           className="hidden"
           onChange={handleInputChange}

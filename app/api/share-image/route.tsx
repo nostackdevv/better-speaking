@@ -7,13 +7,19 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    // Extract params
     const score = searchParams.get("score") || "0";
-    const fillers = searchParams.get("fillers") || "0";
-    const words = searchParams.get("words") || "0";
     const duration = searchParams.get("duration") || "0:00";
+    const words = searchParams.get("words") || "0";
+    const fillers = searchParams.get("fillers") || "0";
     const topFiller = searchParams.get("topFiller") || "um";
-    const grade = searchParams.get("grade") || "C · Good Progress";
+    const grade = searchParams.get("grade") || "F";
+    const gradeText = searchParams.get("gradeText") || "Keep Practicing";
+
+    const debug = searchParams.get("debug") === "true";
+    const scale = debug ? 1 : 3;
+
+    const width = 360 * scale;
+    const height = 640 * scale;
 
     return new ImageResponse(
       (
@@ -25,9 +31,8 @@ export async function GET(request: NextRequest) {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            background: "#0f172b",
-            fontFamily: "system-ui, -apple-system, sans-serif",
-            position: "relative",
+            backgroundColor: "#0f172b",
+            color: "#90a1b9",
           }}
         >
           <div
@@ -36,108 +41,95 @@ export async function GET(request: NextRequest) {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              padding: "24px",
-              maxWidth: "520px",
+              padding: `${40 * scale}px ${24 * scale}px`,
+              maxWidth: `${520 * scale}px`,
               width: "100%",
+              gap: 16 * scale,
             }}
           >
-            {/* Logo & Branding */}
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
-                marginBottom: "16px",
+                justifyContent: "center",
+                gap: 8 * scale,
+                color: "#fff",
+                fontSize: 20 * scale,
               }}
             >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "8px",
+                  justifyContent: "center",
+                  width: 40 * scale,
+                  height: 40 * scale,
+                  borderRadius: 12 * scale,
+                  background:
+                    "linear-gradient(to bottom right, #f97316, #f43f5e)",
                 }}
               >
-                <div
+                <svg
+                  fill="none"
+                  height="20" // Keep these static
+                  stroke="#ffffff"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2} // Keep static
+                  viewBox="0 0 24 24" // Keep static
+                  width="20" // Keep static
+                  xmlns="http://www.w3.org/2000/svg"
                   style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "12px",
-                    background:
-                      "linear-gradient(135deg, #f97316 0%, #f43f5e 100%)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    width: 20 * scale, // Scale via style instead
+                    height: 20 * scale,
                   }}
                 >
-                  <svg
-                    fill="none"
-                    height="20"
-                    stroke="white"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    width="20"
-                  >
-                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                    <line x1="12" x2="12" y1="19" y2="22" />
-                  </svg>
-                </div>
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: 600,
-                    color: "white",
-                    display: "flex",
-                  }}
-                >
-                  Speechdeck
-                </div>
+                  <path d="M12 19v3"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <rect height="13" rx="3" width="6" x="9" y="2"></rect>
+                </svg>
               </div>
-              <div
-                style={{
-                  fontSize: "14px",
-                  color: "#94a3b8",
-                  textAlign: "center",
-                  display: "flex",
-                  marginTop: "4px",
-                }}
-              >
-                I just tracked how much filler words I use 
-              </div>
+              <div style={{ fontWeight: 600 }}>Speechdeck</div>
             </div>
 
-            {/* Score Display */}
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                marginBottom: "20px",
+                fontSize: 14 * scale,
+                color: "#90a1b9",
+                marginBottom: 14 * scale,
+              }}
+            >
+              <div>I just tracked how much filler words</div>
+              <div>I use while speaking</div>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginBottom: 20 * scale,
               }}
             >
               <div
                 style={{
-                  fontSize: "12px",
+                  fontSize: 12 * scale,
                   color: "#94a3b8",
                   textTransform: "uppercase",
                   letterSpacing: "0.05em",
-                  marginBottom: "4px",
-                  display: "flex",
                 }}
               >
                 Clarity Score
               </div>
               <div
                 style={{
-                  fontSize: "60px",
-                  fontWeight: "bold",
-                  color: "white",
-                  marginBottom: "8px",
-                  lineHeight: 1,
-                  display: "flex",
+                  fontSize: 60 * scale,
+                  fontWeight: 700,
+                  color: "#ffffff",
+                  marginBottom: 8 * scale,
                 }}
               >
                 {score}
@@ -145,37 +137,38 @@ export async function GET(request: NextRequest) {
               <div
                 style={{
                   display: "flex",
-                  padding: "4px 12px",
-                  background:
-                    "linear-gradient(90deg, #f97316 0%, #f43f5e 100%)",
-                  borderRadius: "999px",
-                  fontSize: "12px",
+                  paddingLeft: 12 * scale,
+                  paddingRight: 12 * scale,
+                  paddingTop: 4 * scale,
+                  paddingBottom: 4 * scale,
+                  background: "linear-gradient(to right, #f97316, #f43f5e)",
+                  color: "#ffffff",
+                  fontSize: 12 * scale,
                   fontWeight: 600,
-                  color: "white",
+                  borderRadius: 9999,
                 }}
               >
-                {grade}
+                {grade} - {gradeText}
               </div>
             </div>
 
-            {/* Stats */}
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: 8 * scale,
+                marginBottom: 20 * scale,
                 width: "100%",
-                marginBottom: "20px",
               }}
             >
               <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  gap: "24px",
-                  background: "rgba(30, 41, 59, 0.5)",
-                  borderRadius: "12px",
-                  padding: "16px",
+                  gap: 24 * scale,
+                  backgroundColor: "rgba(30, 41, 59, 0.5)",
+                  borderRadius: 12 * scale,
+                  padding: 16 * scale,
                 }}
               >
                 <div
@@ -187,31 +180,20 @@ export async function GET(request: NextRequest) {
                 >
                   <div
                     style={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "white",
-                      display: "flex",
+                      fontSize: 20 * scale,
+                      fontWeight: 700,
+                      color: "#ffffff",
                     }}
                   >
                     {duration}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#94a3b8",
-                      display: "flex",
-                    }}
-                  >
+                  <div style={{ fontSize: 12 * scale, color: "#94a3b8" }}>
                     Duration
                   </div>
                 </div>
                 <div
-                  style={{
-                    width: "1px",
-                    background: "#334155",
-                    display: "flex",
-                  }}
-                />
+                  style={{ width: 1 * scale, backgroundColor: "#334155" }}
+                ></div>
                 <div
                   style={{
                     display: "flex",
@@ -221,31 +203,20 @@ export async function GET(request: NextRequest) {
                 >
                   <div
                     style={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "white",
-                      display: "flex",
+                      fontSize: 20 * scale,
+                      fontWeight: 700,
+                      color: "#ffffff",
                     }}
                   >
                     {words}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#94a3b8",
-                      display: "flex",
-                    }}
-                  >
+                  <div style={{ fontSize: 12 * scale, color: "#94a3b8" }}>
                     Words
                   </div>
                 </div>
                 <div
-                  style={{
-                    width: "1px",
-                    background: "#334155",
-                    display: "flex",
-                  }}
-                />
+                  style={{ width: 1 * scale, backgroundColor: "#334155" }}
+                ></div>
                 <div
                   style={{
                     display: "flex",
@@ -255,21 +226,14 @@ export async function GET(request: NextRequest) {
                 >
                   <div
                     style={{
-                      fontSize: "20px",
-                      fontWeight: "bold",
-                      color: "#fb923c",
-                      display: "flex",
+                      fontSize: 20 * scale,
+                      fontWeight: 700,
+                      color: "#ff8904",
                     }}
                   >
                     {fillers}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#94a3b8",
-                      display: "flex",
-                    }}
-                  >
+                  <div style={{ fontSize: 12 * scale, color: "#94a3b8" }}>
                     Fillers
                   </div>
                 </div>
@@ -279,55 +243,44 @@ export async function GET(request: NextRequest) {
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  background: "rgba(30, 41, 59, 0.5)",
-                  borderRadius: "12px",
-                  padding: "12px",
+                  backgroundColor: "rgba(30, 41, 59, 0.5)",
+                  borderRadius: 12 * scale,
+                  padding: 12 * scale,
                 }}
               >
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "#94a3b8",
-                    display: "flex",
-                  }}
-                >
+                <div style={{ fontSize: 12 * scale, color: "#94a3b8" }}>
                   Most used filler
                 </div>
                 <div
                   style={{
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    color: "#fb923c",
-                    display: "flex",
+                    fontSize: 18 * scale,
+                    fontWeight: 700,
+                    color: "#ff8904",
                   }}
                 >
-                  &quot;{topFiller}&quot;
+                  {topFiller}
                 </div>
               </div>
             </div>
 
-            {/* CTA */}
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center",
-                paddingTop: "16px",
-                borderTop: "1px solid rgba(51, 65, 85, 0.5)",
                 width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 10 * scale,
+                paddingTop: 24 * scale,
+                borderTop: `${1 * scale}px solid #314158`,
               }}
             >
-              <div
-                style={{ fontSize: "12px", color: "#94a3b8", display: "flex" }}
-              >
-                Beat my score at
-              </div>
+              <div style={{ fontSize: 14 * scale }}>Beat my score at</div>
               <div
                 style={{
-                  fontSize: "14px",
+                  fontSize: 16 * scale,
                   fontWeight: 600,
-                  color: "#fb923c",
-                  display: "flex",
+                  color: "#ff8904",
                 }}
               >
                 speechdeck.app
@@ -337,8 +290,8 @@ export async function GET(request: NextRequest) {
         </div>
       ),
       {
-        width: 600,
-        height: 800,
+        width,
+        height,
       }
     );
   } catch (error) {
@@ -346,3 +299,9 @@ export async function GET(request: NextRequest) {
     return new Response("Failed to generate image", { status: 500 });
   }
 }
+
+// # Debug mode (360x640)
+// http://localhost:3000/api/share-image/result?score=85&duration=0:45&words=120&fillers=8&topFiller=like&grade=B&gradeText=Good&debug=true
+
+// # Production mode (1080x1920)
+// http://localhost:3000/api/share-image/result?score=85&duration=0:45&words=120&fillers=8&topFiller=like&grade=B&gradeText=Good

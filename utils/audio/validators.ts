@@ -32,6 +32,13 @@ const ACCEPTED_AUDIO_EXTENSIONS = new Set([
   ".webm",
 ]);
 
+// Combined accept string for file inputs (iOS compatibility)
+// Using explicit extensions alongside audio/* for better iOS Safari support
+export const AUDIO_ACCEPT_STRING = [
+  "audio/*",
+  ...Array.from(ACCEPTED_AUDIO_EXTENSIONS),
+].join(",");
+
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 function hasValidAudioExtension(fileName: string): boolean {
