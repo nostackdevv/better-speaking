@@ -51,7 +51,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
       const formData = new FormData();
       formData.append("access_key", accessKey);
       formData.append("message", trimmedMessage);
-      formData.append("subject", "Speechdeck - User Feedback");
+      formData.append("subject", "Speecha - User Feedback");
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -110,7 +110,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               Thanks for your feedback!
             </h2>
             <p className="text-slate-500 mb-6">
-              We appreciate you taking the time to help us improve Speechdeck.
+              We appreciate you taking the time to help us improve Speecha.
             </p>
             <Button className="w-full" onClick={handleClose}>
               Got it!

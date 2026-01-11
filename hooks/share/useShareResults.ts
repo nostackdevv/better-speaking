@@ -17,7 +17,7 @@ interface ShareResultsReturn {
 }
 
 const DEFAULT_CAPTION =
-  "I just tracked how much filler words I use with speechdeck.app. Can you beat my score?";
+  "I just tracked how much filler words I use with speecha.app. Can you beat my score?";
 
 export function useShareResults(): ShareResultsReturn {
   const [error, setError] = useState<Error | null>(null);
@@ -43,7 +43,7 @@ export function useShareResults(): ShareResultsReturn {
       }
 
       const blob = await response.blob();
-      const file = new File([blob], "speechdeck-results.png", {
+      const file = new File([blob], "speecha-results.png", {
         type: "image/png",
       });
 

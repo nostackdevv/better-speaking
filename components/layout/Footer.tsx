@@ -29,14 +29,14 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
           <div className="col-span-2">
             <Link
-              aria-label="Speechdeck home"
+              aria-label="Speecha home"
               className="inline-flex items-center gap-3"
               href={ROUTES.home}
             >
               <div className="w-12 h-12 rounded-2xl bg-orange-600 flex items-center justify-center">
                 <Mic className="w-6 h-6 text-white" />
               </div>
-              <span className="font-bold text-2xl text-white">Speechdeck</span>
+              <span className="font-bold text-2xl text-white">Speecha</span>
             </Link>
             <p className="text-slate-400 mb-6 leading-relaxed">
               Track how much filler words you use, eliminate it, and speak with
@@ -92,7 +92,7 @@ export function Footer() {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500">
-            © {new Date().getFullYear()} Speechdeck. All rights reserved.
+            © {new Date().getFullYear()} Speecha. All rights reserved.
           </p>
           <p className="text-sm text-slate-500 flex items-center gap-2">
             Made with <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />{" "}

@@ -71,7 +71,7 @@ export const ModalTest = () => {
               <rect height="13" rx="3" width="6" x="9" y="2"></rect>
             </svg>
           </div>
-          <div style={{ fontWeight: 600 }}>Speechdeck</div>
+          <div style={{ fontWeight: 600 }}>Speecha</div>
         </div>
 
         <div
@@ -261,7 +261,7 @@ export const ModalTest = () => {
               color: "#ff8904",
             }}
           >
-            speechdeck.app
+            speecha.app
           </div>
         </div>
       </div>

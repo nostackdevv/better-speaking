@@ -10,7 +10,7 @@ export function PrivacyPolicyContent() {
         <div className="flex items-center justify-center gap-3">
           <div className="">
             <h1 className="text-2xl font-bold text-slate-900">
-              Speechdeck Privacy Notice
+              Speecha Privacy Notice
             </h1>
             <p className="text-sm text-slate-500 text-center">
               Last updated: January 7, 2026
@@ -24,7 +24,7 @@ export function PrivacyPolicyContent() {
         {/* Intro Card */}
         <div className="bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/60 rounded-2xl p-8 mb-8">
           <p className="text-slate-700 leading-relaxed">
-            Speechdeck app (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;)
+            Speecha app (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;)
             is committed to protecting your privacy. This policy explains how we
             handle your information when you use our speech analysis service.
             We&#39;ve designed our service with privacy in mind. We don&#39;t
@@ -96,7 +96,7 @@ export function PrivacyPolicyContent() {
               </li>
               <li>
                 <strong>To improve:</strong> Understand how people use
-                Speechdeck and identify areas for improvement
+                Speecha and identify areas for improvement
               </li>
               <li>
                 <strong>To develop features:</strong> Analytics help us
@@ -230,7 +230,7 @@ export function PrivacyPolicyContent() {
 
           {/* <ExpandableSection title="6. Children's Privacy">
             <p className="mb-2">
-              Speechdeck is not intended for children under 13 years of age. We
+              Speecha is not intended for children under 13 years of age. We
               do not knowingly collect personal information from children under
               13.
             </p>
@@ -288,7 +288,7 @@ export function PrivacyPolicyContent() {
               <li>Post a notice on our website</li>
             </ul>
             <p className="mt-3">
-              Continued use of Speechdeck after changes constitutes acceptance
+              Continued use of Speecha after changes constitutes acceptance
               of the updated policy.
             </p>
           </ExpandableSection>
@@ -303,13 +303,13 @@ export function PrivacyPolicyContent() {
                 <Mail className="w-5 h-5 text-orange-500" />
                 <a
                   className="text-orange-600 hover:text-orange-700 font-medium"
-                  href="mailto:privacy@speechdeck.app"
+                  href="mailto:privacy@speecha.app"
                 >
-                  privacy@speechdeck.app
+                  privacy@speecha.app
                 </a>
               </div>
               <p className="mt-4 text-sm text-slate-500">
-                <strong>Data Controller:</strong> Speechdeck app
+                <strong>Data Controller:</strong> Speecha app
                 <br />
                 <strong>Jurisdiction:</strong> United Kingdom
               </p>

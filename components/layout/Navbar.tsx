@@ -29,14 +29,14 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
         {/* Logo */}
         <div className="flex items-center gap-3">
           <Link
-            aria-label="Speechdeck home"
+            aria-label="Speecha home"
             className="flex items-center gap-3"
             href={ROUTES.home}
           >
             <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center shadow-lg ">
               <Mic className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-xl text-slate-900">Speechdeck</span>
+            <span className="font-bold text-xl text-slate-900">Speecha</span>
           </Link>
         </div>
 

@@ -12,7 +12,7 @@ export const TermsOfService = () => {
         <div className="flex items-center justify-center gap-3">
           <div className="">
             <h1 className="text-2xl font-bold text-slate-900">
-              Speechdeck Terms of Service
+              Speecha Terms of Service
             </h1>
             <p className="text-sm text-slate-500 text-center">
               Last updated: January 8, 2026
@@ -26,14 +26,14 @@ export const TermsOfService = () => {
         {/* Intro Card */}
         <div className="bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/60 rounded-2xl p-8 mb-8">
           <p className="text-slate-700 leading-relaxed mb-4">
-            Welcome to Speechdeck! These Terms of Service (&quot;Terms&quot;)
-            govern your use of our speech analysis service. By using Speechdeck,
+            Welcome to Speecha! These Terms of Service (&quot;Terms&quot;)
+            govern your use of our speech analysis service. By using Speecha,
             you agree to these Terms.
           </p>
           <div className="bg-white/60 rounded-lg p-4 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-slate-700">
-              <strong>Early Stage Notice:</strong> Speechdeck is currently in
+              <strong>Early Stage Notice:</strong> Speecha is currently in
               active development. Features, limits, and functionality may change
               as we improve the service based on user feedback.
             </p>
@@ -44,7 +44,7 @@ export const TermsOfService = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-8 space-y-6">
           <ExpandableSection defaultOpen={true} title="1. Acceptance of Terms">
             <p className="mb-3">
-              By accessing or using Speechdeck, you agree to be bound by these
+              By accessing or using Speecha, you agree to be bound by these
               Terms and our Privacy Policy. If you don&apos;t agree, please
               don&apos;t use our service.
             </p>
@@ -57,7 +57,7 @@ export const TermsOfService = () => {
 
           <ExpandableSection title="2. Service Description">
             <p className="mb-3">
-              Speechdeck is a web-based tool that helps you improve public
+              Speecha is a web-based tool that helps you improve public
               speaking by:
             </p>
             <ul className="list-disc list-inside space-y-2 ml-2">
@@ -67,7 +67,7 @@ export const TermsOfService = () => {
               <li>Tracking your progress over time</li>
             </ul>
             <p className="mt-4">
-              Speechdeck is provided for personal improvement and practice
+              Speecha is provided for personal improvement and practice
               purposes. We do not guarantee specific results or improvements in
               your speaking ability.
             </p>
@@ -80,7 +80,7 @@ export const TermsOfService = () => {
                   Age Requirements:
                 </h4>
                 <p>
-                  You must be at least 13 years old to use Speechdeck. If
+                  You must be at least 13 years old to use Speecha. If
                   you&apos;re under 18, you should have parental or guardian
                   consent.
                 </p>
@@ -91,7 +91,7 @@ export const TermsOfService = () => {
                   No Account Needed:
                 </h4>
                 <p>
-                  Currently, Speechdeck works without requiring account
+                  Currently, Speecha works without requiring account
                   creation. All analysis happens in your browser session and is
                   lost on close
                 </p>
@@ -173,7 +173,7 @@ export const TermsOfService = () => {
           <ExpandableSection title="6. Service Availability & Changes">
             <div className="space-y-3">
               <p>
-                <strong>Beta Service:</strong> Speechdeck is currently in active
+                <strong>Beta Service:</strong> Speecha is currently in active
                 development. The service is provided &quot;as available&quot;
                 and may experience downtime, bugs, or changes without notice.
               </p>
@@ -192,7 +192,7 @@ export const TermsOfService = () => {
 
               <p>
                 <strong>Service Termination:</strong> We may discontinue
-                Speechdeck at any time. If possible, we&apos;ll provide
+                Speecha at any time. If possible, we&apos;ll provide
                 reasonable notice to users on our waitlist.
               </p>
             </div>
@@ -205,7 +205,7 @@ export const TermsOfService = () => {
                 Important Disclaimer
               </h4>
               <p className="text-sm">
-                Speechdeck uses AI to detect filler words and analyze speech
+                Speecha uses AI to detect filler words and analyze speech
                 patterns. While we strive for accuracy, our analysis may not be
                 100% accurate and should be used as a practice tool, not a
                 definitive assessment.
@@ -235,7 +235,7 @@ export const TermsOfService = () => {
               </p>
 
               <p>
-                <strong>As-Is Service:</strong> Speechdeck is provided &quot;as
+                <strong>As-Is Service:</strong> Speecha is provided &quot;as
                 is&quot; and &quot;as available&quot; without warranties of any
                 kind, either express or implied.
               </p>
@@ -244,7 +244,7 @@ export const TermsOfService = () => {
                 <strong>No Liability for Damages:</strong> To the maximum extent
                 permitted by law, we are not liable for any indirect,
                 incidental, special, consequential, or punitive damages arising
-                from your use of Speechdeck.
+                from your use of Speecha.
               </p>
             </div>
           </ExpandableSection>
@@ -252,20 +252,20 @@ export const TermsOfService = () => {
           <ExpandableSection title="9. Intellectual Property">
             <div className="space-y-3">
               <p>
-                <strong>Our Property:</strong> Speechdeck&apos;s design, code,
+                <strong>Our Property:</strong> Speecha&apos;s design, code,
                 features, and branding are owned by us and protected by
                 intellectual property laws.
               </p>
 
               <p>
                 <strong>Your License:</strong> We grant you a limited,
-                non-exclusive, non-transferable license to use Speechdeck for
+                non-exclusive, non-transferable license to use Speecha for
                 personal purposes in accordance with these Terms.
               </p>
 
               <p>
                 <strong>Feedback:</strong> If you provide feedback or
-                suggestions, we may use them to improve Speechdeck without
+                suggestions, we may use them to improve Speecha without
                 compensation or attribution to you.
               </p>
             </div>
@@ -296,7 +296,7 @@ export const TermsOfService = () => {
           <ExpandableSection title="11. Termination">
             <div className="space-y-3">
               <p>
-                <strong>Your Right:</strong> You can stop using Speechdeck at
+                <strong>Your Right:</strong> You can stop using Speecha at
                 any time. Clear your browser data to remove all locally stored
                 analysis results.
               </p>
@@ -309,7 +309,7 @@ export const TermsOfService = () => {
 
               <p>
                 <strong>Effect of Termination:</strong> Upon termination, your
-                right to use Speechdeck ends immediately. Locally stored data
+                right to use Speecha ends immediately. Locally stored data
                 remains on your device until you clear it.
               </p>
             </div>
@@ -320,7 +320,7 @@ export const TermsOfService = () => {
               <li>
                 <strong>Entire Agreement:</strong> These Terms and our Privacy
                 Policy constitute the entire agreement between you and
-                Speechdeck.
+                Speecha.
               </li>
               <li>
                 <strong>Severability:</strong> If any provision is found
@@ -348,13 +348,13 @@ export const TermsOfService = () => {
                 <Mail className="w-5 h-5 text-orange-500" />
                 <a
                   className="text-orange-600 hover:text-orange-700 font-medium"
-                  href="mailto:legal@speechdeck.app"
+                  href="mailto:legal@speecha.app"
                 >
-                  legal@speechdeck.app
+                  legal@speecha.app
                 </a>
               </div>
               <p className="mt-4 text-sm text-slate-500">
-                <strong>Service Operator:</strong> Speechdeck
+                <strong>Service Operator:</strong> Speecha
                 <br />
                 <strong>Location:</strong> London, United Kingdom
               </p>
@@ -365,11 +365,11 @@ export const TermsOfService = () => {
         {/* Footer Note */}
         <div className="mt-8 text-center space-y-3">
           <p className="text-sm text-slate-500">
-            Thank you for using Speechdeck. We&apos;re excited to help you
+            Thank you for using Speecha. We&apos;re excited to help you
             improve your speaking skills!
           </p>
           <p className="text-xs text-slate-400">
-            By using Speechdeck, you acknowledge that you have read and
+            By using Speecha, you acknowledge that you have read and
             understood these Terms.
           </p>
         </div>
