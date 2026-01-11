@@ -9,9 +9,10 @@ import { HistoryPanel } from "@/components/history/HistoryPanel";
 import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
 
 import { useState } from "react";
-import { useTranscribeAudio } from "@/hooks/transcription/useTranscribeAudio";
+import { useTranscribeAudioStream } from "@/hooks/transcription/useTranscribeAudioStream";
 import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
 import { FillerStats } from "@/components/analysis/FillerStats";
+import { FillerStatsSkeleton } from "@/components/analysis/FillerStatsSkeleton";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";
 import { ShareModal } from "@/components/ui/ShareModal";
@@ -28,40 +29,34 @@ export default function Home() {
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
 
-  const {
-    mutate: transcribeAudio,
-    isPending: isTranscribing,
-    data: transcriptResponse,
-    reset: resetTranscription,
-  } = useTranscribeAudio();
-
   const { sessions, addSession, getPreviousSession } = useSessionHistory();
   const previousSession = getPreviousSession();
 
-  const mockUser = {
-    name: "Sam",
-    streak: 7,
-    plan: "free" as const,
-  };
+  const {
+    mutate: transcribeAudio,
+    isPending,
+    isComplete,
+    data: transcriptResponse,
+    reset: resetTranscription,
+  } = useTranscribeAudioStream({
+    onComplete: (data) => {
+      addSession({
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        duration: data.duration,
+        fillerCount: data.fillerStats.totalFillers,
+        fillersPerMin: data.fillerStats.fillersPerMinute,
+        clarityScore: data.clarityScore?.score,
+        topFiller: data.fillerStats.topFillers[0],
+        wordCount: data.fillerStats.totalWords,
+      });
+    },
+  });
 
   const handleUpload = async (file: File | Blob) => {
     if (!file) return;
     setAudioFile(file);
-    transcribeAudio(file, {
-      onSuccess: (data) => {
-        // Save session to localStorage
-        addSession({
-          id: Date.now().toString(),
-          date: new Date().toISOString(),
-          duration: data.duration,
-          fillerCount: data.fillerStats.totalFillers,
-          fillersPerMin: data.fillerStats.fillersPerMinute,
-          clarityScore: data.clarityScore?.score,
-          topFiller: data.fillerStats.topFillers[0],
-          wordCount: data.fillerStats.totalWords,
-        });
-      },
-    });
+    transcribeAudio(file);
   };
 
   const handleTryAgain = () => {
@@ -115,7 +110,7 @@ export default function Home() {
         <Header />
 
         <main>
-          {!transcriptResponse && (
+          {!transcriptResponse.transcript && (
             <>
               {/* Active Prompt Card */}
               {/* {activePrompt && (
@@ -126,7 +121,7 @@ export default function Home() {
               )} */}
 
               <AudioInput
-                isAnalyzing={isTranscribing}
+                isAnalyzing={isPending}
                 onUpload={handleUpload}
               />
 
@@ -138,7 +133,7 @@ export default function Home() {
             </>
           )}
 
-          {transcriptResponse && (
+          {transcriptResponse.transcript && transcriptResponse.words && transcriptResponse.duration !== undefined && (
             <>
               <div className="pb-32">
                 {/* Prompt Reminder Card */}
@@ -154,44 +149,52 @@ export default function Home() {
                   </Card>
                 )}
 
-                <FillerStats
-                  clarityScore={transcriptResponse.clarityScore}
-                  duration={transcriptResponse.duration}
-                  fillerStats={transcriptResponse.fillerStats}
-                  previousSession={previousSession}
-                />
+                {/* Show FillerStats only when complete */}
+                {transcriptResponse.fillerStats && (
+                  <FillerStats
+                    clarityScore={transcriptResponse.clarityScore ?? null}
+                    duration={transcriptResponse.duration}
+                    fillerStats={transcriptResponse.fillerStats}
+                    previousSession={previousSession}
+                  />
+                )}
 
-                {/* Action buttons */}
-                <div className="flex gap-3 mt-4 mb-6">
-                  <Button
-                    className="flex-1"
-                    onClick={() => setShowShareModal(true)}
-                    variant="outline"
-                  >
-                    <Share2 className="w-4 h-4" />
-                    Share
-                  </Button>
-                  {activePrompt && (
+                {/* Show loading state while analyzing fillers */}
+                {!transcriptResponse.fillerStats && <FillerStatsSkeleton />}
+
+                {/* Action buttons - only show when complete */}
+                {isComplete && (
+                  <div className="flex gap-3 mt-4 mb-6">
                     <Button
                       className="flex-1"
-                      onClick={handleNewPrompt}
-                      variant="accent"
+                      onClick={() => setShowShareModal(true)}
+                      variant="outline"
                     >
-                      <Shuffle className="w-4 h-4" />
-                      New Prompt
+                      <Share2 className="w-4 h-4" />
+                      Share
                     </Button>
-                  )}
-                  <Button className="flex-1" onClick={handleTryAgain}>
-                    Try Again
-                  </Button>
-                </div>
+                    {activePrompt && (
+                      <Button
+                        className="flex-1"
+                        onClick={handleNewPrompt}
+                        variant="accent"
+                      >
+                        <Shuffle className="w-4 h-4" />
+                        New Prompt
+                      </Button>
+                    )}
+                    <Button className="flex-1" onClick={handleTryAgain}>
+                      Try Again
+                    </Button>
+                  </div>
+                )}
 
-                {/* Tabbed content */}
+                {/* Tabbed content - show transcript immediately, fillers when available */}
                 <TabbedResults
                   audioSrc={audioFile}
                   duration={transcriptResponse.duration}
-                  fillers={transcriptResponse.fillers}
-                  fillerStats={transcriptResponse.fillerStats}
+                  fillers={transcriptResponse.fillers ?? []}
+                  fillerStats={transcriptResponse.fillerStats ?? { totalFillers: 0, totalWords: 0, fillerPercentage: 0, fillersPerMinute: 0, topFillers: [] }}
                   onSeekAudio={(time) => {}}
                   transcriptText={transcriptResponse.transcript}
                   words={transcriptResponse.words}
@@ -225,12 +228,12 @@ export default function Home() {
           onConfirm={handleConfirmReset}
         />
       )}
-      {showShareModal && transcriptResponse && (
+      {showShareModal && transcriptResponse.duration !== undefined && transcriptResponse.fillerStats && (
         <ShareModal
           data={{
             duration: transcriptResponse.duration,
             fillerStats: transcriptResponse.fillerStats,
-            clarityScore: transcriptResponse.clarityScore,
+            clarityScore: transcriptResponse.clarityScore ?? null,
           }}
           isOpen={showShareModal}
           onClose={() => setShowShareModal(false)}

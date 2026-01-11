@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { processAudioTranscription } from "@/lib/services/transcription.service";
+import { processAudioTranscriptionStream } from "@/lib/services/transcription-stream.service";
 import {
   checkRateLimit,
   checkSuccessLimit,
@@ -9,13 +9,13 @@ import { TRANSCRIPT_DUMMY } from "@/dummy";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
 
-export async function POST(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest) {
   // const rateLimitResult = await checkRateLimit(request);
   // if (!rateLimitResult.success && rateLimitResult.response) {
   //   return rateLimitResult.response;
   // }
 
-  if (TRANSCRIPT_DUMMY) {
+  if (false) {
     const fillerStats = computeFillerStats({
       fillers: TRANSCRIPT_DUMMY.fillers,
       words: TRANSCRIPT_DUMMY.words,
@@ -53,10 +53,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     //   return successLimitResult.response;
     // }
 
-    const result = await processAudioTranscription(audioFile);
-    const response = NextResponse.json(result);
-    // addRateLimitHeaders(response, rateLimitResult);
-    return response;
+    return processAudioTranscriptionStream(audioFile);
   } catch (error) {
     console.error("Transcription error:", error);
 

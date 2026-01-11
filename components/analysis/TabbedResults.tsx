@@ -1,6 +1,6 @@
 import { Filler } from "@/schema/filler";
 import type { FillerStatsType, NormalizedWord } from "@/types/domain";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomTabs } from "@/components/ui/CustomTabs";
 import { Transcript } from "@/components/transcription/Transcript";
 import { BreakdownTab } from "./BreakdownTab";
@@ -20,7 +20,7 @@ type TabbedResultsProps = {
   transcriptText: string;
   words: NormalizedWord[];
   audioSrc?: string | Blob | File;
-}
+};
 
 export const TabbedResults = ({
   fillerStats,
@@ -31,7 +31,14 @@ export const TabbedResults = ({
   words,
   audioSrc,
 }: TabbedResultsProps) => {
-  const [activeTab, setActiveTab] = useState("breakdown");
+  const [activeTab, setActiveTab] = useState("transcript");
+
+  useEffect(() => {
+    if (fillerStats.totalFillers > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setActiveTab("breakdown");
+    }
+  }, [fillerStats]);
 
   return (
     <div>
@@ -44,11 +51,11 @@ export const TabbedResults = ({
       {activeTab === "breakdown" && <BreakdownTab fillerStats={fillerStats} />}
       {activeTab === "transcript" && (
         <Transcript
+          audioSrc={audioSrc}
           duration={duration}
           fillers={fillers}
           transcriptText={transcriptText}
           words={words}
-          audioSrc={audioSrc}
         />
       )}
       {/* {activeTab === "history" && <HistoryTab />} */}
