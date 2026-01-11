@@ -12,14 +12,7 @@
  * - Penalties are capped to ensure scores don't go to 0 for high filler usage
  */
 
-import { FillerStatsType } from "@/types/domain";
-
-export interface ClarityResult {
-  score: number;
-  grade: "A" | "B" | "C" | "D" | "F";
-  version: string;
-  rawScore: number; // Uncapped score - can exceed 100 for exceptional clarity
-}
+import type { FillerStatsType, ClarityResult } from "@/types/domain";
 
 export function calculateClarityScore(
   stats: FillerStatsType,
@@ -48,7 +41,7 @@ export function calculateClarityScore(
     { min: 80, grade: "B" as const },
     { min: 70, grade: "C" as const },
     { min: 60, grade: "D" as const },
-    { min: 0, grade: "F" as const },
+    { min: 0, grade: "E" as const },
   ];
 
   const match = gradeMap.find((m) => score >= m.min)!;

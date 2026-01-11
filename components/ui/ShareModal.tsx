@@ -5,7 +5,7 @@ import { X, Download, Mic, Share2, Check } from "lucide-react";
 import type { FillerStatsType, ClarityResult } from "@/types/domain";
 import { useShareResults } from "@/hooks/share/useShareResults";
 import { useIsMobile } from "@/hooks/ui/useIsMobile";
-import { is } from "zod/v4/locales";
+import { getArchetype } from "@/constants/archetypes";
 
 type ShareModalProps = {
   isOpen: boolean;
@@ -24,15 +24,6 @@ const formatDuration = (seconds: number) => {
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
-// Get grade label from score
-const getGrade = (score: number) => {
-  if (score >= 90) return { letter: "A", label: "Excellent!" };
-  if (score >= 80) return { letter: "B", label: "Great Job!" };
-  if (score >= 70) return { letter: "C", label: "Good Progress" };
-  if (score >= 60) return { letter: "D", label: "Keep Going" };
-  return { letter: "F", label: "Keep Practicing" };
-};
-
 export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
   const isMobile = useIsMobile();
   const [toast, setToast] = useState({ message: "", isVisible: false });
@@ -44,7 +35,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
   const totalFillers = data.fillerStats.totalFillers;
   const mostUsedFiller = data.fillerStats.topFillers[0]?.text || "N/A";
   const clarityScore = data.clarityScore?.score || 0;
-  const grade = getGrade(clarityScore);
+  const archetype = getArchetype(clarityScore);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -91,7 +82,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
       words: totalWords.toString(),
       duration: audioLength,
       topFiller: mostUsedFiller,
-      grade: `${grade.letter} · ${grade.label}`,
+      archetype: archetype.label,
     });
     return `/api/share-image?${params.toString()}`;
   };
@@ -105,7 +96,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
         words: totalWords,
         duration: audioLength,
         topFiller: mostUsedFiller,
-        grade: `${grade.letter} · ${grade.label}`,
+        archetype: archetype.label,
       });
 
       // Show toast for desktop (clipboard copy)
@@ -181,7 +172,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
                 {clarityScore}
               </p>
               <span className="inline-block px-3 py-1 bg-linear-to-r from-orange-500 to-rose-500 text-white text-xs font-semibold rounded-full">
-                {grade.letter} · {grade.label}
+                {archetype.label}
               </span>
             </div>
 

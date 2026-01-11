@@ -12,8 +12,7 @@ export async function GET(request: NextRequest) {
     const words = searchParams.get("words") || "0";
     const fillers = searchParams.get("fillers") || "0";
     const topFiller = searchParams.get("topFiller") || "um";
-    const grade = searchParams.get("grade") || "F";
-    const gradeText = searchParams.get("gradeText") || "Keep Practicing";
+    const archetype = searchParams.get("archetype") || "The Mumbler";
 
     const debug = searchParams.get("debug") === "true";
     const scale = debug ? 1 : 3;
@@ -148,7 +147,7 @@ export async function GET(request: NextRequest) {
                   borderRadius: 9999,
                 }}
               >
-                {grade} - {gradeText}
+                {archetype}
               </div>
             </div>
 

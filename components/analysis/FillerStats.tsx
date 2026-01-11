@@ -2,7 +2,7 @@ import { TrendingDown, TrendingUp, Check } from "lucide-react";
 import { FillerStatsType, ClarityResult } from "@/types/domain";
 import { FillerStatCard } from "./FillerStatsCard";
 import { Card } from "@/components/ui/Card";
-import { getScorePillColor } from "@/utils/scoreGradient";
+import { getArchetype } from "@/constants/archetypes";
 
 type FillerStatsProps = {
   fillerStats: FillerStatsType;
@@ -45,15 +45,6 @@ export const FillerStats = ({
     );
   }
 
-  // Grade label mapping
-  const gradeLabels = {
-    A: "The Pro Speaker",
-    B: "The Storyteller",
-    C: "The Casual Speaker",
-    D: "The Hesitator",
-    E: "The Mumbler",
-  };
-
   // Normal state - fillers detected
   return (
     <div className="space-y-3">
@@ -69,11 +60,11 @@ export const FillerStats = ({
           <div
             className="inline-flex px-4 py-1.5 rounded-full text-sm font-semibold"
             style={{
-              backgroundColor: getScorePillColor(clarityScore.score),
+              backgroundColor: getArchetype(clarityScore.score).color,
               color: "#fff",
             }}
           >
-            {gradeLabels[clarityScore.grade]}
+            {getArchetype(clarityScore.score).label}
           </div>
         </Card>
       )}

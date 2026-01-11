@@ -7,7 +7,7 @@ interface ShareResultsParams {
   words: number;
   duration: string;
   topFiller: string;
-  grade: string;
+  archetype: string;
 }
 
 interface ShareResultsReturn {
@@ -32,7 +32,7 @@ export function useShareResults(): ShareResultsReturn {
         words: params.words.toString(),
         duration: params.duration,
         topFiller: params.topFiller,
-        grade: params.grade,
+        archetype: params.archetype,
       });
 
       const imageUrl = `/api/share-image?${queryParams.toString()}`;
