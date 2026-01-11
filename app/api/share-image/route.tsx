@@ -3,6 +3,15 @@ import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
+// Get archetype color from score
+const getArchetypeColor = (score: number): string => {
+  if (score >= 90) return "#16a34a"; // green-600 - Pro
+  if (score >= 80) return "#2563eb"; // blue-600 - Storyteller
+  if (score >= 70) return "#d97706"; // amber-600 - Casual
+  if (score >= 60) return "#f97316"; // orange-500 - Hesitator
+  return "#dc2626"; // red-500 - Mumbler
+};
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -13,6 +22,7 @@ export async function GET(request: NextRequest) {
     const fillers = searchParams.get("fillers") || "0";
     const topFiller = searchParams.get("topFiller") || "um";
     const archetype = searchParams.get("archetype") || "The Mumbler";
+    const archetypeColor = getArchetypeColor(parseInt(score, 10));
 
     const debug = searchParams.get("debug") === "true";
     const scale = debug ? 1 : 3;
@@ -140,7 +150,7 @@ export async function GET(request: NextRequest) {
                   paddingRight: 12 * scale,
                   paddingTop: 4 * scale,
                   paddingBottom: 4 * scale,
-                  background: "linear-gradient(to right, #f97316, #f43f5e)",
+                  backgroundColor: archetypeColor,
                   color: "#ffffff",
                   fontSize: 12 * scale,
                   fontWeight: 600,

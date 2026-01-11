@@ -151,7 +151,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
             {/* Logo & Branding */}
             <div className="flex flex-col items-center text-center mb-4">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-orange-500 to-rose-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center">
                   <Mic className="w-5 h-5 text-white" />
                 </div>
                 <span className="font-semibold text-white text-lg">
@@ -171,7 +171,10 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
               <p className="text-6xl font-bold text-white mb-2">
                 {clarityScore}
               </p>
-              <span className="inline-block px-3 py-1 bg-linear-to-r from-orange-500 to-rose-500 text-white text-xs font-semibold rounded-full">
+              <span
+                className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full"
+                style={{ backgroundColor: archetype.color }}
+              >
                 {archetype.label}
               </span>
             </div>

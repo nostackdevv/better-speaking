@@ -23,18 +23,16 @@ export const WaveForm = ({ isRecording, barCount = 32 }: WaveformProps) => {
 
   return (
     <div
-      className="flex items-center justify-center gap-1 h-16 w-full mb-4"
       aria-hidden="true"
+      className="flex items-center justify-center gap-1 h-16 w-full mb-4"
     >
       {bars.map((height, i) => (
         <div
-          key={i}
           className={cn(
             "w-1 rounded-full transition-all",
-            isRecording
-              ? "bg-linear-to-t from-orange-500 to-rose-400"
-              : "bg-slate-200"
+            isRecording ? "bg-orange-600" : "bg-slate-200"
           )}
+          key={i}
           style={{
             height: `${isRecording ? height : 15 + Math.sin(i * 0.3) * 10}%`,
           }}

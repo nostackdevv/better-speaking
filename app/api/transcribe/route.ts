@@ -15,7 +15,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   //   return rateLimitResult.response;
   // }
 
-  if (false) {
+  if (TRANSCRIPT_DUMMY) {
     const fillerStats = computeFillerStats({
       fillers: TRANSCRIPT_DUMMY.fillers,
       words: TRANSCRIPT_DUMMY.words,
