@@ -1,4 +1,4 @@
-import { TrendingDown, TrendingUp, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { FillerStatsType, ClarityResult } from "@/types/domain";
 import { FillerStatCard } from "./FillerStatsCard";
 import { Card } from "@/components/ui/Card";
@@ -7,26 +7,13 @@ import { getArchetype } from "@/constants/archetypes";
 type FillerStatsProps = {
   fillerStats: FillerStatsType;
   clarityScore: ClarityResult | null;
-  duration: number;
-  previousSession: {
-    fillerCount: number;
-  } | null;
 };
 
 export const FillerStats = ({
   fillerStats,
   clarityScore,
-  previousSession,
 }: FillerStatsProps) => {
   const { totalFillers, fillersPerMinute } = fillerStats;
-
-  const improvement = previousSession
-    ? Math.round(
-        ((previousSession.fillerCount - totalFillers) /
-          previousSession.fillerCount) *
-          100
-      )
-    : null;
 
   // Empty state - no fillers detected
   if (totalFillers === 0) {
@@ -75,16 +62,7 @@ export const FillerStats = ({
           label="Fillers per minute"
           value={Math.round(fillersPerMinute)}
         />
-        {improvement !== null ? (
-          <FillerStatCard
-            icon={improvement > 0 ? TrendingDown : TrendingUp}
-            label={improvement > 0 ? "Improved" : "vs last"}
-            value={`${Math.abs(improvement)}%`}
-            variant={improvement > 0 ? "positive" : "negative"}
-          />
-        ) : (
-          <FillerStatCard label="vs last" value="—" variant="muted" />
-        )}
+        <FillerStatCard label="Total words" value={fillerStats.totalWords} />
       </div>
     </div>
   );

@@ -29,8 +29,7 @@ export default function Home() {
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
 
-  const { sessions, addSession, getPreviousSession } = useSessionHistory();
-  const previousSession = getPreviousSession();
+  const { sessions, addSession } = useSessionHistory();
 
   const {
     mutate: transcribeAudio,
@@ -153,9 +152,7 @@ export default function Home() {
                 {transcriptResponse.fillerStats && (
                   <FillerStats
                     clarityScore={transcriptResponse.clarityScore ?? null}
-                    duration={transcriptResponse.duration}
                     fillerStats={transcriptResponse.fillerStats}
-                    previousSession={previousSession}
                   />
                 )}
 
