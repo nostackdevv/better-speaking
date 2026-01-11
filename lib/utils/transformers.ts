@@ -33,14 +33,9 @@ export function normalizeDeepgramTranscript({
 }
 
 export function normalizeFillerResponse(fillers: IdentifyFiller[]): Filler[] {
-  return fillers.map(({ displayText, index, confidence }) => {
-    const isArray = Array.isArray(index);
-
-    return {
-      displayText,
-      startIndex: isArray ? index[0] : index,
-      endIndex: isArray ? index.at(-1)! : index,
-      confidence,
-    };
-  });
+  return fillers.map(({ displayText, startIndex, confidence }) => ({
+    displayText,
+    startIndex,
+    confidence,
+  }));
 }

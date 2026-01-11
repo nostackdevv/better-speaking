@@ -22,9 +22,8 @@ Output JSON shape:
 {
   "fillers": [
     {
-      "type": "single" | "phrase",
       "displayText": "string",
-      "index": number | number[],
+      "startIndex": number,
       "confidence": number
     }
   ]

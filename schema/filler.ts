@@ -6,13 +6,6 @@ export const FillerSchema = z.object({
     .int()
     .min(0)
     .describe("Starting word index (0-indexed) in the transcript"),
-  endIndex: z
-    .number()
-    .int()
-    .min(0)
-    .describe(
-      "Ending word index (0-indexed), same as startIndex for single words"
-    ),
   displayText: z
     .string()
     .describe("The filler word or phrase as it appears in the transcript"),

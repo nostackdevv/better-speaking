@@ -12,7 +12,9 @@ export function splitTranscriptIntoChunks(
   const wordToFiller = new Map<number, number>();
 
   fillers.forEach((filler, fillerId) => {
-    for (let i = filler.startIndex; i <= filler.endIndex; i++) {
+    const wordCount = filler.displayText.trim().split(/\s+/).length;
+    const endIndex = filler.startIndex + wordCount - 1;
+    for (let i = filler.startIndex; i <= endIndex; i++) {
       wordToFiller.set(i, fillerId);
     }
   });
