@@ -13,6 +13,7 @@ import { useTranscribeAudioStream } from "@/hooks/transcription/useTranscribeAud
 import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
 import { FillerStats } from "@/components/analysis/FillerStats";
 import { FillerStatsSkeleton } from "@/components/analysis/FillerStatsSkeleton";
+import { EmptyRecordingState } from "@/components/analysis/EmptyRecordingState";
 import { Button } from "@/components/ui/Button";
 import { Share2, Shuffle, MessageCircle } from "lucide-react";
 import { ShareModal } from "@/components/ui/ShareModal";
@@ -35,6 +36,7 @@ export default function Home() {
     mutate: transcribeAudio,
     isPending,
     isComplete,
+    isNoSpeech,
     data: transcriptResponse,
     reset: resetTranscription,
   } = useTranscribeAudioStream({
@@ -109,7 +111,7 @@ export default function Home() {
         <Header />
 
         <main>
-          {!transcriptResponse.transcript && (
+          {!transcriptResponse.transcript && !isNoSpeech && (
             <>
               {/* Active Prompt Card */}
               {/* {activePrompt && (
@@ -130,6 +132,10 @@ export default function Home() {
                 onWaitlistClick={handleWaitlistClick}
               />
             </>
+          )}
+
+          {isNoSpeech && (
+            <EmptyRecordingState onRetry={handleConfirmReset} />
           )}
 
           {transcriptResponse.transcript && transcriptResponse.words && transcriptResponse.duration !== undefined && (

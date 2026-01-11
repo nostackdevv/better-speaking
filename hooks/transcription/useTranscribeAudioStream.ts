@@ -5,7 +5,7 @@ import {
   TranscriptionStreamData,
 } from "@/types/api";
 
-type StreamStatus = "idle" | "transcribing" | "analyzing" | "complete" | "error";
+type StreamStatus = "idle" | "transcribing" | "analyzing" | "complete" | "error" | "no_speech";
 
 interface UseTranscribeAudioStreamOptions {
   onComplete?: (data: TranscribeResponse) => void;
@@ -87,6 +87,13 @@ export function useTranscribeAudioStream(options?: UseTranscribeAudioStreamOptio
             };
             setData(accumulatedData);
             onCompleteRef.current?.(accumulatedData as TranscribeResponse);
+          } else if (chunk.step === "error") {
+            if (chunk.error === "no_speech_detected") {
+              setStatus("no_speech");
+            } else {
+              setStatus("error");
+              setError({ error: chunk.error });
+            }
           }
         }
       }
@@ -113,6 +120,7 @@ export function useTranscribeAudioStream(options?: UseTranscribeAudioStreamOptio
     isAnalyzing: status === "analyzing",
     isComplete: status === "complete",
     isError: status === "error",
+    isNoSpeech: status === "no_speech",
     isPending: status === "transcribing" || status === "analyzing",
   };
 }

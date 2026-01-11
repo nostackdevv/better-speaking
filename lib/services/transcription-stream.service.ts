@@ -16,6 +16,15 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         // Step 2: Transcribe with Deepgram
         const { transcript, words, duration } = await transcribeAudio(buffer);
+
+        // Check for empty transcript (no speech detected)
+        if (!transcript || transcript.trim().length === 0) {
+          const errorData = { step: "error", error: "no_speech_detected" };
+          controller.enqueue(encoder.encode(JSON.stringify(errorData) + "\n"));
+          controller.close();
+          return;
+        }
+
         const normalizedWords = normalizeDeepgramTranscript({
           transcript,
           words,

@@ -36,6 +36,10 @@ export type TranscriptionStreamData =
       fillerStats: FillerStatsType;
       clarityScore: ClarityResult | null;
       createdAt: string;
+    }
+  | {
+      step: "error";
+      error: string;
     };
 
 export interface WaitlistResponse {
