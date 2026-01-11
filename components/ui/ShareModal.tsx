@@ -249,7 +249,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
               onClick={handleDownload}
             >
               <Download className="w-5 h-5" />
-              Save Result
+              Save Image
             </button>
           )}
         </div>

@@ -24,9 +24,9 @@ export async function processAudioTranscription(
   // Step 5: Detect fillers with OpenAI
   const fillers = await detectFillers({
     text: transcript,
-    words: normalizedWords.map(({ index, displayText }) => ({
+    words: words.map(({ word }, index) => ({
       index,
-      text: displayText,
+      text: word,
     })),
   });
 

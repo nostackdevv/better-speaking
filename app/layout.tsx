@@ -18,7 +18,9 @@ export const metadata: Metadata = {
   title: "Speecha - Reduce Your Filler Words",
   description: "Track your filler words and improve your speaking",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
   },
 };
 

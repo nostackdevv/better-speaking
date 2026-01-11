@@ -20,7 +20,6 @@ export function AudioInput({
   const handleAnalyze = (file: File | Blob) => {
     setSelectedFile(file);
     if (onUpload) {
-      console.log("Selected file: onupload", file);
       onUpload(file);
     }
   };
@@ -60,14 +59,13 @@ export function AudioInput({
       </div>
 
       {/* Record Mode */}
-      {mode === "record" && <AudioRecorder isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />}
+      {mode === "record" && (
+        <AudioRecorder isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />
+      )}
 
       {/* Upload Mode */}
       {mode === "upload" && (
-        <AudioFileUpload
-          isAnalyzing={isAnalyzing}
-          onAnalyze={handleAnalyze}
-        />
+        <AudioFileUpload isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />
       )}
     </Card>
   );
