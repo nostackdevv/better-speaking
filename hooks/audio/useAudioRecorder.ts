@@ -120,8 +120,8 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
       timerRef.current = setInterval(() => {
         setDuration((d) => {
           const newDuration = d + 1;
-          // Auto-stop at 5 minutes (300 seconds)
-          if (newDuration >= 300) {
+          // Auto-stop at 2 minutes (120 seconds)
+          if (newDuration >= 120) {
             stopRecording();
           }
           return newDuration;

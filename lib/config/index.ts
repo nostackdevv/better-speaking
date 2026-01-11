@@ -11,7 +11,7 @@ export const config = {
     apiKey: process.env.OPENAI_API_KEY!,
     model: 'gpt-4.1' as const,
     temperature: 0,
-    maxOutputTokens: 512,
+    maxOutputTokens: 1200,
   },
   audio: {
     maxFileSizeBytes: 10 * 1024 * 1024, // 10MB

@@ -33,9 +33,9 @@ export const AudioRecorder = ({
   };
 
   if (status === "recorded") {
-    const isValidDuration = duration >= 20 && duration <= 300;
+    const isValidDuration = duration >= 20 && duration <= 120;
     const isTooShort = duration < 20;
-    const isTooLong = duration > 300;
+    const isTooLong = duration > 120;
 
     return (
       <div className="flex flex-col gap-3">
@@ -66,7 +66,7 @@ export const AudioRecorder = ({
             role="alert"
           >
             <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>Recording exceeds maximum length of 5 minutes</span>
+            <span>Recording exceeds maximum length of 2 minutes</span>
           </div>
         )}
 
@@ -127,7 +127,9 @@ export const AudioRecorder = ({
       )}
 
       <p className="text-sm text-slate-400 mt-4">
-        {status === "idle" ? "Tap to start recording" : "Tap to stop"}
+        {status === "idle"
+          ? "Tap to start recording"
+          : "Recording must be between 20 secs to 2 mins"}
       </p>
     </div>
   );
