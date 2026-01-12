@@ -15,7 +15,7 @@ import { FillerStats } from "@/components/analysis/FillerStats";
 import { FillerStatsSkeleton } from "@/components/analysis/FillerStatsSkeleton";
 import { EmptyRecordingState } from "@/components/analysis/EmptyRecordingState";
 import { Button } from "@/components/ui/Button";
-import { Share2, Shuffle, MessageCircle } from "lucide-react";
+import { Share2, Shuffle, MessageCircle, Clock } from "lucide-react";
 import { ShareModal } from "@/components/ui/ShareModal";
 import { TabbedResults } from "@/components/analysis/TabbedResults";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
@@ -109,6 +109,17 @@ export default function Home() {
 
       <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
         <Header />
+         {/* Daily Usage Badge */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-orange-500" />
+              <span className="text-xs font-semibold text-slate-700">
+                5 free daily sessions
+              </span>
+            </div>
+          </div>
+        </div>
 
         <main>
           {!transcriptResponse.transcript && !isNoSpeech && (
