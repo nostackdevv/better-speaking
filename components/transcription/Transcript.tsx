@@ -31,7 +31,7 @@ export const Transcript = ({
       <Card className="p-4">
         {audioSrc && (
           <div className="mb-4 pb-4 border-b border-slate-100">
-            <AudioPlayerCompact src={audioSrc} />
+            <AudioPlayerCompact duration={duration} src={audioSrc} />
           </div>
         )}
 

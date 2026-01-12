@@ -5,13 +5,13 @@ import { formatSecondsToTimestamp } from "@/utils/formatters";
 
 type AudioPlayerCompactProps = {
   src: string | Blob | File;
+  duration: number;
 };
 
-export const AudioPlayerCompact = ({ src }: AudioPlayerCompactProps) => {
+export const AudioPlayerCompact = ({ src, duration }: AudioPlayerCompactProps) => {
   const {
     isPlaying,
     currentTime,
-    duration,
     isLoading,
     error,
     toggle,
