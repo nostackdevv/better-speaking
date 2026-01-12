@@ -24,8 +24,8 @@ export function PrivacyPolicyContent() {
         {/* Intro Card */}
         <div className="bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/60 rounded-2xl p-8 mb-8">
           <p className="text-slate-700 leading-relaxed">
-            Speecha app (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;)
-            is committed to protecting your privacy. This policy explains how we
+            Speecha app (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is
+            committed to protecting your privacy. This policy explains how we
             handle your information when you use our speech analysis service.
             We&#39;ve designed our service with privacy in mind. We don&#39;t
             store your recordings or transcripts.
@@ -42,21 +42,6 @@ export function PrivacyPolicyContent() {
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-slate-900 mb-2">
-                  Information You Provide:
-                </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
-                  <li>
-                    <strong>Email addresses</strong> if you join our waitlist
-                  </li>
-                  <li>
-                    <strong>Feedback messages</strong> if you submit feedback
-                    through our form
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
                   Audio & Analysis Data:
                 </h4>
                 <ul className="list-disc list-inside space-y-1 ml-2">
@@ -67,6 +52,20 @@ export function PrivacyPolicyContent() {
                   <li>
                     <strong>Transcripts and analysis results</strong> (generated
                     in your browser session only)
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-slate-900 mb-2">
+                  Information You Provide:
+                </h4>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li>
+                    <strong>Email addresses</strong> if you join our waitlist
+                  </li>
+                  <li>
+                    <strong>Feedback messages</strong> if you submit feedback
+                    through our form
                   </li>
                 </ul>
               </div>
@@ -85,7 +84,10 @@ export function PrivacyPolicyContent() {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="how-we-use-your-information" title="2. How We Use Your Information">
+          <ExpandableSection
+            id="how-we-use-your-information"
+            title="2. How We Use Your Information"
+          >
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li>
                 <strong>To provide our service:</strong> Process your audio to
@@ -96,8 +98,8 @@ export function PrivacyPolicyContent() {
                 respond to your feedback
               </li>
               <li>
-                <strong>To improve:</strong> Understand how people use
-                Speecha and identify areas for improvement
+                <strong>To improve:</strong> Understand how people use Speecha
+                and identify areas for improvement
               </li>
               <li>
                 <strong>To develop features:</strong> Analytics help us
@@ -106,7 +108,10 @@ export function PrivacyPolicyContent() {
             </ul>
           </ExpandableSection>
 
-          <ExpandableSection id="third-party-services" title="3. Third-Party Services">
+          <ExpandableSection
+            id="third-party-services"
+            title="3. Third-Party Services"
+          >
             <p className="mb-4">
               To provide our service, we share your data temporarily with
               trusted third-party providers. These services process your data
@@ -152,7 +157,10 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection id="data-retention" title="4. Data Retention & Your Rights">
+          <ExpandableSection
+            id="data-retention"
+            title="4. Data Retention & Your Rights"
+          >
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-slate-900 mb-2">
@@ -242,7 +250,10 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection> */}
 
-          <ExpandableSection id="international-data-transfers" title="6. International Data Transfers">
+          <ExpandableSection
+            id="international-data-transfers"
+            title="6. International Data Transfers"
+          >
             <p className="mb-2">
               Your data may be processed in countries outside the UK, including
               the United States, where our third-party service providers
@@ -289,8 +300,8 @@ export function PrivacyPolicyContent() {
               <li>Post a notice on our website</li>
             </ul>
             <p className="mt-3">
-              Continued use of Speecha after changes constitutes acceptance
-              of the updated policy.
+              Continued use of Speecha after changes constitutes acceptance of
+              the updated policy.
             </p>
           </ExpandableSection>
 

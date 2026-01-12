@@ -128,7 +128,7 @@ export const AudioRecorder = ({
 
       <p className="text-sm text-slate-400 mt-4">
         {status === "idle"
-          ? "Tap to start recording"
+          ? "Tap to start • 10s – 2 mins"
           : "Recording must be between 10 secs to 2 mins"}
       </p>
     </div>

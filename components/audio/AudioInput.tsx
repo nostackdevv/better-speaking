@@ -5,6 +5,7 @@ import { Mic, Upload } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { AudioFileUpload } from "./AudioFileUpload";
 import { AudioRecorder } from "./AudioRecorder";
+import Link from "next/link";
 
 export function AudioInput({
   isAnalyzing = false,
@@ -67,6 +68,17 @@ export function AudioInput({
       {mode === "upload" && (
         <AudioFileUpload isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />
       )}
+      <div className="text-xs text-slate-500 text-center space-y-0.5 mt-3">
+        <p>Your audio is processed securely and never stored.</p>
+        <p>
+          <Link
+            className="text-orange-500 hover:underline font-medium"
+            href="/legal/privacy"
+          >
+            Learn how we protect your privacy
+          </Link>
+        </p>
+      </div>
     </Card>
   );
 }
