@@ -95,8 +95,8 @@ export function AudioFileUpload({
   };
 
   if (selectedFile) {
-    const isValidDuration = duration >= 20 && duration <= 300;
-    const isTooShort = duration > 0 && duration < 20;
+    const isValidDuration = duration >= 10 && duration <= 300;
+    const isTooShort = duration > 0 && duration < 10;
     const isTooLong = duration > 300;
 
     return (
@@ -118,7 +118,7 @@ export function AudioFileUpload({
           >
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>
-              Audio must be at least 20 seconds (currently {duration}s)
+              Audio must be at least 10 seconds (currently {duration}s)
             </span>
           </div>
         )}

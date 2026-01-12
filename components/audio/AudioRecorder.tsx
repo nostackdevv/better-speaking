@@ -33,8 +33,8 @@ export const AudioRecorder = ({
   };
 
   if (status === "recorded") {
-    const isValidDuration = duration >= 20 && duration <= 120;
-    const isTooShort = duration < 20;
+    const isValidDuration = duration >= 10 && duration <= 120;
+    const isTooShort = duration < 10;
     const isTooLong = duration > 120;
 
     return (
@@ -55,7 +55,7 @@ export const AudioRecorder = ({
           >
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>
-              Recording must be at least 20 seconds (currently {duration}s)
+              Recording must be at least 10 seconds (currently {duration}s)
             </span>
           </div>
         )}
@@ -129,7 +129,7 @@ export const AudioRecorder = ({
       <p className="text-sm text-slate-400 mt-4">
         {status === "idle"
           ? "Tap to start recording"
-          : "Recording must be between 20 secs to 2 mins"}
+          : "Recording must be between 10 secs to 2 mins"}
       </p>
     </div>
   );
