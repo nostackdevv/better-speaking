@@ -36,6 +36,7 @@ export function PrivacyPolicyContent() {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-8 space-y-6">
           <ExpandableSection
             defaultOpen={true}
+            id="information-we-collect"
             title="1. Information We Collect"
           >
             <div className="space-y-4">
@@ -84,7 +85,7 @@ export function PrivacyPolicyContent() {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="2. How We Use Your Information">
+          <ExpandableSection id="how-we-use-your-information" title="2. How We Use Your Information">
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li>
                 <strong>To provide our service:</strong> Process your audio to
@@ -105,7 +106,7 @@ export function PrivacyPolicyContent() {
             </ul>
           </ExpandableSection>
 
-          <ExpandableSection title="3. Third-Party Services">
+          <ExpandableSection id="third-party-services" title="3. Third-Party Services">
             <p className="mb-4">
               To provide our service, we share your data temporarily with
               trusted third-party providers. These services process your data
@@ -151,7 +152,7 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="4. Data Retention & Your Rights">
+          <ExpandableSection id="data-retention" title="4. Data Retention & Your Rights">
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-slate-900 mb-2">
@@ -203,7 +204,7 @@ export function PrivacyPolicyContent() {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="5. Data Security">
+          <ExpandableSection id="data-security" title="5. Data Security">
             <p className="mb-3">
               We take reasonable measures to protect your information:
             </p>
@@ -241,7 +242,7 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection> */}
 
-          <ExpandableSection title="6. International Data Transfers">
+          <ExpandableSection id="international-data-transfers" title="6. International Data Transfers">
             <p className="mb-2">
               Your data may be processed in countries outside the UK, including
               the United States, where our third-party service providers
@@ -254,7 +255,7 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="7. Cookies & Tracking">
+          <ExpandableSection id="cookies" title="7. Cookies & Tracking">
             <p className="mb-3">
               We use minimal cookies and tracking technologies:
             </p>
@@ -274,7 +275,7 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="8. Changes to This Policy">
+          <ExpandableSection id="changes" title="8. Changes to This Policy">
             <p className="mb-2">
               We may update this Privacy Policy from time to time. When we do,
               we will:
@@ -293,7 +294,7 @@ export function PrivacyPolicyContent() {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="9. Contact Us">
+          <ExpandableSection id="contact" title="9. Contact Us">
             <div className="bg-slate-50 rounded-lg p-6">
               <p className="mb-4">
                 If you have any questions about this Privacy Policy, want to

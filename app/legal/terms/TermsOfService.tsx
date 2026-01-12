@@ -42,7 +42,7 @@ export const TermsOfService = () => {
 
         {/* Main Content Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-8 space-y-6">
-          <ExpandableSection defaultOpen={true} title="1. Acceptance of Terms">
+          <ExpandableSection defaultOpen={true} id="acceptance" title="1. Acceptance of Terms">
             <p className="mb-3">
               By accessing or using Speecha, you agree to be bound by these
               Terms and our Privacy Policy. If you don&apos;t agree, please
@@ -55,7 +55,7 @@ export const TermsOfService = () => {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="2. Service Description">
+          <ExpandableSection id="service-description" title="2. Service Description">
             <p className="mb-3">
               Speecha is a web-based tool that helps you improve public
               speaking by:
@@ -73,7 +73,7 @@ export const TermsOfService = () => {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection title="3. Eligibility & Account Requirements">
+          <ExpandableSection id="eligibility" title="3. Eligibility & Account Requirements">
             <div className="space-y-4">
               <div>
                 <h4 className="font-semibold text-slate-900 mb-2">
@@ -99,7 +99,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="4. Usage Limits & Restrictions">
+          <ExpandableSection id="usage-limits" title="4. Usage Limits & Restrictions">
             <div className="space-y-4">
               <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
                 <h4 className="font-semibold text-slate-900 mb-2">
@@ -136,7 +136,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="5. Your Content & Privacy">
+          <ExpandableSection id="content-privacy" title="5. Your Content & Privacy">
             <div className="space-y-3">
               <p>
                 <strong>Your Recordings:</strong> You retain all rights to your
@@ -170,7 +170,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="6. Service Availability & Changes">
+          <ExpandableSection id="service-availability" title="6. Service Availability & Changes">
             <div className="space-y-3">
               <p>
                 <strong>Beta Service:</strong> Speecha is currently in active
@@ -198,7 +198,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="7. Accuracy & Disclaimers">
+          <ExpandableSection id="disclaimers" title="7. Accuracy & Disclaimers">
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
               <h4 className="font-semibold text-slate-900 mb-2 flex items-center gap-2">
                 <AlertCircle className="w-4 h-4" />
@@ -228,7 +228,7 @@ export const TermsOfService = () => {
             </ul>
           </ExpandableSection>
 
-          <ExpandableSection title="8. Limitation of Liability">
+          <ExpandableSection id="liability" title="8. Limitation of Liability">
             <div className="space-y-3">
               <p className="uppercase text-xs font-semibold text-slate-900 mb-2">
                 PLEASE READ CAREFULLY:
@@ -249,7 +249,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="9. Intellectual Property">
+          <ExpandableSection id="intellectual-property" title="9. Intellectual Property">
             <div className="space-y-3">
               <p>
                 <strong>Our Property:</strong> Speecha&apos;s design, code,
@@ -271,7 +271,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="10. Future Paid Features">
+          <ExpandableSection id="paid-features" title="10. Future Paid Features">
             <div className="space-y-3">
               <p>
                 We may introduce paid features or subscription plans in the
@@ -293,7 +293,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="11. Termination">
+          <ExpandableSection id="termination" title="11. Termination">
             <div className="space-y-3">
               <p>
                 <strong>Your Right:</strong> You can stop using Speecha at
@@ -315,7 +315,7 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection title="12. General Terms">
+          <ExpandableSection id="general-terms" title="12. General Terms">
             <ul className="list-disc list-inside space-y-2 ml-2">
               <li>
                 <strong>Entire Agreement:</strong> These Terms and our Privacy
@@ -341,7 +341,7 @@ export const TermsOfService = () => {
             </ul>
           </ExpandableSection>
 
-          <ExpandableSection title="13. Contact Information">
+          <ExpandableSection id="contact" title="13. Contact Information">
             <div className="bg-slate-50 rounded-lg p-6">
               <p className="mb-4">Questions about these Terms?</p>
               <div className="flex items-center gap-3">
