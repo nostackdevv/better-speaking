@@ -4,6 +4,7 @@ import { detectFillers } from "./filler-detection.service";
 import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
+import { TRANSCRIPT_DUMMY } from "@/dummy";
 
 export function processAudioTranscriptionStream(audioFile: Blob) {
   const encoder = new TextEncoder();
@@ -76,6 +77,57 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
       } catch (error) {
         controller.error(error);
       }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      "Transfer-Encoding": "chunked",
+    },
+  });
+}
+
+export function getDummyTranscriptionStream() {
+  const encoder = new TextEncoder();
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      // Step 1: Send transcript data
+      const transcriptData: TranscriptionStreamData = {
+        step: "transcript",
+        transcript: TRANSCRIPT_DUMMY.transcript,
+        words: TRANSCRIPT_DUMMY.words,
+        duration: TRANSCRIPT_DUMMY.duration,
+      };
+      controller.enqueue(encoder.encode(JSON.stringify(transcriptData) + "\n"));
+
+      // Step 2: Send fillers data
+      const fillersData: TranscriptionStreamData = {
+        step: "fillers",
+        fillers: TRANSCRIPT_DUMMY.fillers,
+      };
+      controller.enqueue(encoder.encode(JSON.stringify(fillersData) + "\n"));
+
+      // Step 3: Send complete data with stats
+      const fillerStats = computeFillerStats({
+        fillers: TRANSCRIPT_DUMMY.fillers,
+        words: TRANSCRIPT_DUMMY.words,
+        duration: TRANSCRIPT_DUMMY.duration,
+      });
+      const clarityScore = calculateClarityScore(
+        fillerStats,
+        TRANSCRIPT_DUMMY.duration
+      );
+      const completeData: TranscriptionStreamData = {
+        step: "complete",
+        fillerStats,
+        clarityScore,
+        createdAt: new Date().toISOString(),
+      };
+      controller.enqueue(encoder.encode(JSON.stringify(completeData) + "\n"));
+
+      controller.close();
     },
   });
 
