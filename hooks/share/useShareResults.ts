@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { APP_DOMAIN } from "@/lib/constants";
 
 interface ShareResultsParams {
   score: number;
@@ -16,8 +17,7 @@ interface ShareResultsReturn {
   error: Error | null;
 }
 
-const DEFAULT_CAPTION =
-  "I just tracked how much filler words I use with speecha.app. Can you beat my score?";
+const DEFAULT_CAPTION = `I just tracked how much filler words I use with ${APP_DOMAIN}. Can you beat my score?`;
 
 export function useShareResults(): ShareResultsReturn {
   const [error, setError] = useState<Error | null>(null);
