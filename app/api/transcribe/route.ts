@@ -8,6 +8,7 @@ import {
 import { TRANSCRIPT_DUMMY } from "@/dummy";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
+import { BadRequestError, handleError } from "@/lib/errors";
 
 export async function POST(request: NextRequest) {
   // const rateLimitResult = await checkRateLimit(request);
@@ -39,12 +40,7 @@ export async function POST(request: NextRequest) {
     const audioFile = formData.get("file");
 
     if (!(audioFile instanceof Blob)) {
-      const response = NextResponse.json(
-        { error: "Invalid file upload" },
-        { status: 400 }
-      );
-      // addRateLimitHeaders(response, rateLimitResult);
-      return response;
+      throw new BadRequestError("Invalid file upload");
     }
 
     // Check successful transcription limit (10 per day)
@@ -55,21 +51,6 @@ export async function POST(request: NextRequest) {
 
     return processAudioTranscriptionStream(audioFile);
   } catch (error) {
-    console.error("Transcription error:", error);
-
-    const errorMessage =
-      error instanceof Error ? error.message : "Transcription failed";
-    const statusCode = errorMessage.includes("File size")
-      ? 400
-      : errorMessage.includes("Invalid file type")
-      ? 400
-      : 500;
-
-    const response = NextResponse.json(
-      { error: errorMessage },
-      { status: statusCode }
-    );
-    // addRateLimitHeaders(response, rateLimitResult);
-    return response;
+    return handleError(error);
   }
 }

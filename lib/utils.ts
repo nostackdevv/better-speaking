@@ -4,4 +4,3 @@ export {
   normalizeDeepgramTranscript,
   normalizeFillerResponse,
 } from "./utils/transformers";
-export { validateAudioFile } from "./utils/validators";

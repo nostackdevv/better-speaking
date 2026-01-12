@@ -3,16 +3,12 @@ import { transcribeAudio } from "./deepgram.service";
 import { detectFillers } from "./filler-detection.service";
 import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
-import { validateAudioFile } from "@/lib/utils/validators";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
 
 export async function processAudioTranscription(
   audioFile: Blob
 ): Promise<TranscribeResponse> {
-  // Step 1: Validate audio file
-  // validateAudioFile(audioFile);
-
-  // Step 2: Convert to buffer
+  // Convert to buffer
   const buffer = Buffer.from(await audioFile.arrayBuffer());
 
   // Step 3: Transcribe with Deepgram

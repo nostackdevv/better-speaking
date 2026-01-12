@@ -4,6 +4,7 @@ import {
   checkWaitlistRateLimit,
   addRateLimitHeaders,
 } from "@/lib/middleware/rate-limit";
+import { BadRequestError, handleError } from "@/lib/errors";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   // Check rate limit
@@ -18,19 +19,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Validate email
     if (!email || typeof email !== "string") {
-      return NextResponse.json(
-        { error: "Email is required" },
-        { status: 400 }
-      );
+      throw new BadRequestError("Email is required");
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
+      throw new BadRequestError("Invalid email format");
     }
 
     // Add to waitlist in Supabase
@@ -49,12 +44,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Add rate limit headers to successful response
     return addRateLimitHeaders(response, rateLimitResult);
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Failed to join waitlist";
-
-    return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }
