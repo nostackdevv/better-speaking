@@ -26,7 +26,6 @@ function initPostHog() {
     posthog.init(posthogKey, {
       api_host: posthogHost,
       person_profiles: "identified_only",
-      capture_pageview: false, // We handle this manually for Next.js navigation
       capture_pageleave: true,
       persistence: "localStorage+cookie",
       bootstrap: {
