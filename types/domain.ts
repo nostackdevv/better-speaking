@@ -26,7 +26,6 @@ export interface FillerStatsType {
 
 export interface ClarityResult {
   score: number;
-  grade: "A" | "B" | "C" | "D" | "E";
   version: string;
   rawScore: number;
 }

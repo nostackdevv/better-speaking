@@ -36,19 +36,8 @@ export function calculateClarityScore(
   const rawScore = 100 - fillerPenalty - fpmPenalty + durationBonus;
   const score = Math.min(Math.max(Math.round(rawScore), 0), 99);
 
-  const gradeMap = [
-    { min: 90, grade: "A" as const },
-    { min: 80, grade: "B" as const },
-    { min: 70, grade: "C" as const },
-    { min: 60, grade: "D" as const },
-    { min: 0, grade: "E" as const },
-  ];
-
-  const match = gradeMap.find((m) => score >= m.min)!;
-
   return {
     score,
-    grade: match.grade,
     version: "clarity_v1",
     rawScore,
   };
