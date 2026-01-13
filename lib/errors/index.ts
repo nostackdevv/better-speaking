@@ -93,7 +93,6 @@ export function handleError(error: unknown): NextResponse {
         handler: "api_route",
       },
     });
-    console.error("Unexpected error:", error);
   }
 
   // Handle validation errors with field-level details

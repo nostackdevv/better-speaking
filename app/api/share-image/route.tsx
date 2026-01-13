@@ -1,9 +1,9 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 export const runtime = "edge";
 
-// Get archetype color from score
 const getArchetypeColor = (score: number): string => {
   if (score >= 90) return "#16a34a"; // green-600 - Pro
   if (score >= 80) return "#2563eb"; // blue-600 - Storyteller
@@ -80,18 +80,18 @@ export async function GET(request: NextRequest) {
               >
                 <svg
                   fill="none"
-                  height="20" // Keep these static
+                  height="20"
                   stroke="#ffffff"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2} // Keep static
-                  viewBox="0 0 24 24" // Keep static
-                  width="20" // Keep static
-                  xmlns="http://www.w3.org/2000/svg"
+                  strokeWidth={2}
                   style={{
-                    width: 20 * scale, // Scale via style instead
+                    width: 20 * scale,
                     height: 20 * scale,
                   }}
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path d="M12 19v3"></path>
                   <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
@@ -304,7 +304,7 @@ export async function GET(request: NextRequest) {
       }
     );
   } catch (error) {
-    console.error("Error generating share image:", error);
+    Sentry.captureException(error);
     return new Response("Failed to generate image", { status: 500 });
   }
 }

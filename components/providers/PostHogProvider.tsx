@@ -19,9 +19,6 @@ function initPostHog() {
     process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
 
   if (!posthogKey) {
-    console.warn(
-      "[PostHog] NEXT_PUBLIC_POSTHOG_KEY is not set. Analytics disabled."
-    );
     return;
   }
 
