@@ -5,6 +5,7 @@ import { X, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StoredSession } from "@/types/domain";
 import { getScoreGradient } from "@/utils/scoreGradient";
+import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
 
 type HistoryPanelProps = {
   isOpen: boolean;
@@ -18,7 +19,7 @@ function formatDate(isoDate: string): string {
   return date.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
-    year: "numeric"
+    year: "numeric",
   });
 }
 
@@ -27,24 +28,42 @@ function formatTime24(isoDate: string): string {
   return date.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false
+    hour12: false,
   });
 }
 
-export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: HistoryPanelProps) {
+export function HistoryPanel({
+  isOpen,
+  onClose,
+  sessions,
+  onClearHistory,
+}: HistoryPanelProps) {
+  const { track } = useAnalyticsContext();
   const [showConfirm, setShowConfirm] = useState(false);
 
   if (!isOpen) return null;
 
-  const sortedSessions = [...sessions].reverse(); // Most recent first
+  const sortedSessions = [...sessions].reverse();
 
   const handleClearHistory = () => {
+    track((inherited) => ({
+      name: "history_cleared",
+      properties: {
+        ...inherited,
+        sessionCount: sessions.length,
+      },
+    }));
     onClearHistory();
     setShowConfirm(false);
   };
 
   return (
-    <>
+    <AnalyticsContextProvider
+      getProperties={(inherited) => ({
+        ...inherited,
+        source: [...(inherited.source ?? []), "History Panel"],
+      })}
+    >
       <div
         className="fixed inset-0 bg-slate-950/30 backdrop-blur-sm z-40"
         onClick={onClose}
@@ -73,7 +92,9 @@ export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: Hist
 
         {showConfirm && (
           <div className="p-4 bg-red-50 border-b border-red-100">
-            <p className="text-sm text-red-700 mb-3">Clear all session history? This cannot be undone.</p>
+            <p className="text-sm text-red-700 mb-3">
+              Clear all session history? This cannot be undone.
+            </p>
             <div className="flex gap-2">
               <button
                 className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors cursor-pointer"
@@ -109,7 +130,6 @@ export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: Hist
                   className="bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors p-4"
                   key={session.id}
                 >
-                  {/* Date and Score */}
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="flex items-baseline gap-2">
@@ -130,11 +150,12 @@ export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: Hist
                       >
                         {clarityScore}
                       </span>
-                      <span className="text-xs text-slate-400 ml-1">clarity</span>
+                      <span className="text-xs text-slate-400 ml-1">
+                        clarity
+                      </span>
                     </div>
                   </div>
 
-                  {/* Stats Row */}
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-4 text-slate-600">
                       <span>
@@ -160,6 +181,6 @@ export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: Hist
           )}
         </div>
       </div>
-    </>
+    </AnalyticsContextProvider>
   );
 }
