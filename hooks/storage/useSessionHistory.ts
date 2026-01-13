@@ -29,10 +29,15 @@ export function useSessionHistory() {
     return { fillerCount: lastSession.fillerCount };
   }, [sessions]);
 
+  const clearHistory = useCallback(() => {
+    setSessions([]);
+  }, [setSessions]);
+
   return {
     sessions,
     addSession,
     getPreviousSession,
+    clearHistory,
     isLoaded,
   };
 }

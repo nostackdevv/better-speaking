@@ -30,7 +30,7 @@ export default function Home() {
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
 
-  const { sessions, addSession } = useSessionHistory();
+  const { sessions, addSession, clearHistory } = useSessionHistory();
 
   const {
     mutate: transcribeAudio,
@@ -230,6 +230,7 @@ export default function Home() {
       {/* History Panel */}
       <HistoryPanel
         isOpen={showHistory}
+        onClearHistory={clearHistory}
         onClose={() => setShowHistory(false)}
         sessions={sessions}
       />

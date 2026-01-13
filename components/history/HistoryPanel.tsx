@@ -1,6 +1,7 @@
 "use client";
 
-import { X } from "lucide-react";
+import { useState } from "react";
+import { X, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { StoredSession } from "@/types/domain";
 import { getScoreGradient } from "@/utils/scoreGradient";
@@ -9,6 +10,7 @@ type HistoryPanelProps = {
   isOpen: boolean;
   onClose: () => void;
   sessions: StoredSession[];
+  onClearHistory: () => void;
 };
 
 function formatDate(isoDate: string): string {
@@ -29,10 +31,17 @@ function formatTime24(isoDate: string): string {
   });
 }
 
-export function HistoryPanel({ isOpen, onClose, sessions }: HistoryPanelProps) {
+export function HistoryPanel({ isOpen, onClose, sessions, onClearHistory }: HistoryPanelProps) {
+  const [showConfirm, setShowConfirm] = useState(false);
+
   if (!isOpen) return null;
 
   const sortedSessions = [...sessions].reverse(); // Most recent first
+
+  const handleClearHistory = () => {
+    onClearHistory();
+    setShowConfirm(false);
+  };
 
   return (
     <>
@@ -42,14 +51,45 @@ export function HistoryPanel({ isOpen, onClose, sessions }: HistoryPanelProps) {
       />
       <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 overflow-hidden flex flex-col">
         <div className="flex items-center justify-between p-4 border-b border-slate-100">
-          <h2 className="text-lg font-bold text-slate-900">Session History</h2>
-          <button
-            className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer rounded-lg hover:bg-slate-100 transition-colors"
-            onClick={onClose}
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <h2 className="text-lg font-bold text-slate-900">Practice History</h2>
+          <div className="flex items-center gap-1">
+            {sessions.length > 0 && (
+              <button
+                className="p-2 text-slate-400 hover:text-red-500 cursor-pointer rounded-lg hover:bg-red-50 transition-colors"
+                onClick={() => setShowConfirm(true)}
+                title="Clear history"
+              >
+                <Trash2 className="w-5 h-5" />
+              </button>
+            )}
+            <button
+              className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer rounded-lg hover:bg-slate-100 transition-colors"
+              onClick={onClose}
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
+
+        {showConfirm && (
+          <div className="p-4 bg-red-50 border-b border-red-100">
+            <p className="text-sm text-red-700 mb-3">Clear all session history? This cannot be undone.</p>
+            <div className="flex gap-2">
+              <button
+                className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors cursor-pointer"
+                onClick={handleClearHistory}
+              >
+                Clear All
+              </button>
+              <button
+                className="px-3 py-1.5 text-sm font-medium text-slate-600 bg-white hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                onClick={() => setShowConfirm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {sortedSessions.length === 0 ? (
