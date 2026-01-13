@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 
 // Base custom error with status code
 export class AppError extends Error {
@@ -84,8 +85,14 @@ export class ServiceUnavailableError extends AppError {
 
 // Centralized error handler for API routes
 export function handleError(error: unknown): NextResponse {
-  // Log unexpected errors
+  // Capture unexpected errors in Sentry
   if (!(error instanceof AppError) || !error.isOperational) {
+    Sentry.captureException(error, {
+      tags: {
+        error_type: "unexpected",
+        handler: "api_route",
+      },
+    });
     console.error("Unexpected error:", error);
   }
 

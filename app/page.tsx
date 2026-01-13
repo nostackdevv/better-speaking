@@ -109,7 +109,7 @@ export default function Home() {
 
       <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
         <Header />
-         {/* Daily Usage Badge */}
+        {/* Daily Usage Badge */}
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
             <div className="flex items-center gap-1.5">
@@ -132,10 +132,7 @@ export default function Home() {
                 />
               )} */}
 
-              <AudioInput
-                isAnalyzing={isPending}
-                onUpload={handleUpload}
-              />
+              <AudioInput isAnalyzing={isPending} onUpload={handleUpload} />
 
               {/* Challenge Prompts Section */}
               <ChallengePrompts
@@ -145,77 +142,85 @@ export default function Home() {
             </>
           )}
 
-          {isNoSpeech && (
-            <EmptyRecordingState onRetry={handleConfirmReset} />
-          )}
+          {isNoSpeech && <EmptyRecordingState onRetry={handleConfirmReset} />}
 
-          {transcriptResponse.transcript && transcriptResponse.words && transcriptResponse.duration !== undefined && (
-            <>
-              <div className="pb-32">
-                {/* Prompt Reminder Card */}
-                {activePrompt && (
-                  <Card className="mb-4 p-4 bg-teal-50 border-teal-200">
-                    <div className="flex items-center gap-3">
-                      <MessageCircle className="w-5 h-5 text-teal-600" />
-                      <p className="text-sm text-teal-700">
-                        <span className="font-medium">Prompt:</span>{" "}
-                        {activePrompt}
-                      </p>
-                    </div>
-                  </Card>
-                )}
+          {transcriptResponse.transcript &&
+            transcriptResponse.words &&
+            transcriptResponse.duration !== undefined && (
+              <>
+                <div className="pb-32">
+                  {/* Prompt Reminder Card */}
+                  {activePrompt && (
+                    <Card className="mb-4 p-4 bg-teal-50 border-teal-200">
+                      <div className="flex items-center gap-3">
+                        <MessageCircle className="w-5 h-5 text-teal-600" />
+                        <p className="text-sm text-teal-700">
+                          <span className="font-medium">Prompt:</span>{" "}
+                          {activePrompt}
+                        </p>
+                      </div>
+                    </Card>
+                  )}
 
-                {/* Show FillerStats only when complete */}
-                {transcriptResponse.fillerStats && (
-                  <FillerStats
-                    clarityScore={transcriptResponse.clarityScore ?? null}
-                    fillerStats={transcriptResponse.fillerStats}
-                  />
-                )}
+                  {/* Show FillerStats only when complete */}
+                  {transcriptResponse.fillerStats && (
+                    <FillerStats
+                      clarityScore={transcriptResponse.clarityScore ?? null}
+                      fillerStats={transcriptResponse.fillerStats}
+                    />
+                  )}
 
-                {/* Show loading state while analyzing fillers */}
-                {!transcriptResponse.fillerStats && <FillerStatsSkeleton />}
+                  {/* Show loading state while analyzing fillers */}
+                  {!transcriptResponse.fillerStats && <FillerStatsSkeleton />}
 
-                {/* Action buttons - only show when complete */}
-                {isComplete && (
-                  <div className="flex gap-3 mt-4 mb-6">
-                    <Button
-                      className="flex-1"
-                      onClick={() => setShowShareModal(true)}
-                      variant="outline"
-                    >
-                      <Share2 className="w-4 h-4" />
-                      Share
-                    </Button>
-                    {activePrompt && (
+                  {/* Action buttons - only show when complete */}
+                  {isComplete && (
+                    <div className="flex gap-3 mt-4 mb-6">
                       <Button
                         className="flex-1"
-                        onClick={handleNewPrompt}
-                        variant="accent"
+                        onClick={() => setShowShareModal(true)}
+                        variant="outline"
                       >
-                        <Shuffle className="w-4 h-4" />
-                        New Prompt
+                        <Share2 className="w-4 h-4" />
+                        Share
                       </Button>
-                    )}
-                    <Button className="flex-1" onClick={handleTryAgain}>
-                      Try Again
-                    </Button>
-                  </div>
-                )}
+                      {activePrompt && (
+                        <Button
+                          className="flex-1"
+                          onClick={handleNewPrompt}
+                          variant="accent"
+                        >
+                          <Shuffle className="w-4 h-4" />
+                          New Prompt
+                        </Button>
+                      )}
+                      <Button className="flex-1" onClick={handleTryAgain}>
+                        Try Again
+                      </Button>
+                    </div>
+                  )}
 
-                {/* Tabbed content - show transcript immediately, fillers when available */}
-                <TabbedResults
-                  audioSrc={audioFile}
-                  duration={transcriptResponse.duration}
-                  fillers={transcriptResponse.fillers ?? []}
-                  fillerStats={transcriptResponse.fillerStats ?? { totalFillers: 0, totalWords: 0, fillerPercentage: 0, fillersPerMinute: 0, topFillers: [] }}
-                  onSeekAudio={(time) => {}}
-                  transcriptText={transcriptResponse.transcript}
-                  words={transcriptResponse.words}
-                />
-              </div>
-            </>
-          )}
+                  {/* Tabbed content - show transcript immediately, fillers when available */}
+                  <TabbedResults
+                    audioSrc={audioFile}
+                    duration={transcriptResponse.duration}
+                    fillers={transcriptResponse.fillers ?? []}
+                    fillerStats={
+                      transcriptResponse.fillerStats ?? {
+                        totalFillers: 0,
+                        totalWords: 0,
+                        fillerPercentage: 0,
+                        fillersPerMinute: 0,
+                        topFillers: [],
+                      }
+                    }
+                    onSeekAudio={(time) => {}}
+                    transcriptText={transcriptResponse.transcript}
+                    words={transcriptResponse.words}
+                  />
+                </div>
+              </>
+            )}
         </main>
       </div>
       <div className="mt-20">
@@ -242,17 +247,19 @@ export default function Home() {
           onConfirm={handleConfirmReset}
         />
       )}
-      {showShareModal && transcriptResponse.duration !== undefined && transcriptResponse.fillerStats && (
-        <ShareModal
-          data={{
-            duration: transcriptResponse.duration,
-            fillerStats: transcriptResponse.fillerStats,
-            clarityScore: transcriptResponse.clarityScore ?? null,
-          }}
-          isOpen={showShareModal}
-          onClose={() => setShowShareModal(false)}
-        />
-      )}
+      {showShareModal &&
+        transcriptResponse.duration !== undefined &&
+        transcriptResponse.fillerStats && (
+          <ShareModal
+            data={{
+              duration: transcriptResponse.duration,
+              fillerStats: transcriptResponse.fillerStats,
+              clarityScore: transcriptResponse.clarityScore ?? null,
+            }}
+            isOpen={showShareModal}
+            onClose={() => setShowShareModal(false)}
+          />
+        )}
     </div>
   );
 }

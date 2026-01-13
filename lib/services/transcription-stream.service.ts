@@ -5,6 +5,7 @@ import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
 import { computeFillerStats } from "@/lib/filler/filler-stats";
 import { calculateClarityScore } from "@/lib/filler/clarity-score";
 import { TRANSCRIPT_DUMMY } from "@/dummy";
+import * as Sentry from "@sentry/nextjs";
 
 export function processAudioTranscriptionStream(audioFile: Blob) {
   const encoder = new TextEncoder();
@@ -75,6 +76,17 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         controller.close();
       } catch (error) {
+        // Capture streaming errors in Sentry with context
+        Sentry.captureException(error, {
+          tags: {
+            service: "transcription_stream",
+            step: "streaming",
+          },
+          extra: {
+            audioFileSize: audioFile.size,
+            audioFileType: audioFile.type,
+          },
+        });
         controller.error(error);
       }
     },
