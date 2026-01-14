@@ -4,7 +4,7 @@ import { Filler } from "@/schema/filler";
 import { FillerDetectionInput } from "@/lib/interfaces/filler-detector.interface";
 import { IdentifyFillerResponseSchema } from "@/lib/filler/classifier";
 import { normalizeFillerResponse } from "@/lib/utils/transformers";
-import { FILLER_DETECTION_SYSTEM_PROMPT } from "@/lib/prompts/filler-detection.prompts";
+import { FILLER_DETECTION_SYSTEM_PROMPT_V2 } from "@/lib/prompts/filler-detection.prompts";
 
 const openaiClient = new OpenAI({ apiKey: config.openai.apiKey });
 
@@ -15,7 +15,7 @@ export async function detectFillers(
     const response = await openaiClient.responses.create({
       model: config.openai.model,
       temperature: config.openai.temperature,
-      instructions: FILLER_DETECTION_SYSTEM_PROMPT,
+      instructions: FILLER_DETECTION_SYSTEM_PROMPT_V2,
       input: [
         {
           role: "user",

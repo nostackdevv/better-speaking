@@ -1,0 +1,42 @@
+[
+  {
+    "displayText": "you know",
+    "startIndex": 10,
+    "confidence": 0.99
+  },
+  {
+    "displayText": "um",
+    "startIndex": 20,
+    "confidence": 0.99
+  },
+  {
+    "displayText": "i guess",
+    "startIndex": 41,
+    "confidence": 0.98
+  },
+  {
+    "displayText": "um",
+    "startIndex": 43,
+    "confidence": 0.99
+  },
+  {
+    "displayText": "like",
+    "startIndex": 60,
+    "confidence": 0.99
+  },
+  {
+    "displayText": "so",
+    "startIndex": 73,
+    "confidence": 0.97
+  },
+  {
+    "displayText": "you know",
+    "startIndex": 74,
+    "confidence": 0.99
+  },
+  {
+    "displayText": "like",
+    "startIndex": 79,
+    "confidence": 0.99
+  }
+]
