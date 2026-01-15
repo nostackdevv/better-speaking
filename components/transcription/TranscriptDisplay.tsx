@@ -11,7 +11,7 @@ export const TranscriptDisplay = ({ chunks }: TranscriptDisplayProps) => {
   }
 
   return (
-    <p className="leading-relaxed text-slate-700">
+    <p className="leading-relaxed text-slate-700 ph-no-capture">
       {chunks.map((chunk, chunkIdx) => (
         <span key={chunkIdx}>
           <span
