@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { addToWaitlist } from "@/lib/services/waitlist.service";
-import {
-  checkWaitlistRateLimit,
-  addRateLimitHeaders,
-} from "@/lib/middleware/rate-limit";
+import { checkLimit, addRateLimitHeaders } from "@/lib/middleware/rate-limit";
 import { BadRequestError, handleError } from "@/lib/errors";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  // Check rate limit
-  const rateLimitResult = await checkWaitlistRateLimit(request);
+  const rateLimitResult = await checkLimit(request, "waitlist");
   if (!rateLimitResult.success && rateLimitResult.response) {
     return rateLimitResult.response;
   }
