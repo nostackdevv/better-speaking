@@ -1,8 +1,11 @@
 "use client";
 
 import { Shuffle } from "lucide-react";
-import { practicePrompts, type PracticePrompt } from "@/lib/constants/practicePrompts";
-import { useState } from "react";
+import {
+  practicePrompts,
+  type PracticePrompt,
+} from "@/lib/constants/practicePrompts";
+import { useState, useEffect } from "react";
 
 type PromptSelectorProps = {
   className?: string;
@@ -14,16 +17,19 @@ const getRandomPrompt = () => {
 };
 
 export const PromptSelector = ({ className = "" }: PromptSelectorProps) => {
-  const [selectedPrompt, setSelectedPrompt] = useState<PracticePrompt>(getRandomPrompt);
+  const [selectedPrompt, setSelectedPrompt] = useState<PracticePrompt>(
+    practicePrompts[0]
+  );
 
-  const getNextPrompt = () => {
-    const available = practicePrompts.filter((p) => p !== selectedPrompt);
-    const randomIndex = Math.floor(Math.random() * available.length);
-    return available[randomIndex];
-  };
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelectedPrompt(getRandomPrompt());
+  }, []);
 
   const handleShuffle = () => {
-    setSelectedPrompt(getRandomPrompt());
+    const available = practicePrompts.filter((p) => p !== selectedPrompt);
+    const randomIndex = Math.floor(Math.random() * available.length);
+    setSelectedPrompt(available[randomIndex]);
   };
 
   return (
@@ -36,10 +42,10 @@ export const PromptSelector = ({ className = "" }: PromptSelectorProps) => {
           {selectedPrompt}
         </p>
         <button
-          onClick={handleShuffle}
-          className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all hover:scale-105 shrink-0"
-          title="Get a different prompt"
           aria-label="Get a different prompt"
+          className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all hover:scale-105 shrink-0"
+          onClick={handleShuffle}
+          title="Get a different prompt"
         >
           <Shuffle className="w-4 h-4" />
         </button>
