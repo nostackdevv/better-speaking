@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
-    default: "Speecha - Improve Your Public Speaking | Reduce Filler Words",
+    default: "Speecha - Improve Your Speaking Skills | Reduce Filler Words",
     template: "%s | Speecha",
   },
   description:
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: APP_URL,
     siteName: "Speecha",
-    title: "Speecha - Improve Your Public Speaking | Reduce Filler Words",
+    title: "Speecha - Improve Your Speaking Skills | Reduce Filler Words",
     description:
       "Speecha helps you become a confident speaker by tracking and reducing filler words. Record yourself, get instant analysis, and improve your speaking skills.",
     images: [
@@ -71,13 +71,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Speecha - Improve Your Public Speaking",
+        alt: "Speecha - Improve Your Speaking Skills",
       },
     ],
   },
   // twitter: {
   //   card: "summary_large_image",
-  //   title: "Speecha - Improve Your Public Speaking",
+  //   title: "Speecha - Improve Your Speaking Skills",
   //   description:
   //     "Track and reduce filler words like 'um', 'uh', and 'like'. Become a confident speaker with Speecha.",
   //   images: ["/og-image.png"],
