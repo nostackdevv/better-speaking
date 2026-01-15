@@ -71,6 +71,21 @@ export async function checkLimit(
   };
 }
 
+export async function checkLimits(
+  request: NextRequest,
+  types: RateLimitType[]
+): Promise<RateLimitResult> {
+  let lastResult: RateLimitResult | null = null;
+
+  for (const type of types) {
+    const result = await checkLimit(request, type);
+    if (!result.success) return result;
+    lastResult = result;
+  }
+
+  return lastResult!;
+}
+
 export function addRateLimitHeaders(
   response: NextResponse,
   result: RateLimitResult

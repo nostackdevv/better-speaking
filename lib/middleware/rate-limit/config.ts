@@ -7,19 +7,21 @@ export interface FormatErrorArgs {
 export const RATE_LIMIT_CONFIG = {
   transcribe: {
     limit: 10,
-    window: "1 m" as const,
+    window: "5 m" as const,
     prefix: "@ratelimit/transcribe",
     errorTitle: "Rate limit exceeded",
-    formatError: ({ retryAfter }: FormatErrorArgs) =>
-      `Too many requests. Please try again in ${retryAfter} seconds.`,
+    formatError: ({ retryAfter }: FormatErrorArgs) => {
+      const mins = Math.ceil(retryAfter / 60);
+      return `Too many requests. Please try again in ${mins} minute${mins !== 1 ? "s" : ""}.`;
+    },
   },
   transcribeSuccess: {
-    limit: 20,
+    limit: 5,
     window: "1 d" as const,
     prefix: "@ratelimit/transcribe-success",
-    errorTitle: "Daily transcription limit exceeded",
+    errorTitle: "Daily limit exceeded",
     formatError: ({ limit }: FormatErrorArgs) =>
-      `You have reached your daily limit of ${limit} transcriptions. Please try again tomorrow.`,
+      `You have reached your daily limit of ${limit} sessions. Please try again tomorrow.`,
   },
   waitlist: {
     limit: 3,

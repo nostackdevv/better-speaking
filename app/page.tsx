@@ -41,6 +41,8 @@ function HomeContent() {
     isPending,
     isComplete,
     isNoSpeech,
+    isError,
+    error,
     data: transcriptResponse,
     reset: resetTranscription,
   } = useTranscribeAudioStream({
@@ -175,6 +177,20 @@ function HomeContent() {
         </div>
 
         <main>
+          {isError && error && (
+            <div
+              className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg"
+              role="alert"
+            >
+              <p className="font-medium text-red-800">
+                {error.error || "An error occurred"}
+              </p>
+              {error.message && (
+                <p className="mt-1 text-sm text-red-600">{error.message}</p>
+              )}
+            </div>
+          )}
+
           {!transcriptResponse.transcript && !isNoSpeech && (
             <>
               <AudioInput isAnalyzing={isPending} onUpload={handleUpload} />
