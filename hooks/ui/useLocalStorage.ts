@@ -1,37 +1,54 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
 interface UseLocalStorageOptions<T> {
   key: string;
   defaultValue: T;
 }
 
+function getStoredValue<T>(
+  key: string,
+  defaultValue: T
+): { value: T; loaded: boolean } {
+  if (typeof window === 'undefined') {
+    return { value: defaultValue, loaded: false };
+  }
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      return { value: JSON.parse(stored) as T, loaded: true };
+    }
+  } catch {
+    // Ignore parsing errors
+  }
+  return { value: defaultValue, loaded: true };
+}
+
 export function useLocalStorage<T>({
   key,
   defaultValue,
 }: UseLocalStorageOptions<T>) {
-  const [value, setValue] = useState<T>(defaultValue);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [state, setState] = useState(() => getStoredValue(key, defaultValue));
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(key);
-      if (stored) setValue(JSON.parse(stored));
-    } catch (e) {
-      console.error(`Failed to load ${key} from localStorage:`, e);
+    if (state.loaded) {
+      localStorage.setItem(key, JSON.stringify(state.value));
     }
-    setIsLoaded(true);
-  }, [key]);
+  }, [key, state.value, state.loaded]);
 
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(key, JSON.stringify(value));
-    }
-  }, [key, value, isLoaded]);
+  const setValue = useCallback((newValue: T | ((prev: T) => T)) => {
+    setState((prev) => ({
+      ...prev,
+      value:
+        typeof newValue === 'function'
+          ? (newValue as (prev: T) => T)(prev.value)
+          : newValue,
+    }));
+  }, []);
 
   const remove = useCallback(() => {
     localStorage.removeItem(key);
-    setValue(defaultValue);
+    setState({ value: defaultValue, loaded: true });
   }, [key, defaultValue]);
 
-  return { value, setValue, isLoaded, remove };
+  return { value: state.value, setValue, isLoaded: state.loaded, remove };
 }

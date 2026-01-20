@@ -1,27 +1,27 @@
-"use client";
-import { Share2, Shuffle, MessageCircle, Clock } from "lucide-react";
-import { useState } from "react";
+'use client';
 
-import { EmptyRecordingState } from "@/components/analysis/EmptyRecordingState";
-import { FillerStats } from "@/components/analysis/FillerStats";
-import { FillerStatsSkeleton } from "@/components/analysis/FillerStatsSkeleton";
-import { TabbedResults } from "@/components/analysis/TabbedResults";
-import { AudioInput } from "@/components/audio/AudioInput";
-import { ChallengePrompts } from "@/components/challenges/ChallengePrompts";
-import { HistoryPanel } from "@/components/history/HistoryPanel";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { Navbar } from "@/components/layout/Navbar";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { ConfirmModal } from "@/components/ui/ConfirmModal";
-import { ShareModal } from "@/components/ui/ShareModal";
-import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
+import { Share2, Shuffle, MessageCircle, Clock } from 'lucide-react';
+import { useState } from 'react';
 
-import { useTranscribeAudioStream } from "@/hooks/transcription/useTranscribeAudioStream";
-import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import { getArchetype } from "@/constants/archetypes";
+import { EmptyRecordingState } from '@/components/analysis/EmptyRecordingState';
+import { FillerStats } from '@/components/analysis/FillerStats';
+import { FillerStatsSkeleton } from '@/components/analysis/FillerStatsSkeleton';
+import { TabbedResults } from '@/components/analysis/TabbedResults';
+import { AudioInput } from '@/components/audio/AudioInput';
+import { ChallengePrompts } from '@/components/challenges/ChallengePrompts';
+import { HistoryPanel } from '@/components/history/HistoryPanel';
+import { Footer } from '@/components/layout/Footer';
+import { Header } from '@/components/layout/Header';
+import { Navbar } from '@/components/layout/Navbar';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { ConfirmModal } from '@/components/ui/ConfirmModal';
+import { ShareModal } from '@/components/ui/ShareModal';
+import { WaitlistModal } from '@/components/waitlist/WaitlistModal';
+import { getArchetype } from '@/constants/archetypes';
+import { useSessionHistory } from '@/hooks/storage/useSessionHistory';
+import { useTranscribeAudioStream } from '@/hooks/transcription/useTranscribeAudioStream';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
 
 function HomeContent() {
   const { track } = useAnalyticsContext();
@@ -32,8 +32,8 @@ function HomeContent() {
   const [showUpgrade, setShowUpgrade] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [waitlistTrigger, setWaitlistTrigger] = useState<
-    "pro_badge" | "challenge_mode" | "feature_gate"
-  >("pro_badge");
+    'pro_badge' | 'challenge_mode' | 'feature_gate'
+  >('pro_badge');
 
   const { sessions, addSession, clearHistory } = useSessionHistory();
 
@@ -61,10 +61,10 @@ function HomeContent() {
 
       const archetype = getArchetype(data.clarityScore?.score ?? 0);
       track((inherited) => ({
-        name: "analysis_completed",
+        name: 'analysis_completed',
         properties: {
           ...inherited,
-          inputSource: audioFile instanceof File ? "upload" : "recording",
+          inputSource: audioFile instanceof File ? 'upload' : 'recording',
           duration: data.duration,
           clarityScore: data.clarityScore?.score ?? 0,
           archetype: archetype.label,
@@ -93,7 +93,7 @@ function HomeContent() {
     if (transcriptResponse.clarityScore) {
       const archetype = getArchetype(transcriptResponse.clarityScore.score);
       track((inherited) => ({
-        name: "try_again_clicked",
+        name: 'try_again_clicked',
         properties: {
           ...inherited,
           previousScore: transcriptResponse.clarityScore?.score ?? 0,
@@ -112,7 +112,7 @@ function HomeContent() {
 
   const handleHistoryClick = () => {
     track((inherited) => ({
-      name: "history_opened",
+      name: 'history_opened',
       properties: {
         ...inherited,
         sessionCount: sessions.length,
@@ -122,11 +122,11 @@ function HomeContent() {
   };
 
   const handleWaitlistClick = (
-    trigger: "pro_badge" | "challenge_mode" | "feature_gate" = "pro_badge"
+    trigger: 'pro_badge' | 'challenge_mode' | 'feature_gate' = 'pro_badge'
   ) => {
     setWaitlistTrigger(trigger);
     track((inherited) => ({
-      name: "waitlist_modal_opened",
+      name: 'waitlist_modal_opened',
       properties: {
         ...inherited,
         trigger,
@@ -139,7 +139,7 @@ function HomeContent() {
     const score = transcriptResponse.clarityScore?.score ?? 0;
     const archetype = getArchetype(score);
     track((inherited) => ({
-      name: "share_modal_opened",
+      name: 'share_modal_opened',
       properties: {
         ...inherited,
         clarityScore: score,
@@ -161,15 +161,15 @@ function HomeContent() {
     <div className="min-h-screen bg-linear-to-b from-slate-50 to-slate-100">
       <Navbar
         onHistoryClick={handleHistoryClick}
-        onWaitlistClick={() => handleWaitlistClick("pro_badge")}
+        onWaitlistClick={() => handleWaitlistClick('pro_badge')}
       />
 
-      <div className="max-w-xl mx-auto px-4 pt-24 pb-12">
+      <div className="mx-auto max-w-xl px-4 pt-24 pb-12">
         <Header />
-        <div className="flex justify-center mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-full shadow-sm">
+        <div className="mb-6 flex justify-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm">
             <div className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-orange-500" />
+              <Clock className="h-3.5 w-3.5 text-orange-500" />
               <span className="text-xs font-semibold text-slate-700">
                 5 free daily sessions
               </span>
@@ -180,11 +180,11 @@ function HomeContent() {
         <main>
           {isError && error && (
             <div
-              className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg"
+              className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4"
               role="alert"
             >
               <p className="font-medium text-red-800">
-                {error.error || "An error occurred"}
+                {error.error || 'An error occurred'}
               </p>
               {error.message && (
                 <p className="mt-1 text-sm text-red-600">{error.message}</p>
@@ -197,7 +197,7 @@ function HomeContent() {
               <AudioInput isAnalyzing={isPending} onUpload={handleUpload} />
               <ChallengePrompts
                 onSelectPrompt={handleSelectPrompt}
-                onWaitlistClick={() => handleWaitlistClick("challenge_mode")}
+                onWaitlistClick={() => handleWaitlistClick('challenge_mode')}
               />
             </>
           )}
@@ -210,16 +210,16 @@ function HomeContent() {
               <AnalyticsContextProvider
                 getProperties={(inherited) => ({
                   ...inherited,
-                  source: [...(inherited.source ?? []), "Results"],
+                  source: [...(inherited.source ?? []), 'Results'],
                 })}
               >
                 <div className="pb-32">
                   {activePrompt && (
-                    <Card className="mb-4 p-4 bg-teal-50 border-teal-200">
+                    <Card className="mb-4 border-teal-200 bg-teal-50 p-4">
                       <div className="flex items-center gap-3">
-                        <MessageCircle className="w-5 h-5 text-teal-600" />
+                        <MessageCircle className="h-5 w-5 text-teal-600" />
                         <p className="text-sm text-teal-700">
-                          <span className="font-medium">Prompt:</span>{" "}
+                          <span className="font-medium">Prompt:</span>{' '}
                           {activePrompt}
                         </p>
                       </div>
@@ -236,13 +236,13 @@ function HomeContent() {
                   {!transcriptResponse.fillerStats && <FillerStatsSkeleton />}
 
                   {isComplete && (
-                    <div className="flex gap-3 mt-4 mb-6">
+                    <div className="mt-4 mb-6 flex gap-3">
                       <Button
                         className="flex-1"
                         onClick={handleShareClick}
                         variant="outline"
                       >
-                        <Share2 className="w-4 h-4" />
+                        <Share2 className="h-4 w-4" />
                         Share
                       </Button>
                       {activePrompt && (
@@ -251,7 +251,7 @@ function HomeContent() {
                           onClick={handleNewPrompt}
                           variant="accent"
                         >
-                          <Shuffle className="w-4 h-4" />
+                          <Shuffle className="h-4 w-4" />
                           New Prompt
                         </Button>
                       )}
@@ -330,7 +330,7 @@ export default function Home() {
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "Home"],
+        source: [...(inherited.source ?? []), 'Home'],
       })}
     >
       <HomeContent />

@@ -1,6 +1,6 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 
-export type RecorderStatus = "idle" | "recording" | "recorded";
+export type RecorderStatus = 'idle' | 'recording' | 'recorded';
 
 type UseAudioRecorderReturn = {
   status: RecorderStatus;
@@ -14,10 +14,10 @@ type UseAudioRecorderReturn = {
 };
 
 const PREFERRED_MIME_TYPES = [
-  "audio/webm",
-  "audio/mp4",
-  "audio/ogg",
-  "audio/wav",
+  'audio/webm',
+  'audio/mp4',
+  'audio/ogg',
+  'audio/wav',
 ];
 
 function getSupportedMimeType(): string | undefined {
@@ -27,7 +27,7 @@ function getSupportedMimeType(): string | undefined {
 }
 
 export function useAudioRecorder(): UseAudioRecorderReturn {
-  const [status, setStatus] = useState<RecorderStatus>("idle");
+  const [status, setStatus] = useState<RecorderStatus>('idle');
   const [duration, setDuration] = useState(0);
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +36,7 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
   const streamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const stopRecordingRef = useRef<() => void>(() => {});
 
   const audioUrl = useMemo(() => {
     if (recordedBlob) {
@@ -61,7 +62,7 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
 
     if (
       mediaRecorderRef.current &&
-      mediaRecorderRef.current.state !== "inactive"
+      mediaRecorderRef.current.state !== 'inactive'
     ) {
       mediaRecorderRef.current.stop();
     }
@@ -74,6 +75,25 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
 
     chunksRef.current = [];
   }, []);
+
+  const stopRecording = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state === 'recording'
+    ) {
+      mediaRecorderRef.current.stop();
+    }
+  }, []);
+
+  // Keep ref updated for use in interval callback
+  useEffect(() => {
+    stopRecordingRef.current = stopRecording;
+  }, [stopRecording]);
 
   const startRecording = useCallback(async () => {
     setError(null);
@@ -100,20 +120,20 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
           type: mediaRecorder.mimeType,
         });
         setRecordedBlob(blob);
-        setStatus("recorded");
+        setStatus('recorded');
 
         // Stop all tracks after recording
         streamRef.current?.getTracks().forEach((track) => track.stop());
       };
 
       mediaRecorder.onerror = () => {
-        setError("Recording failed. Please try again.");
+        setError('Recording failed. Please try again.');
         cleanup();
-        setStatus("idle");
+        setStatus('idle');
       };
 
       mediaRecorder.start();
-      setStatus("recording");
+      setStatus('recording');
       setDuration(0);
       setRecordedBlob(null);
 
@@ -122,38 +142,24 @@ export function useAudioRecorder(): UseAudioRecorderReturn {
           const newDuration = d + 1;
           // Auto-stop at 2 minutes (120 seconds)
           if (newDuration >= 120) {
-            stopRecording();
+            stopRecordingRef.current();
           }
           return newDuration;
         });
       }, 1000);
     } catch (err) {
       const message =
-        err instanceof Error && err.name === "NotAllowedError"
-          ? "Microphone access denied. Please allow microphone access and try again."
-          : "Could not access microphone. Please check your device settings.";
+        err instanceof Error && err.name === 'NotAllowedError'
+          ? 'Microphone access denied. Please allow microphone access and try again.'
+          : 'Could not access microphone. Please check your device settings.';
       setError(message);
-      setStatus("idle");
+      setStatus('idle');
     }
   }, [cleanup]);
 
-  const stopRecording = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-
-    if (
-      mediaRecorderRef.current &&
-      mediaRecorderRef.current.state === "recording"
-    ) {
-      mediaRecorderRef.current.stop();
-    }
-  }, []);
-
   const resetRecording = useCallback(() => {
     cleanup();
-    setStatus("idle");
+    setStatus('idle');
     setDuration(0);
     setRecordedBlob(null);
     setError(null);

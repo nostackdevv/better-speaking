@@ -1,13 +1,13 @@
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
   dsn:
-    process.env.NODE_ENV === "production"
+    process.env.NODE_ENV === 'production'
       ? process.env.NEXT_PUBLIC_SENTRY_DSN
       : undefined,
   environment: process.env.NODE_ENV,
 
-  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
@@ -21,22 +21,22 @@ Sentry.init({
   ],
 
   ignoreErrors: [
-    "top.GLOBALS",
-    "originalCreateNotification",
-    "canvas.contentDocument",
-    "MyApp_RemoveAllHighlights",
-    "http://tt.telepornsites.com",
-    "jigsaw is not defined",
-    "ComboSearch is not defined",
-    "atomicFindClose",
+    'top.GLOBALS',
+    'originalCreateNotification',
+    'canvas.contentDocument',
+    'MyApp_RemoveAllHighlights',
+    'http://tt.telepornsites.com',
+    'jigsaw is not defined',
+    'ComboSearch is not defined',
+    'atomicFindClose',
 
-    "Network request failed",
-    "Failed to fetch",
-    "NetworkError",
-    "AbortError",
+    'Network request failed',
+    'Failed to fetch',
+    'NetworkError',
+    'AbortError',
     /^AbortError/,
-    "The operation was aborted",
-    "The user aborted a request",
+    'The operation was aborted',
+    'The user aborted a request',
   ],
 
   denyUrls: [
@@ -48,7 +48,7 @@ Sentry.init({
   ],
 
   // Scrub sensitive data before sending
-  beforeSend(event, hint) {
+  beforeSend(event) {
     if (event.request?.data) {
       delete event.request.data;
     }
@@ -57,7 +57,7 @@ Sentry.init({
     }
     event.tags = {
       ...event.tags,
-      client_type: "browser",
+      client_type: 'browser',
     };
 
     return event;

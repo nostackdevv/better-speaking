@@ -1,20 +1,10 @@
-"use client";
+'use client';
 
-import {
-  Mic,
-  History,
-  Crown,
-  User,
-  Settings,
-  CreditCard,
-  LogOut,
-  Flame,
-} from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Mic, History, Crown } from 'lucide-react';
+import Link from 'next/link';
 
-import { Badge } from "@/components/ui/Badge";
-import { ROUTES } from "@/lib/routes";
+import { Badge } from '@/components/ui/Badge';
+import { ROUTES } from '@/lib/routes';
 
 type NavbarProps = {
   onHistoryClick?: () => void;
@@ -22,21 +12,19 @@ type NavbarProps = {
 };
 
 export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
-  const [showUserMenu, setShowUserMenu] = useState(false);
-
   return (
-    <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-40">
-      <div className="max-w-6xl mx-auto h-full px-4 flex items-center justify-between">
+    <nav className="fixed top-0 right-0 left-0 z-40 h-16 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-full max-w-6xl items-center justify-between px-4">
         <div className="flex items-center gap-3">
           <Link
             aria-label="Speecha home"
             className="flex items-center gap-3"
             href={ROUTES.home}
           >
-            <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center shadow-lg ">
-              <Mic className="w-5 h-5 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600 shadow-lg">
+              <Mic className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-xl text-slate-900">Speecha</span>
+            <span className="text-xl font-bold text-slate-900">Speecha</span>
           </Link>
         </div>
 
@@ -48,23 +36,23 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
 
           {onHistoryClick && (
             <button
-              className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              className="cursor-pointer rounded-xl p-2.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
               onClick={onHistoryClick}
               type="button"
             >
-              <History className="w-5 h-5" />
+              <History className="h-5 w-5" />
             </button>
           )}
 
           {onWaitlistClick && (
             <button
-              className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              className="flex cursor-pointer items-center gap-2 rounded-xl bg-slate-100 px-3 py-2 transition-colors hover:bg-slate-200"
               onClick={onWaitlistClick}
               type="button"
             >
-              <Crown className="w-4 h-4 text-amber-500" />
+              <Crown className="h-4 w-4 text-amber-500" />
               <span className="text-sm font-semibold text-slate-700">Pro</span>
-              <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
+              <Badge className="px-1.5 py-0.5 text-[10px]" variant="comingSoon">
                 SOON
               </Badge>
             </button>

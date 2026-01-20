@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { HistoryTab } from "@/components/history/HistoryTab";
-import { Transcript } from "@/components/transcription/Transcript";
-import { CustomTabs } from "@/components/ui/CustomTabs";
-import { Filler } from "@/schema/filler";
-import type { FillerStatsType, NormalizedWord } from "@/types/domain";
+import { Transcript } from '@/components/transcription/Transcript';
+import { CustomTabs } from '@/components/ui/CustomTabs';
+import { Filler } from '@/schema/filler';
+import type { FillerStatsType, NormalizedWord } from '@/types/domain';
 
-import { BreakdownTab } from "./BreakdownTab";
-
+import { BreakdownTab } from './BreakdownTab';
 
 const TABS = [
-  { id: "breakdown", label: "Breakdown" },
-  { id: "transcript", label: "Transcript" },
+  { id: 'breakdown', label: 'Breakdown' },
+  { id: 'transcript', label: 'Transcript' },
   // { id: "history", label: "History" },
 ];
 
@@ -28,18 +26,18 @@ type TabbedResultsProps = {
 export const TabbedResults = ({
   fillerStats,
   fillers,
-  onSeekAudio,
+  onSeekAudio: _onSeekAudio,
   duration,
   transcriptText,
   words,
   audioSrc,
 }: TabbedResultsProps) => {
-  const [activeTab, setActiveTab] = useState("transcript");
+  const [activeTab, setActiveTab] = useState('transcript');
 
   useEffect(() => {
     if (fillerStats.totalFillers > 0) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setActiveTab("breakdown");
+      setActiveTab('breakdown');
     }
   }, [fillerStats]);
 
@@ -51,8 +49,8 @@ export const TabbedResults = ({
         tabs={TABS}
       />
 
-      {activeTab === "breakdown" && <BreakdownTab fillerStats={fillerStats} />}
-      {activeTab === "transcript" && (
+      {activeTab === 'breakdown' && <BreakdownTab fillerStats={fillerStats} />}
+      {activeTab === 'transcript' && (
         <Transcript
           audioSrc={audioSrc}
           duration={duration}

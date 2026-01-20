@@ -1,9 +1,10 @@
-import posthog from "posthog-js";
+/* eslint-disable no-console */
+import posthog from 'posthog-js';
 
-import type { EventProperties } from "./types";
+import type { EventProperties } from './types';
 
 function isAvailable(): boolean {
-  if (typeof window === "undefined") return false;
+  if (typeof window === 'undefined') return false;
   if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return false;
   if (!posthog.__loaded) return false;
   return true;
@@ -15,7 +16,7 @@ function track(name: string, properties: EventProperties): void {
   try {
     posthog.capture(name, properties);
   } catch (error) {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
       console.warn(`[Analytics] Failed to capture "${name}":`, error);
     }
   }
@@ -27,8 +28,8 @@ function identify(userId: string, traits?: Record<string, unknown>): void {
   try {
     posthog.identify(userId, traits);
   } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn("[Analytics] Failed to identify user:", error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[Analytics] Failed to identify user:', error);
     }
   }
 }
@@ -39,8 +40,8 @@ function reset(): void {
   try {
     posthog.reset();
   } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn("[Analytics] Failed to reset:", error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[Analytics] Failed to reset:', error);
     }
   }
 }
@@ -51,8 +52,8 @@ function setUserProperties(properties: Record<string, unknown>): void {
   try {
     posthog.setPersonProperties(properties);
   } catch (error) {
-    if (process.env.NODE_ENV === "development") {
-      console.warn("[Analytics] Failed to set user properties:", error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[Analytics] Failed to set user properties:', error);
     }
   }
 }

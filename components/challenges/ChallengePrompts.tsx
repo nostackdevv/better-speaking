@@ -1,47 +1,47 @@
-"use client";
+'use client';
 
-import { Zap, Crown, Shuffle, Target, MessageCircle, User } from "lucide-react";
-import { useState } from "react";
+import { Zap, Crown, Shuffle, Target, MessageCircle, User } from 'lucide-react';
+import { useState } from 'react';
 
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
-import { cn } from "@/lib/utils";
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { cn } from '@/lib/utils';
 
 const questionPrompts = {
   interview: [
-    "Tell me about yourself and your background.",
+    'Tell me about yourself and your background.',
     "What's your greatest professional achievement?",
-    "Describe a challenge you faced and how you overcame it.",
-    "Where do you see yourself in five years?",
-    "Why should we hire you for this position?",
-    "Tell me about a time you failed and what you learned.",
-    "What motivates you to do your best work?",
-    "Describe your ideal work environment.",
+    'Describe a challenge you faced and how you overcame it.',
+    'Where do you see yourself in five years?',
+    'Why should we hire you for this position?',
+    'Tell me about a time you failed and what you learned.',
+    'What motivates you to do your best work?',
+    'Describe your ideal work environment.',
   ],
   presentation: [
-    "Explain a complex topic from your field to a beginner.",
-    "Pitch a product idea in 60 seconds.",
-    "Summarize the key points of a recent project.",
-    "Introduce yourself to a new team.",
-    "Explain why your idea deserves funding.",
-    "Present the results of your latest work.",
+    'Explain a complex topic from your field to a beginner.',
+    'Pitch a product idea in 60 seconds.',
+    'Summarize the key points of a recent project.',
+    'Introduce yourself to a new team.',
+    'Explain why your idea deserves funding.',
+    'Present the results of your latest work.',
   ],
   social: [
     "What's the most interesting thing you've learned recently?",
-    "Describe your perfect weekend.",
+    'Describe your perfect weekend.',
     "What's a hobby you're passionate about and why?",
-    "Tell a story about a memorable travel experience.",
-    "What book or movie has influenced you the most?",
-    "If you could have dinner with anyone, who would it be?",
+    'Tell a story about a memorable travel experience.',
+    'What book or movie has influenced you the most?',
+    'If you could have dinner with anyone, who would it be?',
   ],
   impromptu: [
-    "What would you do if you won the lottery tomorrow?",
-    "Argue for or against social media.",
+    'What would you do if you won the lottery tomorrow?',
+    'Argue for or against social media.',
     "What's the most important invention of the last century?",
-    "If you could change one thing about the world, what would it be?",
-    "Describe your dream job without naming it.",
-    "What advice would you give to your younger self?",
+    'If you could change one thing about the world, what would it be?',
+    'Describe your dream job without naming it.',
+    'What advice would you give to your younger self?',
   ],
 };
 
@@ -51,36 +51,31 @@ type ChallengePromptsProps = {
 };
 
 export function ChallengePrompts({
-  onSelectPrompt,
+  onSelectPrompt: _onSelectPrompt,
   onWaitlistClick,
 }: ChallengePromptsProps) {
   const [activeCategory, setActiveCategory] =
-    useState<keyof typeof questionPrompts>("interview");
+    useState<keyof typeof questionPrompts>('interview');
 
   const categories = [
-    { id: "interview" as const, label: "Interview", icon: Target },
-    { id: "presentation" as const, label: "Presentation", icon: MessageCircle },
-    { id: "social" as const, label: "Social", icon: User },
-    { id: "impromptu" as const, label: "Impromptu", icon: Zap },
+    { id: 'interview' as const, label: 'Interview', icon: Target },
+    { id: 'presentation' as const, label: 'Presentation', icon: MessageCircle },
+    { id: 'social' as const, label: 'Social', icon: User },
+    { id: 'impromptu' as const, label: 'Impromptu', icon: Zap },
   ];
 
-  const getRandomPrompt = (category: keyof typeof questionPrompts) => {
+  const _getRandomPrompt = (category: keyof typeof questionPrompts) => {
     const prompts = questionPrompts[category];
     return prompts[Math.floor(Math.random() * prompts.length)];
   };
 
-  const handleGetPrompt = () => {
-    const prompt = getRandomPrompt(activeCategory);
-    onSelectPrompt(prompt);
-  };
-
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8">
+    <div className="mx-auto mt-8 w-full max-w-2xl">
       <Card className="p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-slate-900 flex items-center gap-2">
-              <Zap className="w-5 h-5 text-amber-500" />
+            <h3 className="flex items-center gap-2 font-bold text-slate-900">
+              <Zap className="h-5 w-5 text-amber-500" />
               Challenge Mode
             </h3>
             <p className="text-sm text-slate-500">
@@ -88,11 +83,11 @@ export function ChallengePrompts({
             </p>
           </div>
           <button
-            className="flex items-center gap-1.5 hover:opacity-80 transition-opacity cursor-pointer"
+            className="flex cursor-pointer items-center gap-1.5 transition-opacity hover:opacity-80"
             onClick={onWaitlistClick}
           >
             <Badge variant="pro">
-              <Crown className="w-3 h-3" /> Pro
+              <Crown className="h-3 w-3" /> Pro
             </Badge>
             <Badge className="text-[10px]" variant="comingSoon">
               SOON
@@ -101,34 +96,34 @@ export function ChallengePrompts({
         </div>
 
         {/* Category Tabs */}
-        <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+        <div className="mb-4 flex gap-2 overflow-x-auto pb-2">
           {categories.map((cat) => (
             <button
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-2",
+                'flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium whitespace-nowrap transition-all',
                 activeCategory === cat.id
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               )}
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
             >
-              <cat.icon className="w-4 h-4" />
+              <cat.icon className="h-4 w-4" />
               {cat.label}
             </button>
           ))}
         </div>
 
         {/* Prompt Preview */}
-        <div className="bg-linear-to-r from-slate-50 to-slate-100/50 rounded-xl p-4 mb-4">
-          <p className="text-slate-700 font-medium">
+        <div className="mb-4 rounded-xl bg-linear-to-r from-slate-50 to-slate-100/50 p-4">
+          <p className="font-medium text-slate-700">
             &quot;{questionPrompts[activeCategory][0]}&quot;
           </p>
         </div>
 
         {/* Action */}
         <Button className="w-full" onClick={onWaitlistClick} variant="accent">
-          <Shuffle className="w-4 h-4" />
+          <Shuffle className="h-4 w-4" />
           Get Random Prompt & Record
         </Button>
       </Card>

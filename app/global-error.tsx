@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as Sentry from "@sentry/nextjs";
-import { useEffect } from "react";
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
 
 interface GlobalErrorProps {
   error: Error & { digest?: string };
@@ -18,42 +18,42 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       <body
         style={{
           margin: 0,
-          background: "linear-gradient(to bottom, #f8fafc, #f1f5f9)",
-          minHeight: "100vh",
+          background: 'linear-gradient(to bottom, #f8fafc, #f1f5f9)',
+          minHeight: '100vh',
         }}
       >
         <div
           style={{
-            display: "flex",
-            minHeight: "100vh",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1rem",
+            display: 'flex',
+            minHeight: '100vh',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem',
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
-              maxWidth: "32rem",
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              maxWidth: '32rem',
             }}
           >
             {/* Error Icon */}
             <div
               style={{
-                width: "6rem",
-                height: "6rem",
-                borderRadius: "50%",
-                backgroundColor: "#FEE2E2",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "2rem",
+                width: '6rem',
+                height: '6rem',
+                borderRadius: '50%',
+                backgroundColor: '#FEE2E2',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '2rem',
               }}
             >
               <svg
@@ -75,11 +75,11 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             {/* Message */}
             <h1
               style={{
-                fontSize: "1.875rem",
+                fontSize: '1.875rem',
                 fontWeight: 700,
-                color: "#0f172a",
-                marginBottom: "1rem",
-                margin: "0 0 1rem 0",
+                color: '#0f172a',
+                marginBottom: '1rem',
+                margin: '0 0 1rem 0',
               }}
             >
               Something Went Wrong
@@ -87,10 +87,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
             <p
               style={{
-                fontSize: "1.125rem",
-                color: "#64748b",
-                marginBottom: "2rem",
-                maxWidth: "28rem",
+                fontSize: '1.125rem',
+                color: '#64748b',
+                marginBottom: '2rem',
+                maxWidth: '28rem',
                 lineHeight: 1.6,
               }}
             >
@@ -99,23 +99,23 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             </p>
 
             {/* Dev error details */}
-            {process.env.NODE_ENV === "development" && (
+            {process.env.NODE_ENV === 'development' && (
               <div
                 style={{
-                  width: "100%",
-                  marginBottom: "2rem",
-                  padding: "1rem",
-                  backgroundColor: "#f1f5f9",
-                  borderRadius: "0.75rem",
-                  textAlign: "left",
+                  width: '100%',
+                  marginBottom: '2rem',
+                  padding: '1rem',
+                  backgroundColor: '#f1f5f9',
+                  borderRadius: '0.75rem',
+                  textAlign: 'left',
                 }}
               >
                 <p
                   style={{
-                    fontSize: "0.875rem",
-                    fontFamily: "monospace",
-                    color: "#334155",
-                    wordBreak: "break-all",
+                    fontSize: '0.875rem',
+                    fontFamily: 'monospace',
+                    color: '#334155',
+                    wordBreak: 'break-all',
                     margin: 0,
                   }}
                 >
@@ -124,9 +124,9 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 {error.digest && (
                   <p
                     style={{
-                      fontSize: "0.75rem",
-                      color: "#94a3b8",
-                      marginTop: "0.5rem",
+                      fontSize: '0.75rem',
+                      color: '#94a3b8',
+                      marginTop: '0.5rem',
                       marginBottom: 0,
                     }}
                   >
@@ -139,28 +139,28 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             {/* Action Buttons */}
             <div
               style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "1rem",
-                flexWrap: "wrap",
-                justifyContent: "center",
+                display: 'flex',
+                flexDirection: 'row',
+                gap: '1rem',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
               }}
             >
               <button
                 onClick={reset}
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.75rem 1.5rem",
-                  backgroundColor: "#ea580c",
-                  color: "white",
-                  borderRadius: "0.75rem",
-                  border: "none",
-                  fontSize: "1rem",
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#ea580c',
+                  color: 'white',
+                  borderRadius: '0.75rem',
+                  border: 'none',
+                  fontSize: '1rem',
                   fontWeight: 600,
-                  cursor: "pointer",
-                  boxShadow: "0 4px 14px rgba(234, 88, 12, 0.25)",
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 14px rgba(234, 88, 12, 0.25)',
                 }}
               >
                 <svg
@@ -181,21 +181,22 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 Try Again
               </button>
 
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- Using <a> in global error boundary as Next.js Link may not be available */}
               <a
                 href="/"
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.75rem 1.5rem",
-                  backgroundColor: "#e2e8f0",
-                  color: "#334155",
-                  borderRadius: "0.75rem",
-                  border: "none",
-                  fontSize: "1rem",
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#e2e8f0',
+                  color: '#334155',
+                  borderRadius: '0.75rem',
+                  border: 'none',
+                  fontSize: '1rem',
                   fontWeight: 600,
-                  cursor: "pointer",
-                  textDecoration: "none",
+                  cursor: 'pointer',
+                  textDecoration: 'none',
                 }}
               >
                 <svg

@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Upload, FileAudio, Trash, AlertCircle, Loader2 } from "lucide-react";
-import React, { useState, useRef, useEffect } from "react";
+import { Upload, FileAudio, Trash, AlertCircle, Loader2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
 
-import { AudioItemCard } from "@/components/history/AudioItemCard";
-import { Button } from "@/components/ui/Button";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
+import { AudioItemCard } from '@/components/history/AudioItemCard';
+import { Button } from '@/components/ui/Button';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
 import {
   validateClientAudioFile,
   MAX_FILE_SIZE,
   AUDIO_ACCEPT_STRING,
-} from "@/utils/audio/validators";
-import { formatBytesToSize } from "@/utils/formatters";
+} from '@/utils/audio/validators';
+import { formatBytesToSize } from '@/utils/formatters';
 
 type AudioFileUploadProps = {
   isAnalyzing?: boolean;
@@ -35,6 +35,7 @@ export function AudioFileUpload({
 
   useEffect(() => {
     if (!selectedFile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Reset duration when file is cleared
       setDuration(0);
       return;
     }
@@ -43,25 +44,28 @@ export function AudioFileUpload({
     const audio = new Audio();
     const url = URL.createObjectURL(selectedFile);
 
-    audio.addEventListener("loadedmetadata", () => {
+    audio.addEventListener('loadedmetadata', () => {
       const fileDuration = Math.floor(audio.duration);
       setDuration(fileDuration);
       setIsLoadingDuration(false);
       URL.revokeObjectURL(url);
 
       track((inherited) => ({
-        name: "file_uploaded",
+        name: 'file_uploaded',
         properties: {
           ...inherited,
           fileSize: selectedFile.size,
-          fileType: selectedFile.type || selectedFile.name.split(".").pop() || "unknown",
+          fileType:
+            selectedFile.type ||
+            selectedFile.name.split('.').pop() ||
+            'unknown',
           duration: fileDuration,
         },
       }));
     });
 
-    audio.addEventListener("error", () => {
-      setError("Unable to read audio file duration");
+    audio.addEventListener('error', () => {
+      setError('Unable to read audio file duration');
       setIsLoadingDuration(false);
       URL.revokeObjectURL(url);
     });
@@ -77,11 +81,11 @@ export function AudioFileUpload({
     const validationError = validateClientAudioFile(file, maxSize);
     if (validationError) {
       track((inherited) => ({
-        name: "file_upload_error",
+        name: 'file_upload_error',
         properties: {
           ...inherited,
           error: validationError,
-          fileType: file.type || file.name.split(".").pop() || "unknown",
+          fileType: file.type || file.name.split('.').pop() || 'unknown',
           fileSize: file.size,
         },
       }));
@@ -95,7 +99,7 @@ export function AudioFileUpload({
   const handleDeleteAudio = () => {
     if (selectedFile) {
       track((inherited) => ({
-        name: "file_removed",
+        name: 'file_removed',
         properties: {
           ...inherited,
           fileSize: selectedFile.size,
@@ -105,7 +109,7 @@ export function AudioFileUpload({
     setSelectedFile(null);
     setError(null);
     if (inputRef.current) {
-      inputRef.current.value = "";
+      inputRef.current.value = '';
     }
   };
 
@@ -121,7 +125,7 @@ export function AudioFileUpload({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleClick();
     }
@@ -130,10 +134,10 @@ export function AudioFileUpload({
   const handleAnalyze = () => {
     if (selectedFile) {
       track((inherited) => ({
-        name: "analysis_started",
+        name: 'analysis_started',
         properties: {
           ...inherited,
-          inputSource: "upload",
+          inputSource: 'upload',
           duration,
         },
       }));
@@ -150,7 +154,7 @@ export function AudioFileUpload({
       <AnalyticsContextProvider
         getProperties={(inherited) => ({
           ...inherited,
-          source: [...(inherited.source ?? []), "File Upload"],
+          source: [...(inherited.source ?? []), 'File Upload'],
         })}
       >
         <div className="flex flex-col gap-3">
@@ -166,10 +170,10 @@ export function AudioFileUpload({
 
           {isTooShort && !isLoadingDuration && (
             <div
-              className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg"
+              className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-700"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <AlertCircle className="h-4 w-4 shrink-0" />
               <span>
                 Audio must be at least 10 seconds (currently {duration}s)
               </span>
@@ -178,10 +182,10 @@ export function AudioFileUpload({
 
           {isTooLong && !isLoadingDuration && (
             <div
-              className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg"
+              className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <AlertCircle className="h-4 w-4 shrink-0" />
               <span>Audio exceeds maximum length of 5 minutes</span>
             </div>
           )}
@@ -192,13 +196,13 @@ export function AudioFileUpload({
           >
             {isAnalyzing ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Analyzing...
               </>
             ) : isLoadingDuration ? (
-              "Checking duration..."
+              'Checking duration...'
             ) : (
-              "Analyze Recording"
+              'Analyze Recording'
             )}
           </Button>
         </div>
@@ -210,32 +214,32 @@ export function AudioFileUpload({
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "File Upload"],
+        source: [...(inherited.source ?? []), 'File Upload'],
       })}
     >
       <div>
         <div
           aria-label="Upload audio file"
           className={cn(
-            "group flex flex-col items-center py-16 px-8 border-2 border-dashed rounded-2xl cursor-pointer transition-all",
-            "border-slate-300 hover:border-orange-400 hover:bg-orange-50/30"
+            'group flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed px-8 py-16 transition-all',
+            'border-slate-300 hover:border-orange-400 hover:bg-orange-50/30'
           )}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           role="button"
           tabIndex={0}
         >
-          <div className="w-20 h-20 rounded-2xl bg-slate-100 group-hover:bg-orange-100 flex items-center justify-center mb-4 transition-colors">
+          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-slate-100 transition-colors group-hover:bg-orange-100">
             <Upload
               aria-hidden="true"
-              className="w-10 h-10 text-slate-400 group-hover:text-orange-500 transition-colors"
+              className="h-10 w-10 text-slate-400 transition-colors group-hover:text-orange-500"
             />
           </div>
-          <p className="font-semibold text-slate-700 mb-1 text-lg">
+          <p className="mb-1 text-lg font-semibold text-slate-700">
             Drop your audio file here
           </p>
-          <p className="text-slate-500 mb-4">or click to browse</p>
-          <p className="text-xs text-slate-400 bg-white px-3 py-1.5 rounded-full border border-slate-200">
+          <p className="mb-4 text-slate-500">or click to browse</p>
+          <p className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-400">
             Add any valid audio file • Max 10
           </p>
 
@@ -250,7 +254,7 @@ export function AudioFileUpload({
         </div>
 
         {error && (
-          <p className="text-sm text-red-500 mt-2" role="alert">
+          <p className="mt-2 text-sm text-red-500" role="alert">
             {error}
           </p>
         )}
