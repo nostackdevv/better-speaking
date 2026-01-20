@@ -3,9 +3,9 @@ export {
   checkLimits,
   addRateLimitHeaders,
   type RateLimitResult,
-} from "./check";
+} from './check';
 export {
   RATE_LIMIT_CONFIG,
   type RateLimitType,
   type FormatErrorArgs,
-} from "./config";
+} from './config';

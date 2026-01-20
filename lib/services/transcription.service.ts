@@ -1,10 +1,10 @@
-import { calculateClarityScore } from "@/lib/filler/clarity-score";
-import { computeFillerStats } from "@/lib/filler/filler-stats";
-import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
-import { TranscribeResponse } from "@/types/api";
+import { calculateClarityScore } from '@/lib/filler/clarity-score';
+import { computeFillerStats } from '@/lib/filler/filler-stats';
+import { normalizeDeepgramTranscript } from '@/lib/utils/transformers';
+import { TranscribeResponse } from '@/types/api';
 
-import { transcribeAudio } from "./deepgram.service";
-import { detectFillers } from "./filler-detection.service";
+import { transcribeAudio } from './deepgram.service';
+import { detectFillers } from './filler-detection.service';
 
 export async function processAudioTranscription(
   audioFile: Blob

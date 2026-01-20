@@ -7,9 +7,9 @@
  * Used by: API routes, client-side API calls
  */
 
-import { Filler } from "@/schema/filler";
+import { Filler } from '@/schema/filler';
 
-import { NormalizedWord, FillerStatsType, ClarityResult } from "./domain";
+import { NormalizedWord, FillerStatsType, ClarityResult } from './domain';
 
 export interface TranscribeResponse {
   transcript: string;
@@ -23,23 +23,23 @@ export interface TranscribeResponse {
 
 export type TranscriptionStreamData =
   | {
-      step: "transcript";
+      step: 'transcript';
       transcript: string;
       words: NormalizedWord[];
       duration: number;
     }
   | {
-      step: "fillers";
+      step: 'fillers';
       fillers: Filler[];
     }
   | {
-      step: "complete";
+      step: 'complete';
       fillerStats: FillerStatsType;
       clarityScore: ClarityResult | null;
       createdAt: string;
     }
   | {
-      step: "error";
+      step: 'error';
       error: string;
     };
 

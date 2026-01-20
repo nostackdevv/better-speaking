@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 type WaveformProps = {
   isRecording: boolean;
@@ -25,13 +25,13 @@ export const WaveForm = ({ isRecording, barCount = 32 }: WaveformProps) => {
   return (
     <div
       aria-hidden="true"
-      className="flex items-center justify-center gap-1 h-16 w-full mb-4"
+      className="mb-4 flex h-16 w-full items-center justify-center gap-1"
     >
       {bars.map((height, i) => (
         <div
           className={cn(
-            "w-1 rounded-full transition-all",
-            isRecording ? "bg-orange-600" : "bg-slate-200"
+            'w-1 rounded-full transition-all',
+            isRecording ? 'bg-orange-600' : 'bg-slate-200'
           )}
           key={i}
           style={{

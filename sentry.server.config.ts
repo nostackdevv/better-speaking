@@ -1,11 +1,11 @@
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
   dsn:
-    process.env.NODE_ENV === "production" ? process.env.SENTRY_DSN : undefined,
+    process.env.NODE_ENV === 'production' ? process.env.SENTRY_DSN : undefined,
   environment: process.env.NODE_ENV,
-  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.2 : 1.0,
-  profilesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.2 : 1.0,
+  profilesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
 
   // Filter operational errors (expected user-facing errors)
   beforeSend(event, hint) {
@@ -23,7 +23,7 @@ Sentry.init({
     // }
     event.tags = {
       ...event.tags,
-      runtime: "nodejs",
+      runtime: 'nodejs',
     };
 
     return event;
@@ -32,18 +32,18 @@ Sentry.init({
   // Ignore common non-actionable errors
   ignoreErrors: [
     // Network issues
-    "ECONNREFUSED",
-    "ENOTFOUND",
-    "ETIMEDOUT",
-    "ECONNRESET",
+    'ECONNREFUSED',
+    'ENOTFOUND',
+    'ETIMEDOUT',
+    'ECONNRESET',
 
     // Expected operational errors
-    "BadRequestError",
-    "ValidationError",
-    "RateLimitError",
-    "UnauthorizedError",
-    "ForbiddenError",
-    "NotFoundError",
+    'BadRequestError',
+    'ValidationError',
+    'RateLimitError',
+    'UnauthorizedError',
+    'ForbiddenError',
+    'NotFoundError',
   ],
 
   // Limit breadcrumbs

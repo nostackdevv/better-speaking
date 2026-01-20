@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-import { RATE_LIMIT_CONFIG, RateLimitType } from "./config";
-import { limiters } from "./limiters";
+import { RATE_LIMIT_CONFIG, RateLimitType } from './config';
+import { limiters } from './limiters';
 
 export interface RateLimitResult {
   success: boolean;
@@ -16,17 +16,17 @@ export interface RateLimitResult {
 }
 
 function getClientIP(request: NextRequest): string {
-  const forwarded = request.headers.get("x-forwarded-for");
+  const forwarded = request.headers.get('x-forwarded-for');
   if (forwarded) {
-    return forwarded.split(",")[0].trim();
+    return forwarded.split(',')[0].trim();
   }
 
-  const realIP = request.headers.get("x-real-ip");
+  const realIP = request.headers.get('x-real-ip');
   if (realIP) {
     return realIP;
   }
 
-  return "unknown";
+  return 'unknown';
 }
 
 export async function checkLimit(
@@ -54,10 +54,10 @@ export async function checkLimit(
         {
           status: 429,
           headers: {
-            "Retry-After": retryAfter.toString(),
-            "X-RateLimit-Limit": limit.toString(),
-            "X-RateLimit-Remaining": remaining.toString(),
-            "X-RateLimit-Reset": new Date(reset).toISOString(),
+            'Retry-After': retryAfter.toString(),
+            'X-RateLimit-Limit': limit.toString(),
+            'X-RateLimit-Remaining': remaining.toString(),
+            'X-RateLimit-Reset': new Date(reset).toISOString(),
           },
         }
       ),
@@ -91,10 +91,10 @@ export function addRateLimitHeaders(
   response: NextResponse,
   result: RateLimitResult
 ): NextResponse {
-  response.headers.set("X-RateLimit-Limit", result.limit.toString());
-  response.headers.set("X-RateLimit-Remaining", result.remaining.toString());
+  response.headers.set('X-RateLimit-Limit', result.limit.toString());
+  response.headers.set('X-RateLimit-Remaining', result.remaining.toString());
   response.headers.set(
-    "X-RateLimit-Reset",
+    'X-RateLimit-Reset',
     new Date(result.reset).toISOString()
   );
   return response;

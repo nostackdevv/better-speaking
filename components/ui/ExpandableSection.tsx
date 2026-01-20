@@ -1,5 +1,5 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState } from 'react';
 
 type ExpandableSectionProps = {
   title: string;
@@ -15,7 +15,11 @@ export const ExpandableSection = ({
   id,
 }: ExpandableSectionProps) => {
   const [isOpen, setIsOpen] = useState(() => {
-    if (typeof window !== "undefined" && id && window.location.hash === `#${id}`) {
+    if (
+      typeof window !== 'undefined' &&
+      id &&
+      window.location.hash === `#${id}`
+    ) {
       return true;
     }
     return defaultOpen;
@@ -25,36 +29,43 @@ export const ExpandableSection = ({
     e.preventDefault();
     setIsOpen(!isOpen);
     if (id) {
-      window.history.replaceState(null, "", `#${id}`);
+      window.history.replaceState(null, '', `#${id}`);
     }
   };
 
   const header = (
     <button
-      className="w-full py-4 flex items-center justify-between text-left hover:bg-slate-50 px-4 -mx-4 rounded-lg transition-colors cursor-pointer"
+      className="-mx-4 flex w-full cursor-pointer items-center justify-between rounded-lg px-4 py-4 text-left transition-colors hover:bg-slate-50"
       onClick={handleClick}
       type="button"
     >
       <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
       {isOpen ? (
-        <ChevronUp className="w-5 h-5 text-slate-400" />
+        <ChevronUp className="h-5 w-5 text-slate-400" />
       ) : (
-        <ChevronDown className="w-5 h-5 text-slate-400" />
+        <ChevronDown className="h-5 w-5 text-slate-400" />
       )}
     </button>
   );
 
   return (
-    <div className="border-b border-slate-200 last:border-0 scroll-mt-4" id={id}>
+    <div
+      className="scroll-mt-4 border-b border-slate-200 last:border-0"
+      id={id}
+    >
       {id ? (
-        <a className="block" href={`#${id}`} onClick={(e) => e.preventDefault()}>
+        <a
+          className="block"
+          href={`#${id}`}
+          onClick={(e) => e.preventDefault()}
+        >
           {header}
         </a>
       ) : (
         header
       )}
       {isOpen && (
-        <div className="pb-6 text-slate-600 leading-relaxed">{children}</div>
+        <div className="pb-6 leading-relaxed text-slate-600">{children}</div>
       )}
     </div>
   );

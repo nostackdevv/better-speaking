@@ -1,18 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
-import { BlogNavbar } from "@/components/blog/BlogNavbar";
-import { Footer } from "@/components/layout/Footer";
+import { BlogNavbar } from '@/components/blog/BlogNavbar';
+import { Footer } from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Speecha Blog",
-    default: "Speecha Blog",
+    template: '%s | Speecha Blog',
+    default: 'Speecha Blog',
   },
   description:
-    "Practical, research-backed speaking tools: clarity, confidence, pacing, and filler-word reduction.",
+    'Practical, research-backed speaking tools: clarity, confidence, pacing, and filler-word reduction.',
 };
 
-export default function BlogLayout({ children }: { children: React.ReactNode }) {
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <div className="pointer-events-none fixed inset-0 opacity-[0.55]">

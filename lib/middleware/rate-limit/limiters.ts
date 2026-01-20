@@ -1,7 +1,7 @@
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
 
-import { RATE_LIMIT_CONFIG, RateLimitType } from "./config";
+import { RATE_LIMIT_CONFIG, RateLimitType } from './config';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -19,7 +19,7 @@ function createLimiter(type: RateLimitType): Ratelimit {
 }
 
 export const limiters: Record<RateLimitType, Ratelimit> = {
-  transcribe: createLimiter("transcribe"),
-  transcribeSuccess: createLimiter("transcribeSuccess"),
-  waitlist: createLimiter("waitlist"),
+  transcribe: createLimiter('transcribe'),
+  transcribeSuccess: createLimiter('transcribeSuccess'),
+  waitlist: createLimiter('waitlist'),
 };

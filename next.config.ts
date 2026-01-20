@@ -1,23 +1,23 @@
-import { withSentryConfig } from "@sentry/nextjs";
-import type { NextConfig } from "next";
+import { withSentryConfig } from '@sentry/nextjs';
+import type { NextConfig } from 'next';
 
-import { securityHeaders, corsHeaders } from "./config/http-headers";
+import { securityHeaders, corsHeaders } from './config/http-headers';
 
 const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: '/:path*',
         headers: securityHeaders,
       },
       {
-        source: "/api/:path*",
+        source: '/api/:path*',
         headers: [...corsHeaders],
       },
     ];
   },
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
+    remotePatterns: [{ protocol: 'https', hostname: 'images.unsplash.com' }],
   },
 };
 
@@ -26,7 +26,7 @@ export default withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   widenClientFileUpload: true,
-  tunnelRoute: "/monitoring",
+  tunnelRoute: '/monitoring',
   sourcemaps: {
     deleteSourcemapsAfterUpload: true,
   },

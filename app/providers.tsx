@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useState } from 'react';
 
-import { PostHogProvider } from "@/components/providers/PostHogProvider";
+import { PostHogProvider } from '@/components/providers/PostHogProvider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -20,9 +20,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <PostHogProvider>
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </PostHogProvider>
   );
 }

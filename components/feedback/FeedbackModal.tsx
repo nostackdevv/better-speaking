@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { MessageSquare, Check, Loader2, AlertCircle, X } from "lucide-react";
-import { useState } from "react";
+import { MessageSquare, Check, Loader2, AlertCircle, X } from 'lucide-react';
+import { useState } from 'react';
 
-import { Button } from "@/components/ui/Button";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/Button';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
 
 type FeedbackModalProps = {
   isOpen: boolean;
@@ -14,8 +14,8 @@ type FeedbackModalProps = {
 
 export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const { track } = useAnalyticsContext();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -28,33 +28,33 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     const trimmedMessage = message.trim();
 
     if (trimmedMessage.length < 10) {
-      setError("Please provide at least 10 characters");
+      setError('Please provide at least 10 characters');
       return;
     }
 
     if (trimmedMessage.length > maxCharacters) {
-      setError("Feedback must be less than 2000 characters");
+      setError('Feedback must be less than 2000 characters');
       return;
     }
 
-    setError("");
+    setError('');
     setIsSubmitting(true);
 
     try {
       const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
       if (!accessKey) {
-        setError("Feedback service is not configured");
+        setError('Feedback service is not configured');
         setIsSubmitting(false);
         return;
       }
 
       const formData = new FormData();
-      formData.append("access_key", accessKey);
-      formData.append("message", trimmedMessage);
-      formData.append("subject", "Speecha - User Feedback");
+      formData.append('access_key', accessKey);
+      formData.append('message', trimmedMessage);
+      formData.append('subject', 'Speecha - User Feedback');
 
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
         body: formData,
       });
 
@@ -62,41 +62,41 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
 
       if (data.success) {
         track((inherited) => ({
-          name: "feedback_submitted",
+          name: 'feedback_submitted',
           properties: {
             ...inherited,
             messageLength: trimmedMessage.length,
           },
         }));
         setIsSuccess(true);
-        setMessage("");
+        setMessage('');
       } else {
         track((inherited) => ({
-          name: "feedback_error",
+          name: 'feedback_error',
           properties: {
             ...inherited,
-            error: "Failed to submit feedback",
+            error: 'Failed to submit feedback',
           },
         }));
-        setError("Failed to submit feedback. Please try again.");
+        setError('Failed to submit feedback. Please try again.');
       }
     } catch (err) {
       track((inherited) => ({
-        name: "feedback_error",
+        name: 'feedback_error',
         properties: {
           ...inherited,
-          error: err instanceof Error ? err.message : "Network error",
+          error: err instanceof Error ? err.message : 'Network error',
         },
       }));
-      setError("Network error. Please try again.");
+      setError('Network error. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleClose = () => {
-    setMessage("");
-    setError("");
+    setMessage('');
+    setError('');
     setIsSuccess(false);
     onClose();
   };
@@ -107,34 +107,34 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "Feedback Modal"],
+        source: [...(inherited.source ?? []), 'Feedback Modal'],
       })}
     >
       <div
-        className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
         onClick={handleClose}
       >
         <div
-          className="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative"
+          className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           <button
-            className="absolute top-4 right-4 z-10 p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+            className="absolute top-4 right-4 z-10 cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
             disabled={isSubmitting}
             onClick={handleClose}
           >
-            <X className="w-5 h-5" />
+            <X className="h-5 w-5" />
           </button>
 
           {isSuccess ? (
             <div className="p-8 text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Check className="w-8 h-8 text-green-600" />
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100">
+                <Check className="h-8 w-8 text-green-600" />
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">
+              <h2 className="mb-2 text-2xl font-bold text-slate-900">
                 Thanks for your feedback!
               </h2>
-              <p className="text-slate-500 mb-6">
+              <p className="mb-6 text-slate-500">
                 We appreciate you taking the time to help us improve Speecha.
               </p>
               <Button className="w-full" onClick={handleClose}>
@@ -143,11 +143,11 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             </div>
           ) : (
             <>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-white text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <MessageSquare className="w-8 h-8 text-white" />
+              <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-center text-white">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-400 shadow-lg">
+                  <MessageSquare className="h-8 w-8 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold mb-2">Send Feedback</h2>
+                <h2 className="mb-2 text-2xl font-bold">Send Feedback</h2>
                 <p className="text-slate-400">
                   Help us improve your experience
                 </p>
@@ -158,33 +158,33 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   <div>
                     <textarea
                       className={cn(
-                        "w-full px-4 py-3.5 rounded-xl border-2 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 transition-colors resize-none min-h-[150px]",
-                        error ? "border-red-300 bg-red-50" : "border-slate-200"
+                        'min-h-[150px] w-full resize-none rounded-xl border-2 px-4 py-3.5 text-slate-900 transition-colors placeholder:text-slate-400 focus:border-blue-500 focus:outline-none',
+                        error ? 'border-red-300 bg-red-50' : 'border-slate-200'
                       )}
                       disabled={isSubmitting}
                       onChange={(e) => {
                         setMessage(e.target.value);
-                        setError("");
+                        setError('');
                       }}
                       placeholder="Share your thoughts, suggestions, or report issues..."
                       value={message}
                     />
 
-                    <div className="flex items-center justify-between mt-2">
+                    <div className="mt-2 flex items-center justify-between">
                       <div>
                         {error && (
-                          <p className="text-sm text-red-600 flex items-center gap-1">
-                            <AlertCircle className="w-4 h-4" />
+                          <p className="flex items-center gap-1 text-sm text-red-600">
+                            <AlertCircle className="h-4 w-4" />
                             {error}
                           </p>
                         )}
                       </div>
                       <p
                         className={cn(
-                          "text-sm",
+                          'text-sm',
                           characterCount > maxCharacters
-                            ? "text-red-600 font-medium"
-                            : "text-slate-400"
+                            ? 'font-medium text-red-600'
+                            : 'text-slate-400'
                         )}
                       >
                         {characterCount}/{maxCharacters}
@@ -200,12 +200,12 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="h-5 w-5 animate-spin" />
                         Sending...
                       </>
                     ) : (
                       <>
-                        <MessageSquare className="w-5 h-5" />
+                        <MessageSquare className="h-5 w-5" />
                         Send Feedback
                       </>
                     )}
@@ -213,7 +213,7 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 </form>
 
                 <button
-                  className="w-full py-3 mt-3 text-sm text-slate-500 hover:text-slate-700 cursor-pointer transition-colors"
+                  className="mt-3 w-full cursor-pointer py-3 text-sm text-slate-500 transition-colors hover:text-slate-700"
                   disabled={isSubmitting}
                   onClick={handleClose}
                 >

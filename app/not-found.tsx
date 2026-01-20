@@ -1,43 +1,43 @@
-"use client";
+'use client';
 
-import { Home } from "lucide-react";
-import Link from "next/link";
+import { Home } from 'lucide-react';
+import Link from 'next/link';
 
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
-import { ROUTES } from "@/lib/routes";
+import { Footer } from '@/components/layout/Footer';
+import { Navbar } from '@/components/layout/Navbar';
+import { ROUTES } from '@/lib/routes';
 
 export default function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 flex flex-col">
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-slate-100">
       <Navbar />
 
       {/* Main Content */}
-      <main className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-16">
-        <div className="max-w-2xl mx-auto text-center">
+      <main className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-16">
+        <div className="mx-auto max-w-2xl text-center">
           {/* 404 Visual */}
-          <div className="mb-8 relative">
-            <div className="text-[120px] md:text-[180px] font-bold text-slate-300 leading-none">
+          <div className="relative mb-8">
+            <div className="text-[120px] leading-none font-bold text-slate-300 md:text-[180px]">
               404
             </div>
           </div>
 
           {/* Message */}
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+          <h1 className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
             Page Not Found
           </h1>
-          <p className="text-lg text-slate-600 mb-8 max-w-md mx-auto">
+          <p className="mx-auto mb-8 max-w-md text-lg text-slate-600">
             This wasn’t supposed to happen. The page you’re looking for is
             missing. Let&apos;s get you back on track.
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-600/20"
+              className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-600/20 transition-colors hover:bg-orange-700"
               href={ROUTES.home}
             >
-              <Home className="w-5 h-5" />
+              <Home className="h-5 w-5" />
               Go Home
             </Link>
           </div>

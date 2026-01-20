@@ -1,5 +1,5 @@
-import { Filler } from "@/schema/filler";
-import { FillerStatsType, NormalizedWord } from "@/types/domain";
+import { Filler } from '@/schema/filler';
+import { FillerStatsType, NormalizedWord } from '@/types/domain';
 
 interface ComputeFillerStatsParams {
   fillers: Filler[];

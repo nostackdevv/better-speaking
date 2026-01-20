@@ -1,15 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
-import { ApiError, TranscribeResponse } from "@/types/api";
+import { ApiError, TranscribeResponse } from '@/types/api';
 
 export function useTranscribeAudio() {
   return useMutation<TranscribeResponse, ApiError, File | Blob>({
     mutationFn: async (file: File | Blob) => {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
 
-      const response = await fetch("/api/transcribe", {
-        method: "POST",
+      const response = await fetch('/api/transcribe', {
+        method: 'POST',
         body: formData,
       });
 

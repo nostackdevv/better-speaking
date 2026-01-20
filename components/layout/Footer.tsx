@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import { Mic, Heart } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Mic, Heart } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import { FeedbackModal } from "@/components/feedback/FeedbackModal";
-import { ROUTES } from "@/lib/routes";
+import { FeedbackModal } from '@/components/feedback/FeedbackModal';
+import { ROUTES } from '@/lib/routes';
 
-
-import { WaitlistModal } from "../waitlist/WaitlistModal";
+import { WaitlistModal } from '../waitlist/WaitlistModal';
 
 export function Footer() {
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -22,37 +21,37 @@ export function Footer() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
-            backgroundSize: "32px 32px",
+              'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '32px 32px',
           }}
-         />
+        />
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+      <div className="relative mx-auto max-w-6xl px-4 py-16">
+        <div className="mb-12 grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
           <div className="col-span-2">
             <Link
               aria-label="Speecha home"
               className="inline-flex items-center gap-3"
               href={ROUTES.home}
             >
-              <div className="w-12 h-12 rounded-2xl bg-orange-600 flex items-center justify-center">
-                <Mic className="w-6 h-6 text-white" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-600">
+                <Mic className="h-6 w-6 text-white" />
               </div>
-              <span className="font-bold text-2xl text-white">Speecha</span>
+              <span className="text-2xl font-bold text-white">Speecha</span>
             </Link>
-            <p className="text-slate-400 mb-6 leading-relaxed">
+            <p className="mb-6 leading-relaxed text-slate-400">
               Track how much filler words you use, eliminate it, and speak with
               confidence in every conversation.
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Resources</h4>
+            <h4 className="mb-4 font-semibold text-white">Resources</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <button
-                  className="text-slate-400 hover:text-orange-400 transition-colors cursor-pointer"
+                  className="cursor-pointer text-slate-400 transition-colors hover:text-orange-400"
                   onClick={() => setIsFeedbackModalOpen(true)}
                 >
                   Send Feedback
@@ -61,7 +60,7 @@ export function Footer() {
 
               <li>
                 <button
-                  className="text-slate-400 hover:text-orange-400 transition-colors cursor-pointer"
+                  className="cursor-pointer text-slate-400 transition-colors hover:text-orange-400"
                   onClick={() => setIsWaitlistModalOpen(true)}
                 >
                   Join the pro waitlist
@@ -71,11 +70,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-white mb-4">Legal</h4>
+            <h4 className="mb-4 font-semibold text-white">Legal</h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
-                  className="text-slate-400 hover:text-orange-400 transition-colors"
+                  className="text-slate-400 transition-colors hover:text-orange-400"
                   href={ROUTES.legal.privacy}
                 >
                   Privacy Policy
@@ -83,7 +82,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  className="text-slate-400 hover:text-orange-400 transition-colors"
+                  className="text-slate-400 transition-colors hover:text-orange-400"
                   href={ROUTES.legal.terms}
                 >
                   Terms of Service
@@ -93,12 +92,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-8 sm:flex-row">
           <p className="text-sm text-slate-500">
             © {new Date().getFullYear()} Speecha. All rights reserved.
           </p>
-          <p className="text-sm text-slate-500 flex items-center gap-2">
-            Made with <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />{" "}
+          <p className="flex items-center gap-2 text-sm text-slate-500">
+            Made with <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />{' '}
             in London
           </p>
         </div>

@@ -1,8 +1,8 @@
-import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
+import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 export function Markdown({ content }: { content: string }) {
   return (
@@ -10,8 +10,8 @@ export function Markdown({ content }: { content: string }) {
       <ReactMarkdown
         components={{
           a: ({ href, children }) => {
-            const url = href ?? "";
-            const isExternal = url.startsWith("http");
+            const url = href ?? '';
+            const isExternal = url.startsWith('http');
             if (!url) return <span>{children}</span>;
             if (isExternal) {
               return (
@@ -25,9 +25,9 @@ export function Markdown({ content }: { content: string }) {
           img: ({ alt, src }) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              alt={alt ?? ""}
+              alt={alt ?? ''}
               className="rounded-2xl border border-slate-200 shadow-sm"
-              src={src ?? ""}
+              src={src ?? ''}
             />
           ),
           table: ({ children }) => (
@@ -38,7 +38,7 @@ export function Markdown({ content }: { content: string }) {
         }}
         rehypePlugins={[
           rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: "wrap" }],
+          [rehypeAutolinkHeadings, { behavior: 'wrap' }],
         ]}
         remarkPlugins={[remarkGfm]}
       >

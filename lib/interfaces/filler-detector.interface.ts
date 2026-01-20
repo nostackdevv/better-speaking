@@ -1,4 +1,4 @@
-import { Filler } from "@/schema/filler";
+import { Filler } from '@/schema/filler';
 
 export interface Word {
   index: number;

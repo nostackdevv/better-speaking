@@ -1,19 +1,19 @@
-"use client";
-import { Mail } from "lucide-react";
+'use client';
+import { Mail } from 'lucide-react';
 
-import { ExpandableSection } from "@/components/ui/ExpandableSection";
+import { ExpandableSection } from '@/components/ui/ExpandableSection';
 
 export function PrivacyPolicyContent() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pb-24">
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-4 pt-12">
+      <header className="mx-auto max-w-4xl px-4 pt-12">
         <div className="flex items-center justify-center gap-3">
           <div className="">
             <h1 className="text-2xl font-bold text-slate-900">
               Speecha Privacy Notice
             </h1>
-            <p className="text-sm text-slate-500 text-center">
+            <p className="text-center text-sm text-slate-500">
               Last updated: January 7, 2026
             </p>
           </div>
@@ -21,10 +21,10 @@ export function PrivacyPolicyContent() {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="mx-auto max-w-4xl px-4 py-8">
         {/* Intro Card */}
-        <div className="bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/60 rounded-2xl p-8 mb-8">
-          <p className="text-slate-700 leading-relaxed">
+        <div className="mb-8 rounded-2xl border border-orange-200/60 bg-gradient-to-br from-orange-50 to-rose-50 p-8">
+          <p className="leading-relaxed text-slate-700">
             Speecha app (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is
             committed to protecting your privacy. This policy explains how we
             handle your information when you use our speech analysis service.
@@ -34,7 +34,7 @@ export function PrivacyPolicyContent() {
         </div>
 
         {/* Main Content Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-8 space-y-6">
+        <div className="space-y-6 rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm">
           <ExpandableSection
             defaultOpen={true}
             id="information-we-collect"
@@ -42,10 +42,10 @@ export function PrivacyPolicyContent() {
           >
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Audio & Analysis Data:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>
                     <strong>Audio recordings</strong> you upload or record
                     (processed temporarily, never stored)
@@ -57,10 +57,10 @@ export function PrivacyPolicyContent() {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Information You Provide:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>
                     <strong>Email addresses</strong> if you join our waitlist
                   </li>
@@ -72,10 +72,10 @@ export function PrivacyPolicyContent() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Analytics Data:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>
                     Usage patterns, button clicks, and feature interactions
                   </li>
@@ -89,7 +89,7 @@ export function PrivacyPolicyContent() {
             id="how-we-use-your-information"
             title="2. How We Use Your Information"
           >
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>
                 <strong>To provide our service:</strong> Process your audio to
                 detect filler words and generate analysis
@@ -120,8 +120,8 @@ export function PrivacyPolicyContent() {
             </p>
 
             <div className="space-y-3">
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h4 className="font-semibold text-slate-900 mb-1">
+              <div className="rounded-lg bg-slate-50 p-4">
+                <h4 className="mb-1 font-semibold text-slate-900">
                   Speech Recognition Services
                 </h4>
                 <p className="text-sm">
@@ -130,8 +130,8 @@ export function PrivacyPolicyContent() {
                 </p>
               </div>
 
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h4 className="font-semibold text-slate-900 mb-1">
+              <div className="rounded-lg bg-slate-50 p-4">
+                <h4 className="mb-1 font-semibold text-slate-900">
                   AI Analysis Services
                 </h4>
                 <p className="text-sm">
@@ -141,8 +141,8 @@ export function PrivacyPolicyContent() {
                 </p>
               </div>
 
-              <div className="bg-slate-50 rounded-lg p-4">
-                <h4 className="font-semibold text-slate-900 mb-1">
+              <div className="rounded-lg bg-slate-50 p-4">
+                <h4 className="mb-1 font-semibold text-slate-900">
                   Analytics Providers
                 </h4>
                 <p className="text-sm">
@@ -164,10 +164,10 @@ export function PrivacyPolicyContent() {
           >
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   What We Store:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>
                     <strong>Waitlist emails:</strong> Until you unsubscribe or
                     we launch
@@ -184,24 +184,24 @@ export function PrivacyPolicyContent() {
               </div>
 
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   What We Don&apos;t Store:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>Your audio recordings</li>
                   <li>Your transcripts or analysis results</li>
                   <li>Any speech content from your sessions</li>
                 </ul>
               </div>
 
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mt-4">
-                <h4 className="font-semibold text-slate-900 mb-2">
+              <div className="mt-4 rounded-lg border border-orange-200 bg-orange-50 p-4">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Your Rights (GDPR):
                 </h4>
-                <p className="text-sm mb-2">
+                <p className="mb-2 text-sm">
                   As a UK-based service, you have the right to:
                 </p>
-                <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
+                <ul className="ml-2 list-inside list-disc space-y-1 text-sm">
                   <li>Access your personal data</li>
                   <li>Correct inaccurate data</li>
                   <li>Request deletion of your data</li>
@@ -217,7 +217,7 @@ export function PrivacyPolicyContent() {
             <p className="mb-3">
               We take reasonable measures to protect your information:
             </p>
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>
                 All data transmission uses industry-standard encryption
                 (HTTPS/TLS)
@@ -271,7 +271,7 @@ export function PrivacyPolicyContent() {
             <p className="mb-3">
               We use minimal cookies and tracking technologies:
             </p>
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>
                 <strong>Essential cookies:</strong> Required for the site to
                 function
@@ -292,7 +292,7 @@ export function PrivacyPolicyContent() {
               We may update this Privacy Policy from time to time. When we do,
               we will:
             </p>
-            <ul className="list-disc list-inside space-y-1 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-1">
               <li>Update the &quot;Last updated&quot; date at the top</li>
               <li>
                 Notify you via email if you&apos;re on our waitlist (for
@@ -307,15 +307,15 @@ export function PrivacyPolicyContent() {
           </ExpandableSection>
 
           <ExpandableSection id="contact" title="9. Contact Us">
-            <div className="bg-slate-50 rounded-lg p-6">
+            <div className="rounded-lg bg-slate-50 p-6">
               <p className="mb-4">
                 If you have any questions about this Privacy Policy, want to
                 exercise your rights, or need to contact us for any reason:
               </p>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-orange-500" />
+                <Mail className="h-5 w-5 text-orange-500" />
                 <a
-                  className="text-orange-600 hover:text-orange-700 font-medium"
+                  className="font-medium text-orange-600 hover:text-orange-700"
                   href="mailto:privacy@speecha.app"
                 >
                   privacy@speecha.app

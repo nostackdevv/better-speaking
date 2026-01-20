@@ -1,6 +1,6 @@
-import { Filler } from "@/schema/filler";
-import { NormalizedWord } from "@/types/domain";
-import { Chunk } from "@/types/ui";
+import { Filler } from '@/schema/filler';
+import { NormalizedWord } from '@/types/domain';
+import { Chunk } from '@/types/ui';
 
 export function splitTranscriptIntoChunks(
   words: NormalizedWord[],
@@ -25,7 +25,7 @@ export function splitTranscriptIntoChunks(
   for (const word of words) {
     const fillerId = wordToFiller.get(word.index);
     const isFiller = fillerId !== undefined;
-    const type = isFiller ? "filler" : "normal";
+    const type = isFiller ? 'filler' : 'normal';
 
     // Determine if we need a new chunk
     const needsNewChunk =

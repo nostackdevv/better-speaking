@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import * as Sentry from "@sentry/nextjs";
-import { AlertTriangle, Home, RefreshCw } from "lucide-react";
-import Link from "next/link";
-import { useEffect } from "react";
+import * as Sentry from '@sentry/nextjs';
+import { AlertTriangle, Home, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
-import { ROUTES } from "@/lib/routes";
+import { Footer } from '@/components/layout/Footer';
+import { Navbar } from '@/components/layout/Navbar';
+import { ROUTES } from '@/lib/routes';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -20,35 +20,35 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 flex flex-col">
+    <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-50 to-slate-100">
       <Navbar />
 
-      <main className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-16">
-        <div className="max-w-2xl mx-auto text-center">
+      <main className="flex min-h-[calc(100vh-200px)] items-center justify-center px-4 py-16">
+        <div className="mx-auto max-w-2xl text-center">
           {/* Error Visual */}
-          <div className="mb-8 relative">
-            <div className="w-24 h-24 mx-auto rounded-full bg-red-100 flex items-center justify-center">
-              <AlertTriangle className="w-12 h-12 text-red-600" />
+          <div className="relative mb-8">
+            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
+              <AlertTriangle className="h-12 w-12 text-red-600" />
             </div>
           </div>
 
           {/* Message */}
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+          <h1 className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
             Something Went Wrong
           </h1>
-          <p className="text-lg text-slate-600 mb-8 max-w-md mx-auto">
+          <p className="mx-auto mb-8 max-w-md text-lg text-slate-600">
             We encountered an unexpected error. Our team has been notified and
             is working on a fix.
           </p>
 
           {/* Dev error details */}
-          {process.env.NODE_ENV === "development" && (
-            <div className="mb-8 p-4 bg-slate-100 rounded-xl text-left max-w-md mx-auto">
-              <p className="text-sm font-mono text-slate-700 break-all">
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mx-auto mb-8 max-w-md rounded-xl bg-slate-100 p-4 text-left">
+              <p className="font-mono text-sm break-all text-slate-700">
                 {error.message}
               </p>
               {error.digest && (
-                <p className="text-xs text-slate-500 mt-2">
+                <p className="mt-2 text-xs text-slate-500">
                   Error ID: {error.digest}
                 </p>
               )}
@@ -56,19 +56,19 @@ export default function Error({ error, reset }: ErrorProps) {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <button
-              className="inline-flex items-center gap-2 px-6 py-3 bg-orange-600 text-white font-semibold rounded-xl hover:bg-orange-700 transition-colors shadow-lg shadow-orange-600/20"
+              className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 font-semibold text-white shadow-lg shadow-orange-600/20 transition-colors hover:bg-orange-700"
               onClick={reset}
             >
-              <RefreshCw className="w-5 h-5" />
+              <RefreshCw className="h-5 w-5" />
               Try Again
             </button>
             <Link
-              className="inline-flex items-center gap-2 px-6 py-3 bg-slate-200 text-slate-700 font-semibold rounded-xl hover:bg-slate-300 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl bg-slate-200 px-6 py-3 font-semibold text-slate-700 transition-colors hover:bg-slate-300"
               href={ROUTES.home}
             >
-              <Home className="w-5 h-5" />
+              <Home className="h-5 w-5" />
               Go Home
             </Link>
           </div>

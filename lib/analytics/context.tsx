@@ -1,9 +1,13 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useCallback, useMemo } from "react";
+import { createContext, useContext, useCallback, useMemo } from 'react';
 
-import { analytics } from "./analytics";
-import type { EventProperties, GetEventCallback, GetPropertiesCallback } from "./types";
+import { analytics } from './analytics';
+import type {
+  EventProperties,
+  GetEventCallback,
+  GetPropertiesCallback,
+} from './types';
 
 type AnalyticsContextValue = {
   getProperties: () => EventProperties;

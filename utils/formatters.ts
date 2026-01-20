@@ -16,11 +16,11 @@ export function formatBytesToSize(bytes: number): string {
  * @returns A formatted timestamp like "3:45" or "0:00"
  */
 export function formatSecondsToTimestamp(seconds: number): string {
-  if (!isFinite(seconds) || seconds < 0) return "0:00";
+  if (!isFinite(seconds) || seconds < 0) return '0:00';
 
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
 /**
@@ -32,5 +32,5 @@ export function formatSecondsToTimestamp(seconds: number): string {
 export function formatDuration(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 }

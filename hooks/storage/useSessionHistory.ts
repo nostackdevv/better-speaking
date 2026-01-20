@@ -1,13 +1,17 @@
-import { useCallback } from "react";
+import { useCallback } from 'react';
 
-import { useLocalStorage } from "@/hooks/ui/useLocalStorage";
-import { StoredSession } from "@/types/domain";
+import { useLocalStorage } from '@/hooks/ui/useLocalStorage';
+import { StoredSession } from '@/types/domain';
 
 const MAX_SESSIONS = 25;
-const STORAGE_KEY = "practice-sessions";
+const STORAGE_KEY = 'practice-sessions';
 
 export function useSessionHistory() {
-  const { value: sessions, setValue: setSessions, isLoaded } = useLocalStorage<StoredSession[]>({
+  const {
+    value: sessions,
+    setValue: setSessions,
+    isLoaded,
+  } = useLocalStorage<StoredSession[]>({
     key: STORAGE_KEY,
     defaultValue: [],
   });

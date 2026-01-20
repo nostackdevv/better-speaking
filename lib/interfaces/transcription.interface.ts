@@ -1,4 +1,4 @@
-import { DeepgramWord } from "@/types/external/deepgram";
+import { DeepgramWord } from '@/types/external/deepgram';
 
 export interface TranscriptionResult {
   transcript: string;

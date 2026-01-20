@@ -1,4 +1,4 @@
-import { supabaseAdmin } from "@/lib/supabase/client";
+import { supabaseAdmin } from '@/lib/supabase/client';
 
 export interface AddToWaitlistParams {
   email: string;
@@ -16,17 +16,17 @@ export interface AddToWaitlistResult {
  */
 export async function addToWaitlist({
   email,
-  source = "web",
+  source = 'web',
 }: AddToWaitlistParams): Promise<AddToWaitlistResult> {
   const trimmedEmail = email.toLowerCase().trim();
 
   const { error } = await supabaseAdmin
-    .from("waitlist")
+    .from('waitlist')
     .insert({ email: trimmedEmail, source });
 
   if (error) {
     // PostgreSQL unique constraint violation code
-    if (error.code === "23505") {
+    if (error.code === '23505') {
       return { success: true, alreadyExists: true };
     }
 

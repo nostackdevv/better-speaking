@@ -10,10 +10,12 @@ export type AnalyticsEvent = {
 
 export type GetEventCallback = (inherited: EventProperties) => AnalyticsEvent;
 
-export type GetPropertiesCallback = (inherited: EventProperties) => EventProperties;
+export type GetPropertiesCallback = (
+  inherited: EventProperties
+) => EventProperties;
 
 export type RecordingStartedProperties = EventProperties & {
-  inputSource: "microphone";
+  inputSource: 'microphone';
 };
 
 export type RecordingCompletedProperties = EventProperties & {
@@ -23,7 +25,7 @@ export type RecordingCompletedProperties = EventProperties & {
 
 export type RecordingDiscardedProperties = EventProperties & {
   duration: number;
-  reason: "user_action" | "too_short" | "too_long";
+  reason: 'user_action' | 'too_short' | 'too_long';
 };
 
 export type FileUploadedProperties = EventProperties & {
@@ -43,12 +45,12 @@ export type FileUploadErrorProperties = EventProperties & {
 };
 
 export type AnalysisStartedProperties = EventProperties & {
-  inputSource: "recording" | "upload";
+  inputSource: 'recording' | 'upload';
   duration: number;
 };
 
 export type AnalysisCompletedProperties = EventProperties & {
-  inputSource: "recording" | "upload";
+  inputSource: 'recording' | 'upload';
   duration: number;
   clarityScore: number;
   archetype: string;
@@ -61,14 +63,14 @@ export type AnalysisCompletedProperties = EventProperties & {
 };
 
 export type AnalysisErrorProperties = EventProperties & {
-  inputSource: "recording" | "upload";
+  inputSource: 'recording' | 'upload';
   error: string;
   duration?: number;
 };
 
 export type ModeSwitchedProperties = EventProperties & {
-  from: "record" | "upload";
-  to: "record" | "upload";
+  from: 'record' | 'upload';
+  to: 'record' | 'upload';
 };
 
 export type ShareModalOpenedProperties = EventProperties & {
@@ -77,14 +79,14 @@ export type ShareModalOpenedProperties = EventProperties & {
 };
 
 export type ResultSharedProperties = EventProperties & {
-  method: "native_share" | "clipboard" | "download";
+  method: 'native_share' | 'clipboard' | 'download';
   clarityScore: number;
   archetype: string;
-  device: "mobile" | "desktop";
+  device: 'mobile' | 'desktop';
 };
 
 export type ShareErrorProperties = EventProperties & {
-  method: "native_share" | "clipboard" | "download";
+  method: 'native_share' | 'clipboard' | 'download';
   error: string;
 };
 
@@ -97,20 +99,20 @@ export type HistoryClearedProperties = EventProperties & {
 };
 
 export type ChallengeCategorySelectedProperties = EventProperties & {
-  from: "interview" | "presentation" | "social" | "impromptu";
-  to: "interview" | "presentation" | "social" | "impromptu";
+  from: 'interview' | 'presentation' | 'social' | 'impromptu';
+  to: 'interview' | 'presentation' | 'social' | 'impromptu';
 };
 
 export type ChallengePromptRequestedProperties = EventProperties & {
-  category: "interview" | "presentation" | "social" | "impromptu";
+  category: 'interview' | 'presentation' | 'social' | 'impromptu';
 };
 
 export type WaitlistModalOpenedProperties = EventProperties & {
-  trigger: "pro_badge" | "challenge_mode" | "feature_gate";
+  trigger: 'pro_badge' | 'challenge_mode' | 'feature_gate';
 };
 
 export type WaitlistJoinedProperties = EventProperties & {
-  trigger: "pro_badge" | "challenge_mode" | "feature_gate";
+  trigger: 'pro_badge' | 'challenge_mode' | 'feature_gate';
 };
 
 export type WaitlistErrorProperties = EventProperties & {
@@ -140,8 +142,8 @@ export type TryAgainClickedProperties = EventProperties & {
 };
 
 export type ResultTabSwitchedProperties = EventProperties & {
-  from: "breakdown" | "transcript";
-  to: "breakdown" | "transcript";
+  from: 'breakdown' | 'transcript';
+  to: 'breakdown' | 'transcript';
 };
 
 export type AnalyticsEventMap = {

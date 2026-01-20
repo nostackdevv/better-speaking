@@ -1,7 +1,7 @@
-import { IdentifyFiller } from "@/lib/filler/classifier";
-import { Filler } from "@/schema/filler";
-import { NormalizedWord } from "@/types/domain";
-import { DeepgramWord } from "@/types/external/deepgram";
+import { IdentifyFiller } from '@/lib/filler/classifier';
+import { Filler } from '@/schema/filler';
+import { NormalizedWord } from '@/types/domain';
+import { DeepgramWord } from '@/types/external/deepgram';
 
 export function normalizeDeepgramTranscript({
   transcript,

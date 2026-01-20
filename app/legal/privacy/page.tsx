@@ -1,12 +1,12 @@
-import { APP_URL } from "@/lib/constants";
+import { APP_URL } from '@/lib/constants';
 
-import { PrivacyPolicyContent } from "./PrivacyPolicyContest";
+import { PrivacyPolicyContent } from './PrivacyPolicyContest';
 
 export const metadata = {
-  title: "Privacy Policy",
+  title: 'Privacy Policy',
   description:
-    "Learn how Speecha protects your privacy and handles your data. Your audio recordings and speech analysis data are processed securely.",
-  robots: "index, follow",
+    'Learn how Speecha protects your privacy and handles your data. Your audio recordings and speech analysis data are processed securely.',
+  robots: 'index, follow',
   alternates: {
     canonical: `${APP_URL}/legal/privacy`,
   },

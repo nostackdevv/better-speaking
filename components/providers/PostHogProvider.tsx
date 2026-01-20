@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { usePathname, useSearchParams } from "next/navigation";
-import posthog from "posthog-js";
-import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
-import { useEffect, Suspense } from "react";
+import { usePathname, useSearchParams } from 'next/navigation';
+import posthog from 'posthog-js';
+import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react';
+import { useEffect, Suspense } from 'react';
 
 function initPostHog() {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return;
 
   // Disable PostHog in development
-  if (process.env.NODE_ENV === "development") {
-    console.log("[PostHog] Disabled in development");
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[PostHog] Disabled in development');
     return;
   }
 
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   const posthogHost =
-    process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
+    process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
 
   if (!posthogKey) {
     return;
@@ -25,9 +25,9 @@ function initPostHog() {
   if (!posthog.__loaded) {
     posthog.init(posthogKey, {
       api_host: posthogHost,
-      person_profiles: "identified_only",
+      person_profiles: 'identified_only',
       capture_pageleave: true,
-      persistence: "localStorage+cookie",
+      persistence: 'localStorage+cookie',
       bootstrap: {
         distinctID: undefined,
       },
@@ -51,10 +51,10 @@ function PostHogPageView() {
     let url = window.origin + pathname;
     const search = searchParams?.toString();
     if (search) {
-      url = url + "?" + search;
+      url = url + '?' + search;
     }
 
-    posthogClient.capture("$pageview", {
+    posthogClient.capture('$pageview', {
       $current_url: url,
     });
   }, [pathname, searchParams, posthogClient]);

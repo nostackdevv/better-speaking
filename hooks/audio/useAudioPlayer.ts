@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, RefObject } from "react";
+import { useRef, useState, useCallback, RefObject } from 'react';
 
 type AudioPlayerState = {
   isPlaying: boolean;
@@ -74,9 +74,9 @@ export const useAudioPlayer = (): UseAudioPlayerReturn => {
   const handleError = useCallback(
     (e: React.SyntheticEvent<HTMLAudioElement>) => {
       const audio = e.currentTarget;
-      const errorMessage = audio?.error?.message || "Failed to load audio";
+      const errorMessage = audio?.error?.message || 'Failed to load audio';
 
-      console.error("Audio error:", audio?.error);
+      console.error('Audio error:', audio?.error);
 
       setState((prev) => ({
         ...prev,

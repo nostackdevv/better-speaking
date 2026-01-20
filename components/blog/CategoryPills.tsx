@@ -1,7 +1,7 @@
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
 
-import { BlogCategory } from "@/content/blog";
+import { BlogCategory } from '@/content/blog';
 
 function Pill({
   href,
@@ -15,20 +15,20 @@ function Pill({
   return (
     <Link
       className={[
-        "group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition",
+        'group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition',
         active
-          ? "border-slate-900 bg-slate-900 text-white"
-          : "border-slate-200 bg-white/70 text-slate-800 hover:border-slate-300 hover:bg-white",
-      ].join(" ")}
+          ? 'border-slate-900 bg-slate-900 text-white'
+          : 'border-slate-200 bg-white/70 text-slate-800 hover:border-slate-300 hover:bg-white',
+      ].join(' ')}
       href={href}
     >
       <span>{children}</span>
       <ArrowUpRight
         aria-hidden="true"
         className={[
-          "h-4 w-4 transition",
-          active ? "opacity-90" : "opacity-40 group-hover:opacity-70",
-        ].join(" ")}
+          'h-4 w-4 transition',
+          active ? 'opacity-90' : 'opacity-40 group-hover:opacity-70',
+        ].join(' ')}
       />
     </Link>
   );

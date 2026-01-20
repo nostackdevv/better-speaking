@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/Card";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import type { FillerStatsType } from "@/types/domain";
+import { Card } from '@/components/ui/Card';
+import { ProgressBar } from '@/components/ui/ProgressBar';
+import type { FillerStatsType } from '@/types/domain';
 
 type BreakdownTabProps = {
   fillerStats: FillerStatsType;
@@ -15,17 +15,17 @@ export const BreakdownTab = ({ fillerStats }: BreakdownTabProps) => {
   return (
     <div className="space-y-4">
       {mostUsedFiller && (
-        <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-          <p className="text-slate-700 leading-relaxed">
-            Watch out for{" "}
-            <span className="px-2 py-0.5 bg-orange-100 text-orange-700 rounded font-semibold">
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm">
+          <p className="leading-relaxed text-slate-700">
+            Watch out for{' '}
+            <span className="rounded bg-orange-100 px-2 py-0.5 font-semibold text-orange-700">
               {mostUsedFiller}
-            </span>{" "}
+            </span>{' '}
             — it&apos;s your most common filler.
             <span className="font-semibold text-slate-900">
-              {" "}
+              {' '}
               {fillerPercentage.toFixed(1)}%
-            </span>{" "}
+            </span>{' '}
             of your total words were fillers
           </p>
         </div>
@@ -33,17 +33,17 @@ export const BreakdownTab = ({ fillerStats }: BreakdownTabProps) => {
 
       {totalFillers > 0 && (
         <Card className="overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100">
+          <div className="border-b border-gray-100 px-4 py-3">
             <h3 className="font-semibold text-gray-900">Your filler words</h3>
           </div>
 
           <ul>
             {topFillers.map((filler, index) => (
               <li
-                className="flex items-center gap-3 px-4 py-3 border-b border-gray-50 last:border-b-0"
+                className="flex items-center gap-3 border-b border-gray-50 px-4 py-3 last:border-b-0"
                 key={filler.text}
               >
-                <span className="w-6 h-6 rounded-full bg-gray-100 text-xs font-semibold text-gray-500 flex items-center justify-center">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 text-xs font-semibold text-gray-500">
                   {index + 1}
                 </span>
                 <span className="flex-1 text-sm font-medium text-gray-800">
@@ -56,7 +56,7 @@ export const BreakdownTab = ({ fillerStats }: BreakdownTabProps) => {
                   size="sm"
                   value={filler.count}
                 />
-                <span className="w-10 text-sm font-bold text-gray-900 text-right">
+                <span className="w-10 text-right text-sm font-bold text-gray-900">
                   {filler.count}×
                 </span>
               </li>
@@ -66,7 +66,7 @@ export const BreakdownTab = ({ fillerStats }: BreakdownTabProps) => {
       )}
 
       {topFillers[0] && (
-        <Card className="p-4 bg-amber-50 border-amber-200">
+        <Card className="border-amber-200 bg-amber-50 p-4">
           <p className="text-sm text-amber-800">
             <span className="font-semibold">💡 Tip:</span> Try pausing instead
             of saying &quot;{topFillers[0].text}&quot;. A brief silence sounds

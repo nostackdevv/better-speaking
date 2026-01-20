@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { X, LucideIcon } from "lucide-react";
+import { X, LucideIcon } from 'lucide-react';
 
 type AudioItemCardProps = {
   icon: LucideIcon;
@@ -43,22 +43,22 @@ export function AudioItemCard({
   title,
   subtitle,
   onRemove,
-  removeLabel = "Remove",
+  removeLabel = 'Remove',
   removeIcon: RemoveIcon = X,
   truncateTitle = false,
 }: AudioItemCardProps) {
   return (
-    <div className="flex items-center gap-3 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+    <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 p-4">
       {/* Icon container */}
-      <div className="flex items-center justify-center w-10 h-10 bg-indigo-100 rounded-lg">
-        <Icon aria-hidden="true" className="w-5 h-5 text-indigo-600" />
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-100">
+        <Icon aria-hidden="true" className="h-5 w-5 text-indigo-600" />
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0 flex-1">
         <p
           className={`text-sm font-medium text-gray-900 ${
-            truncateTitle ? "truncate" : ""
+            truncateTitle ? 'truncate' : ''
           }`}
         >
           {title}
@@ -69,11 +69,11 @@ export function AudioItemCard({
       {/* Remove button */}
       <button
         aria-label={removeLabel}
-        className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-md transition-colors cursor-pointer"
+        className="cursor-pointer rounded-md p-1.5 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600"
         onClick={onRemove}
         type="button"
       >
-        <RemoveIcon className="w-4 h-4" />
+        <RemoveIcon className="h-4 w-4" />
       </button>
     </div>
   );

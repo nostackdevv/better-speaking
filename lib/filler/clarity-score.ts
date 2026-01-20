@@ -12,7 +12,7 @@
  * - Penalties are capped to ensure scores don't go to 0 for high filler usage
  */
 
-import type { FillerStatsType, ClarityResult } from "@/types/domain";
+import type { FillerStatsType, ClarityResult } from '@/types/domain';
 
 export function calculateClarityScore(
   stats: FillerStatsType,
@@ -38,7 +38,7 @@ export function calculateClarityScore(
 
   return {
     score,
-    version: "clarity_v1",
+    version: 'clarity_v1',
     rawScore,
   };
 }

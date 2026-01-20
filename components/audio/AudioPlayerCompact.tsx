@@ -1,27 +1,23 @@
-import { Pause, Play } from "lucide-react";
-import { ChangeEvent, useMemo } from "react";
+import { Pause, Play } from 'lucide-react';
+import { ChangeEvent, useMemo } from 'react';
 
-import { useAudioPlayer } from "@/hooks/audio/useAudioPlayer";
-import { formatSecondsToTimestamp } from "@/utils/formatters";
+import { useAudioPlayer } from '@/hooks/audio/useAudioPlayer';
+import { formatSecondsToTimestamp } from '@/utils/formatters';
 
 type AudioPlayerCompactProps = {
   src: string | Blob | File;
   duration: number;
 };
 
-export const AudioPlayerCompact = ({ src, duration }: AudioPlayerCompactProps) => {
-  const {
-    isPlaying,
-    currentTime,
-    isLoading,
-    error,
-    toggle,
-    seek,
-    audioProps,
-  } = useAudioPlayer();
+export const AudioPlayerCompact = ({
+  src,
+  duration,
+}: AudioPlayerCompactProps) => {
+  const { isPlaying, currentTime, isLoading, error, toggle, seek, audioProps } =
+    useAudioPlayer();
 
   const audioSrc = useMemo(() => {
-    if (typeof src === "string") {
+    if (typeof src === 'string') {
       return src;
     }
     const url = URL.createObjectURL(src);
@@ -49,23 +45,23 @@ export const AudioPlayerCompact = ({ src, duration }: AudioPlayerCompactProps) =
 
       <div className="flex items-center gap-3">
         <button
-          aria-label={isPlaying ? "Pause" : "Play"}
-          className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white cursor-pointer hover:bg-slate-700 transition-colors flex-shrink-0 disabled:opacity-50"
+          aria-label={isPlaying ? 'Pause' : 'Play'}
+          className="flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-full bg-slate-800 text-white transition-colors hover:bg-slate-700 disabled:opacity-50"
           disabled={isLoading}
           onClick={toggle}
           type="button"
         >
           {isPlaying ? (
-            <Pause className="w-4 h-4" />
+            <Pause className="h-4 w-4" />
           ) : (
-            <Play className="w-4 h-4 ml-0.5" />
+            <Play className="ml-0.5 h-4 w-4" />
           )}
         </button>
 
-        <div className="flex-1 relative">
-          <div className="relative h-1 bg-slate-200 rounded-full">
+        <div className="relative flex-1">
+          <div className="relative h-1 rounded-full bg-slate-200">
             <div
-              className="absolute inset-y-0 left-0 h-full bg-slate-400 rounded-full"
+              className="absolute inset-y-0 left-0 h-full rounded-full bg-slate-400"
               style={{ width: `${progress}%` }}
             />
             <input
@@ -81,8 +77,8 @@ export const AudioPlayerCompact = ({ src, duration }: AudioPlayerCompactProps) =
           </div>
         </div>
 
-        <span className="text-xs text-slate-500 tabular-nums shrink-0 min-w-10 text-right">
-          {formatSecondsToTimestamp(currentTime)} /{" "}
+        <span className="min-w-10 shrink-0 text-right text-xs text-slate-500 tabular-nums">
+          {formatSecondsToTimestamp(currentTime)} /{' '}
           {formatSecondsToTimestamp(duration)}
         </span>
       </div>

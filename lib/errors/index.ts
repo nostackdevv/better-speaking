@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/nextjs";
-import { NextResponse } from "next/server";
+import * as Sentry from '@sentry/nextjs';
+import { NextResponse } from 'next/server';
 
 // Base custom error with status code
 export class AppError extends Error {
@@ -16,35 +16,35 @@ export class AppError extends Error {
 
 // 400 - Client sent invalid data
 export class BadRequestError extends AppError {
-  constructor(message: string = "Bad request") {
+  constructor(message: string = 'Bad request') {
     super(message, 400);
   }
 }
 
 // 401 - Not authenticated
 export class UnauthorizedError extends AppError {
-  constructor(message: string = "Unauthorized") {
+  constructor(message: string = 'Unauthorized') {
     super(message, 401);
   }
 }
 
 // 403 - Authenticated but not allowed
 export class ForbiddenError extends AppError {
-  constructor(message: string = "Forbidden") {
+  constructor(message: string = 'Forbidden') {
     super(message, 403);
   }
 }
 
 // 404 - Resource not found
 export class NotFoundError extends AppError {
-  constructor(message: string = "Not found") {
+  constructor(message: string = 'Not found') {
     super(message, 404);
   }
 }
 
 // 409 - Conflict (duplicate resource, etc.)
 export class ConflictError extends AppError {
-  constructor(message: string = "Conflict") {
+  constructor(message: string = 'Conflict') {
     super(message, 409);
   }
 }
@@ -54,7 +54,7 @@ export class ValidationError extends AppError {
   readonly errors?: Record<string, string[]>;
 
   constructor(
-    message: string = "Validation failed",
+    message: string = 'Validation failed',
     errors?: Record<string, string[]>
   ) {
     super(message, 422);
@@ -64,21 +64,21 @@ export class ValidationError extends AppError {
 
 // 429 - Too many requests
 export class RateLimitError extends AppError {
-  constructor(message: string = "Too many requests") {
+  constructor(message: string = 'Too many requests') {
     super(message, 429);
   }
 }
 
 // 500 - Server error
 export class InternalServerError extends AppError {
-  constructor(message: string = "Internal server error") {
+  constructor(message: string = 'Internal server error') {
     super(message, 500);
   }
 }
 
 // 503 - Service unavailable (external API down, etc.)
 export class ServiceUnavailableError extends AppError {
-  constructor(message: string = "Service unavailable") {
+  constructor(message: string = 'Service unavailable') {
     super(message, 503);
   }
 }
@@ -89,8 +89,8 @@ export function handleError(error: unknown): NextResponse {
   if (!(error instanceof AppError) || !error.isOperational) {
     Sentry.captureException(error, {
       tags: {
-        error_type: "unexpected",
-        handler: "api_route",
+        error_type: 'unexpected',
+        handler: 'api_route',
       },
     });
   }
@@ -112,5 +112,5 @@ export function handleError(error: unknown): NextResponse {
   }
 
   // Handle unknown errors
-  return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
 }

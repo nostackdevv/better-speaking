@@ -1,8 +1,8 @@
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -152,7 +152,6 @@
     margin: 2rem 0;
   }
 }
-
 
 /* Modal animations */
 @keyframes fadeIn {

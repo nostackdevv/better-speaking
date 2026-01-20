@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { X, Download, Mic, Share2, Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { X, Download, Mic, Share2, Check } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import { getArchetype } from "@/constants/archetypes";
-import { useShareResults } from "@/hooks/share/useShareResults";
-import { useIsMobile } from "@/hooks/ui/useIsMobile";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import type { FillerStatsType, ClarityResult } from "@/types/domain";
+import { getArchetype } from '@/constants/archetypes';
+import { useShareResults } from '@/hooks/share/useShareResults';
+import { useIsMobile } from '@/hooks/ui/useIsMobile';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
+import type { FillerStatsType, ClarityResult } from '@/types/domain';
 
 type ShareModalProps = {
   isOpen: boolean;
@@ -22,43 +22,43 @@ type ShareModalProps = {
 const formatDuration = (seconds: number) => {
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
 export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
   const { track } = useAnalyticsContext();
   const isMobile = useIsMobile();
-  const [toast, setToast] = useState({ message: "", isVisible: false });
+  const [toast, setToast] = useState({ message: '', isVisible: false });
   const { shareResults, isSharing } = useShareResults();
 
   const audioLength = formatDuration(data.duration);
   const totalWords = data.fillerStats.totalWords;
   const totalFillers = data.fillerStats.totalFillers;
-  const mostUsedFiller = data.fillerStats.topFillers[0]?.text || "N/A";
+  const mostUsedFiller = data.fillerStats.topFillers[0]?.text || 'N/A';
   const clarityScore = data.clarityScore?.score || 0;
   const archetype = getArchetype(clarityScore);
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === 'Escape' && isOpen) {
         onClose();
       }
     };
 
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [isOpen, onClose]);
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -69,7 +69,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
 
   const showToast = (message: string) => {
     setToast({ message, isVisible: true });
-    setTimeout(() => setToast({ message: "", isVisible: false }), 3000);
+    setTimeout(() => setToast({ message: '', isVisible: false }), 3000);
   };
 
   const getShareImageUrl = () => {
@@ -85,8 +85,9 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
   };
 
   const handleShare = async () => {
-    const canShare = typeof navigator.canShare === "function" && navigator.canShare();
-    const method = canShare ? "native_share" : "clipboard";
+    const canShare =
+      typeof navigator.canShare === 'function' && navigator.canShare();
+    const method = canShare ? 'native_share' : 'clipboard';
     try {
       await shareResults({
         score: clarityScore,
@@ -98,52 +99,52 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
       });
 
       track((inherited) => ({
-        name: "result_shared",
+        name: 'result_shared',
         properties: {
           ...inherited,
           method,
           clarityScore,
           archetype: archetype.label,
-          device: isMobile ? "mobile" : "desktop",
+          device: isMobile ? 'mobile' : 'desktop',
         },
       }));
 
       if (!canShare) {
-        showToast("Image copied! Paste it anywhere.");
+        showToast('Image copied! Paste it anywhere.');
       }
     } catch (err) {
-      if (err instanceof Error && err.name !== "AbortError") {
+      if (err instanceof Error && err.name !== 'AbortError') {
         track((inherited) => ({
-          name: "share_error",
+          name: 'share_error',
           properties: {
             ...inherited,
             method,
             error: err.message,
           },
         }));
-        showToast("Failed to share. Try downloading instead.");
+        showToast('Failed to share. Try downloading instead.');
       }
     }
   };
 
   const handleDownload = () => {
-    const link = document.createElement("a");
+    const link = document.createElement('a');
     link.href = getShareImageUrl();
-    link.download = "speecha-results.png";
+    link.download = 'speecha-results.png';
     link.click();
 
     track((inherited) => ({
-      name: "result_shared",
+      name: 'result_shared',
       properties: {
         ...inherited,
-        method: "download",
+        method: 'download',
         clarityScore,
         archetype: archetype.label,
-        device: isMobile ? "mobile" : "desktop",
+        device: isMobile ? 'mobile' : 'desktop',
       },
     }));
 
-    showToast("Image saved!");
+    showToast('Image saved!');
   };
 
   if (!isOpen) return null;
@@ -152,64 +153,66 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "Share Modal"],
+        source: [...(inherited.source ?? []), 'Share Modal'],
       })}
     >
       <div
         aria-modal="true"
-        className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn"
+        className="animate-fadeIn fixed inset-0 z-50 flex items-center justify-center bg-slate-900/80 p-4 backdrop-blur-sm"
         onClick={handleBackdropClick}
         role="dialog"
       >
-        <div className="max-w-sm w-full animate-scaleIn">
-          <div className="flex justify-end mb-3">
+        <div className="animate-scaleIn w-full max-w-sm">
+          <div className="mb-3 flex justify-end">
             <button
               aria-label="Close modal"
-              className="p-2 text-slate-400 hover:text-white cursor-pointer rounded-lg hover:bg-slate-700/50 transition-colors"
+              className="cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-700/50 hover:text-white"
               onClick={onClose}
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
           </div>
 
-          <div className="bg-slate-900 rounded-3xl p-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl" />
-            <div className="absolute bottom-0 left-0 w-24 h-24  rounded-full blur-xl" />
+          <div className="relative overflow-hidden rounded-3xl bg-slate-900 p-6">
+            <div className="absolute top-0 right-0 h-32 w-32 rounded-full blur-2xl" />
+            <div className="absolute bottom-0 left-0 h-24 w-24 rounded-full blur-xl" />
 
             <div className="relative">
-              <div className="flex flex-col items-center text-center mb-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-orange-600 flex items-center justify-center">
-                    <Mic className="w-5 h-5 text-white" />
+              <div className="mb-4 flex flex-col items-center text-center">
+                <div className="mb-2 flex items-center gap-2">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600">
+                    <Mic className="h-5 w-5 text-white" />
                   </div>
-                  <span className="font-semibold text-white text-lg">
+                  <span className="text-lg font-semibold text-white">
                     Speecha
                   </span>
                 </div>
-                <p className="text-slate-400 text-sm mt-1">
+                <p className="mt-1 text-sm text-slate-400">
                   I just tracked how much filler words I use
                 </p>
               </div>
 
-              <div className="text-center mb-5">
-                <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">
+              <div className="mb-5 text-center">
+                <p className="mb-1 text-xs tracking-wider text-slate-400 uppercase">
                   Clarity Score
                 </p>
-                <p className="text-6xl font-bold text-white mb-2">
+                <p className="mb-2 text-6xl font-bold text-white">
                   {clarityScore}
                 </p>
                 <span
-                  className="inline-block px-3 py-1 text-white text-xs font-semibold rounded-full"
+                  className="inline-block rounded-full px-3 py-1 text-xs font-semibold text-white"
                   style={{ backgroundColor: archetype.color }}
                 >
                   {archetype.label}
                 </span>
               </div>
 
-              <div className="space-y-2 mb-5">
-                <div className="flex justify-center gap-6 text-center bg-slate-800/50 rounded-xl p-4">
+              <div className="mb-5 space-y-2">
+                <div className="flex justify-center gap-6 rounded-xl bg-slate-800/50 p-4 text-center">
                   <div>
-                    <p className="text-xl font-bold text-white">{audioLength}</p>
+                    <p className="text-xl font-bold text-white">
+                      {audioLength}
+                    </p>
                     <p className="text-xs text-slate-400">Duration</p>
                   </div>
                   <div className="w-px bg-slate-700" />
@@ -225,7 +228,7 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
                     <p className="text-xs text-slate-400">Fillers</p>
                   </div>
                 </div>
-                <div className="bg-slate-800/50 rounded-xl p-3 text-center">
+                <div className="rounded-xl bg-slate-800/50 p-3 text-center">
                   <p className="text-xs text-slate-400">Most used filler</p>
                   <p className="text-lg font-bold text-orange-400">
                     &quot;{mostUsedFiller}&quot;
@@ -233,44 +236,44 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-700/50 text-center">
-                <p className="text-slate-400 text-xs">Beat my score at</p>
-                <p className="text-orange-400 font-semibold text-sm">
+              <div className="border-t border-slate-700/50 pt-4 text-center">
+                <p className="text-xs text-slate-400">Beat my score at</p>
+                <p className="text-sm font-semibold text-orange-400">
                   speecha.app
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-3 mt-4">
+          <div className="mt-4 flex items-center justify-center gap-3">
             {isMobile && (
               <>
                 <button
                   aria-label="Share results"
-                  className="flex-1 h-11 bg-linear-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl cursor-pointer transition-colors flex items-center justify-center gap-2 text-white font-medium"
+                  className="flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-linear-to-r from-orange-500 to-rose-500 font-medium text-white transition-colors hover:from-orange-600 hover:to-rose-600 disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={isSharing}
                   onClick={handleShare}
                 >
-                  <Share2 className="w-5 h-5" />
-                  {isSharing ? "Sharing..." : "Share"}
+                  <Share2 className="h-5 w-5" />
+                  {isSharing ? 'Sharing...' : 'Share'}
                 </button>
 
                 <button
                   aria-label="Download image"
-                  className="w-11 h-11 bg-slate-700 hover:bg-slate-600 rounded-xl cursor-pointer transition-colors flex items-center justify-center"
+                  className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-slate-700 transition-colors hover:bg-slate-600"
                   onClick={handleDownload}
                 >
-                  <Download className="w-5 h-5 text-white" />
+                  <Download className="h-5 w-5 text-white" />
                 </button>
               </>
             )}
             {!isMobile && (
               <button
                 aria-label="Save results"
-                className="w-full h-11 bg-linear-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 rounded-xl cursor-pointer transition-colors flex items-center justify-center gap-2 text-white font-medium"
+                className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-linear-to-r from-orange-500 to-rose-500 font-medium text-white transition-colors hover:from-orange-600 hover:to-rose-600"
                 onClick={handleDownload}
               >
-                <Download className="w-5 h-5" />
+                <Download className="h-5 w-5" />
                 Save Image
               </button>
             )}
@@ -278,8 +281,8 @@ export const ShareModal = ({ isOpen, onClose, data }: ShareModalProps) => {
         </div>
 
         {toast.isVisible && (
-          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 z-50 animate-fade-in">
-            <Check className="w-4 h-4 text-emerald-400" />
+          <div className="animate-fade-in fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-xl bg-slate-800 px-4 py-3 text-white shadow-lg">
+            <Check className="h-4 w-4 text-emerald-400" />
             <span className="text-sm font-medium">{toast.message}</span>
           </div>
         )}

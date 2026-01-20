@@ -1,4 +1,4 @@
-import { BLOG_CATEGORIES, BLOG_POSTS } from "@/content/blog";
+import { BLOG_CATEGORIES, BLOG_POSTS } from '@/content/blog';
 
 export function getCategories() {
   return BLOG_CATEGORIES;
@@ -27,16 +27,16 @@ export function getPost(category: string, slug: string) {
 export function formatDate(iso: string) {
   const d = new Date(iso);
   return d.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
   });
 }
 
 export function readingTimeMinutes(markdown: string) {
   const words = markdown
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/[#>*_\-\[\]\(\)`]/g, "")
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/[#>*_\-\[\]\(\)`]/g, '')
     .split(/\s+/)
     .filter(Boolean).length;
 

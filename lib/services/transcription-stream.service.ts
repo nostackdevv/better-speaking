@@ -1,14 +1,13 @@
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
-import { TRANSCRIPT_DUMMY } from "@/dummy";
-import { calculateClarityScore } from "@/lib/filler/clarity-score";
-import { computeFillerStats } from "@/lib/filler/filler-stats";
-import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
-import { TranscriptionStreamData } from "@/types/api";
+import { TRANSCRIPT_DUMMY } from '@/dummy';
+import { calculateClarityScore } from '@/lib/filler/clarity-score';
+import { computeFillerStats } from '@/lib/filler/filler-stats';
+import { normalizeDeepgramTranscript } from '@/lib/utils/transformers';
+import { TranscriptionStreamData } from '@/types/api';
 
-import { transcribeAudio } from "./deepgram.service";
-import { detectFillers } from "./filler-detection.service";
-
+import { transcribeAudio } from './deepgram.service';
+import { detectFillers } from './filler-detection.service';
 
 export function processAudioTranscriptionStream(audioFile: Blob) {
   const encoder = new TextEncoder();
@@ -24,8 +23,8 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         // Check for empty transcript (no speech detected)
         if (!transcript || transcript.trim().length === 0) {
-          const errorData = { step: "error", error: "no_speech_detected" };
-          controller.enqueue(encoder.encode(JSON.stringify(errorData) + "\n"));
+          const errorData = { step: 'error', error: 'no_speech_detected' };
+          controller.enqueue(encoder.encode(JSON.stringify(errorData) + '\n'));
           controller.close();
           return;
         }
@@ -37,12 +36,14 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         // Send transcript data immediately
         const transcriptData: TranscriptionStreamData = {
-          step: "transcript",
+          step: 'transcript',
           transcript,
           words: normalizedWords,
           duration,
         };
-        controller.enqueue(encoder.encode(JSON.stringify(transcriptData) + "\n"));
+        controller.enqueue(
+          encoder.encode(JSON.stringify(transcriptData) + '\n')
+        );
 
         // Step 3: Detect fillers with OpenAI
         const fillers = await detectFillers({
@@ -55,10 +56,10 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         // Send fillers data
         const fillersData: TranscriptionStreamData = {
-          step: "fillers",
+          step: 'fillers',
           fillers,
         };
-        controller.enqueue(encoder.encode(JSON.stringify(fillersData) + "\n"));
+        controller.enqueue(encoder.encode(JSON.stringify(fillersData) + '\n'));
 
         // Step 4: Compute statistics and clarity score
         const fillerStats = computeFillerStats({
@@ -70,20 +71,20 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
         // Send final complete data
         const completeData: TranscriptionStreamData = {
-          step: "complete",
+          step: 'complete',
           fillerStats,
           clarityScore,
           createdAt: new Date().toISOString(),
         };
-        controller.enqueue(encoder.encode(JSON.stringify(completeData) + "\n"));
+        controller.enqueue(encoder.encode(JSON.stringify(completeData) + '\n'));
 
         controller.close();
       } catch (error) {
         // Capture streaming errors in Sentry with context
         Sentry.captureException(error, {
           tags: {
-            service: "transcription_stream",
-            step: "streaming",
+            service: 'transcription_stream',
+            step: 'streaming',
           },
           extra: {
             audioFileSize: audioFile.size,
@@ -97,8 +98,8 @@ export function processAudioTranscriptionStream(audioFile: Blob) {
 
   return new Response(stream, {
     headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Transfer-Encoding": "chunked",
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
     },
   });
 }
@@ -110,19 +111,19 @@ export function getDummyTranscriptionStream() {
     async start(controller) {
       // Step 1: Send transcript data
       const transcriptData: TranscriptionStreamData = {
-        step: "transcript",
+        step: 'transcript',
         transcript: TRANSCRIPT_DUMMY.transcript,
         words: TRANSCRIPT_DUMMY.words,
         duration: TRANSCRIPT_DUMMY.duration,
       };
-      controller.enqueue(encoder.encode(JSON.stringify(transcriptData) + "\n"));
+      controller.enqueue(encoder.encode(JSON.stringify(transcriptData) + '\n'));
 
       // Step 2: Send fillers data
       const fillersData: TranscriptionStreamData = {
-        step: "fillers",
+        step: 'fillers',
         fillers: TRANSCRIPT_DUMMY.fillers,
       };
-      controller.enqueue(encoder.encode(JSON.stringify(fillersData) + "\n"));
+      controller.enqueue(encoder.encode(JSON.stringify(fillersData) + '\n'));
 
       // Step 3: Send complete data with stats
       const fillerStats = computeFillerStats({
@@ -135,12 +136,12 @@ export function getDummyTranscriptionStream() {
         TRANSCRIPT_DUMMY.duration
       );
       const completeData: TranscriptionStreamData = {
-        step: "complete",
+        step: 'complete',
         fillerStats,
         clarityScore,
         createdAt: new Date().toISOString(),
       };
-      controller.enqueue(encoder.encode(JSON.stringify(completeData) + "\n"));
+      controller.enqueue(encoder.encode(JSON.stringify(completeData) + '\n'));
 
       controller.close();
     },
@@ -148,8 +149,8 @@ export function getDummyTranscriptionStream() {
 
   return new Response(stream, {
     headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Transfer-Encoding": "chunked",
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Transfer-Encoding': 'chunked',
     },
   });
 }

@@ -10,7 +10,7 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
@@ -50,4 +50,4 @@ export type Database = {
       [_ in never]: never;
     };
   };
-}
+};

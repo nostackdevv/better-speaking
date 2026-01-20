@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 
-import { APP_DOMAIN } from "@/lib/constants";
+import { APP_DOMAIN } from '@/lib/constants';
 
 interface ShareResultsParams {
   score: number;
@@ -40,12 +40,12 @@ export function useShareResults(): ShareResultsReturn {
       const response = await fetch(imageUrl);
 
       if (!response.ok) {
-        throw new Error("Failed to generate share image");
+        throw new Error('Failed to generate share image');
       }
 
       const blob = await response.blob();
-      const file = new File([blob], "speecha-results.png", {
-        type: "image/png",
+      const file = new File([blob], 'speecha-results.png', {
+        type: 'image/png',
       });
 
       // Mobile: Native share with image + caption
@@ -60,17 +60,17 @@ export function useShareResults(): ShareResultsReturn {
       // Desktop: Copy image to clipboard
       if (navigator.clipboard?.write) {
         await navigator.clipboard.write([
-          new ClipboardItem({ "image/png": blob }),
+          new ClipboardItem({ 'image/png': blob }),
         ]);
         return;
       }
 
       // If neither share nor clipboard is available, throw error
-      throw new Error("Sharing not supported on this device");
+      throw new Error('Sharing not supported on this device');
     },
     onError: (err: Error) => {
       // Don't treat user cancellation as an error
-      if (err.name !== "AbortError") {
+      if (err.name !== 'AbortError') {
         setError(err);
       }
     },

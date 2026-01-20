@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
-import { BlogShell } from "@/components/blog/BlogShell";
-import { CategoryPills } from "@/components/blog/CategoryPills";
-import { PostCard } from "@/components/blog/PostCard";
-import { getCategories, getPostsByCategory } from "@/lib/blog";
+import { BlogShell } from '@/components/blog/BlogShell';
+import { CategoryPills } from '@/components/blog/CategoryPills';
+import { PostCard } from '@/components/blog/PostCard';
+import { getCategories, getPostsByCategory } from '@/lib/blog';
 
 export const dynamicParams = false;
 
@@ -19,13 +19,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category } = await params;
   const cat = getCategories().find((c) => c.slug === category);
-  if (!cat) return { title: "Category" };
+  if (!cat) return { title: 'Category' };
 
   return {
     title: cat.label,
     description:
       cat.description ??
-      "Speaking guidance: clearer structure, stronger delivery, fewer filler words.",
+      'Speaking guidance: clearer structure, stronger delivery, fewer filler words.',
   };
 }
 
@@ -47,11 +47,11 @@ export default async function BlogCategoryPage({
         <p className="text-xs font-semibold tracking-[0.22em] text-slate-600 uppercase">
           Category
         </p>
-        <h1 className="mt-4 text-3xl sm:text-5xl font-bold tracking-tight text-slate-900">
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl">
           {cat.label}
         </h1>
         {cat.description && (
-          <p className="mt-5 text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="mx-auto mt-5 max-w-2xl leading-relaxed text-slate-600">
             {cat.description}
           </p>
         )}
@@ -61,7 +61,7 @@ export default async function BlogCategoryPage({
 
       <section className="mt-12">
         <div className="flex items-baseline justify-between gap-4">
-          <h3 className="text-sm font-semibold tracking-[0.18em] uppercase text-slate-700">
+          <h3 className="text-sm font-semibold tracking-[0.18em] text-slate-700 uppercase">
             Articles
           </h3>
           <div className="h-px flex-1 bg-slate-200" />

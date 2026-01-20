@@ -1,53 +1,53 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
-import importPlugin from "eslint-plugin-import";
+import { FlatCompat } from '@eslint/eslintrc';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import importPlugin from 'eslint-plugin-import';
 
 const compat = new FlatCompat();
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  ...compat.extends("prettier"),
+  ...compat.extends('prettier'),
   {
     plugins: {
       import: importPlugin,
     },
     rules: {
-      "prefer-const": "error",
-      "no-console": "warn",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
+      'prefer-const': 'error',
+      'no-console': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
         {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
-      "react/self-closing-comp": "error",
-      "react/jsx-curly-brace-presence": [
-        "error",
-        { props: "never", children: "never" },
+      'react/self-closing-comp': 'error',
+      'react/jsx-curly-brace-presence': [
+        'error',
+        { props: 'never', children: 'never' },
       ],
-      "react/jsx-sort-props": [
-        "error",
+      'react/jsx-sort-props': [
+        'error',
         {
           ignoreCase: true,
         },
       ],
-      "import/order": [
-        "error",
+      'import/order': [
+        'error',
         {
           groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
           ],
-          "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
     },
@@ -55,10 +55,10 @@ const eslintConfig = defineConfig([
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
   ]),
 ]);
 

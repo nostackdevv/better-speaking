@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Mic, Square, AlertCircle, Loader2 } from "lucide-react";
+import { Mic, Square, AlertCircle, Loader2 } from 'lucide-react';
 
-import { AudioItemCard } from "@/components/history/AudioItemCard";
-import { Button } from "@/components/ui/Button";
-import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import { formatSecondsToTimestamp } from "@/utils/formatters";
+import { AudioItemCard } from '@/components/history/AudioItemCard';
+import { Button } from '@/components/ui/Button';
+import { useAudioRecorder } from '@/hooks/audio/useAudioRecorder';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
+import { formatSecondsToTimestamp } from '@/utils/formatters';
 
-import { PromptSelector } from "./PromptSelector";
-import { WaveForm } from "./WaveForm";
+import { PromptSelector } from './PromptSelector';
+import { WaveForm } from './WaveForm';
 
 type AudioRecorderProps = {
   isAnalyzing?: boolean;
@@ -34,10 +34,10 @@ export const AudioRecorder = ({
 
   const handleStartRecording = () => {
     track((inherited) => ({
-      name: "recording_started",
+      name: 'recording_started',
       properties: {
         ...inherited,
-        inputSource: "microphone",
+        inputSource: 'microphone',
       },
     }));
     startRecording();
@@ -45,7 +45,7 @@ export const AudioRecorder = ({
 
   const handleStopRecording = () => {
     track((inherited) => ({
-      name: "recording_completed",
+      name: 'recording_completed',
       properties: {
         ...inherited,
         duration,
@@ -57,9 +57,9 @@ export const AudioRecorder = ({
 
   const handleDiscard = () => {
     const reason =
-      duration < 10 ? "too_short" : duration > 120 ? "too_long" : "user_action";
+      duration < 10 ? 'too_short' : duration > 120 ? 'too_long' : 'user_action';
     track((inherited) => ({
-      name: "recording_discarded",
+      name: 'recording_discarded',
       properties: {
         ...inherited,
         duration,
@@ -72,10 +72,10 @@ export const AudioRecorder = ({
   const handleAnalyze = () => {
     if (recordedBlob) {
       track((inherited) => ({
-        name: "analysis_started",
+        name: 'analysis_started',
         properties: {
           ...inherited,
-          inputSource: "recording",
+          inputSource: 'recording',
           duration,
         },
       }));
@@ -83,7 +83,7 @@ export const AudioRecorder = ({
     }
   };
 
-  if (status === "recorded") {
+  if (status === 'recorded') {
     const isValidDuration = duration >= 10 && duration <= 120;
     const isTooShort = duration < 10;
     const isTooLong = duration > 120;
@@ -92,7 +92,7 @@ export const AudioRecorder = ({
       <AnalyticsContextProvider
         getProperties={(inherited) => ({
           ...inherited,
-          source: [...(inherited.source ?? []), "Audio Recorder"],
+          source: [...(inherited.source ?? []), 'Audio Recorder'],
         })}
       >
         <div className="flex flex-col gap-3">
@@ -107,10 +107,10 @@ export const AudioRecorder = ({
 
           {isTooShort && (
             <div
-              className="flex items-center gap-2 p-3 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg"
+              className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-700"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <AlertCircle className="h-4 w-4 shrink-0" />
               <span>
                 Recording must be at least 10 seconds (currently {duration}s)
               </span>
@@ -119,10 +119,10 @@ export const AudioRecorder = ({
 
           {isTooLong && (
             <div
-              className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg"
+              className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
               role="alert"
             >
-              <AlertCircle className="w-4 h-4 shrink-0" />
+              <AlertCircle className="h-4 w-4 shrink-0" />
               <span>Recording exceeds maximum length of 2 minutes</span>
             </div>
           )}
@@ -133,11 +133,11 @@ export const AudioRecorder = ({
           >
             {isAnalyzing ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 Analyzing...
               </>
             ) : (
-              "Analyze Recording"
+              'Analyze Recording'
             )}
           </Button>
         </div>
@@ -149,51 +149,51 @@ export const AudioRecorder = ({
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "Audio Recorder"],
+        source: [...(inherited.source ?? []), 'Audio Recorder'],
       })}
     >
       <div className="flex flex-col items-center gap-4">
         {error && (
           <div
-            className="flex items-center gap-2 p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg w-full"
+            className="flex w-full items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
             role="alert"
           >
-            <AlertCircle className="w-4 h-4 shrink-0" />
+            <AlertCircle className="h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         <PromptSelector className="" />
 
-        <WaveForm isRecording={status === "recording"} />
+        <WaveForm isRecording={status === 'recording'} />
 
         <div
           aria-live="polite"
-          className="text-5xl font-bold text-slate-900 tabular-nums mb-6"
+          className="mb-6 text-5xl font-bold text-slate-900 tabular-nums"
         >
           {formatSecondsToTimestamp(duration)}
         </div>
 
-        {status === "idle" ? (
+        {status === 'idle' ? (
           <button
-            className="w-20 h-20 rounded-full bg-orange-600 hover:bg-orange-500 flex items-center justify-center cursor-pointer transition-all shadow-lg shadow-orange-500/30 hover:scale-105"
+            className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-orange-600 shadow-lg shadow-orange-500/30 transition-all hover:scale-105 hover:bg-orange-500"
             onClick={handleStartRecording}
           >
-            <Mic className="w-8 h-8 text-white" />
+            <Mic className="h-8 w-8 text-white" />
           </button>
         ) : (
           <button
-            className="w-20 h-20 rounded-full bg-slate-900 hover:bg-slate-800 flex items-center justify-center cursor-pointer transition-all shadow-lg hover:scale-105"
+            className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-slate-900 shadow-lg transition-all hover:scale-105 hover:bg-slate-800"
             onClick={handleStopRecording}
           >
-            <Square className="w-7 h-7 text-white fill-white" />
+            <Square className="h-7 w-7 fill-white text-white" />
           </button>
         )}
 
-        <p className="text-sm text-slate-400 mt-4">
-          {status === "idle"
-            ? "Tap to start • 10s – 2 mins"
-            : "Recording must be between 10 secs to 2 mins"}
+        <p className="mt-4 text-sm text-slate-400">
+          {status === 'idle'
+            ? 'Tap to start • 10s – 2 mins'
+            : 'Recording must be between 10 secs to 2 mins'}
         </p>
       </div>
     </AnalyticsContextProvider>

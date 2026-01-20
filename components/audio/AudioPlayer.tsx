@@ -1,8 +1,8 @@
-import { Pause, Play } from "lucide-react";
-import { ChangeEvent, useMemo } from "react";
+import { Pause, Play } from 'lucide-react';
+import { ChangeEvent, useMemo } from 'react';
 
-import { useAudioPlayer } from "@/hooks/audio/useAudioPlayer";
-import { formatSecondsToTimestamp } from "@/utils/formatters";
+import { useAudioPlayer } from '@/hooks/audio/useAudioPlayer';
+import { formatSecondsToTimestamp } from '@/utils/formatters';
 
 type AudioPlayerProps = {
   src: string | Blob | File;
@@ -21,7 +21,7 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
   } = useAudioPlayer();
 
   const audioSrc = useMemo(() => {
-    if (typeof src === "string") {
+    if (typeof src === 'string') {
       return src;
     }
     const url = URL.createObjectURL(src);
@@ -44,7 +44,7 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
   }
 
   return (
-    <div className="max-w-xl mx-auto">
+    <div className="mx-auto max-w-xl">
       <audio {...audioProps} src={audioSrc} />
 
       <div className="relative mb-4 h-1 w-full">
@@ -71,7 +71,7 @@ export const AudioPlayer = ({ src }: AudioPlayerProps) => {
         </span>
 
         <button
-          aria-label={isPlaying ? "Pause" : "Play"}
+          aria-label={isPlaying ? 'Pause' : 'Play'}
           className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-600 text-white transition-colors hover:bg-gray-700 disabled:opacity-50"
           disabled={isLoading}
           onClick={toggle}

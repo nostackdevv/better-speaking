@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Mic, Upload } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import { Mic, Upload } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
 
-import { Card } from "@/components/ui/Card";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { Card } from '@/components/ui/Card';
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
 
-import { AudioFileUpload } from "./AudioFileUpload";
-import { AudioRecorder } from "./AudioRecorder";
+import { AudioFileUpload } from './AudioFileUpload';
+import { AudioRecorder } from './AudioRecorder';
 
 export function AudioInput({
   isAnalyzing = false,
@@ -18,12 +18,12 @@ export function AudioInput({
   onUpload?: (file: File | Blob) => void;
 }) {
   const { track } = useAnalyticsContext();
-  const [mode, setMode] = useState<"record" | "upload">("record");
+  const [mode, setMode] = useState<'record' | 'upload'>('record');
 
-  const handleModeChange = (newMode: "record" | "upload") => {
+  const handleModeChange = (newMode: 'record' | 'upload') => {
     if (newMode !== mode) {
       track((inherited) => ({
-        name: "mode_switched",
+        name: 'mode_switched',
         properties: {
           ...inherited,
           from: mode,
@@ -44,53 +44,56 @@ export function AudioInput({
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "Audio Input"],
+        source: [...(inherited.source ?? []), 'Audio Input'],
       })}
     >
       <Card className="p-6">
         <div
           aria-label="Audio input method"
-          className="flex gap-2 mb-6 bg-slate-100 p-1.5 rounded-xl max-w-xs mx-auto"
+          className="mx-auto mb-6 flex max-w-xs gap-2 rounded-xl bg-slate-100 p-1.5"
           role="tablist"
         >
           <button
-            aria-selected={mode === "record"}
-            className={`flex-1 cursor-pointer px-4 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-              mode === "record"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
+            aria-selected={mode === 'record'}
+            className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
+              mode === 'record'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700'
             }`}
-            onClick={() => handleModeChange("record")}
+            onClick={() => handleModeChange('record')}
             role="tab"
           >
-            <Mic className="w-4 h-4" /> Record
+            <Mic className="h-4 w-4" /> Record
           </button>
           <button
-            aria-selected={mode === "upload"}
-            className={`flex-1 cursor-pointer px-4 py-2 text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 ${
-              mode === "upload"
-                ? "bg-white text-slate-900 shadow-sm"
-                : "text-slate-500 hover:text-slate-700"
+            aria-selected={mode === 'upload'}
+            className={`flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
+              mode === 'upload'
+                ? 'bg-white text-slate-900 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700'
             }`}
-            onClick={() => handleModeChange("upload")}
+            onClick={() => handleModeChange('upload')}
             role="tab"
           >
-            <Upload className="w-4 h-4" /> Upload
+            <Upload className="h-4 w-4" /> Upload
           </button>
         </div>
 
-        {mode === "record" && (
+        {mode === 'record' && (
           <AudioRecorder isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />
         )}
 
-        {mode === "upload" && (
-          <AudioFileUpload isAnalyzing={isAnalyzing} onAnalyze={handleAnalyze} />
+        {mode === 'upload' && (
+          <AudioFileUpload
+            isAnalyzing={isAnalyzing}
+            onAnalyze={handleAnalyze}
+          />
         )}
-        <div className="text-xs text-slate-500 text-center space-y-0.5 mt-3">
+        <div className="mt-3 space-y-0.5 text-center text-xs text-slate-500">
           <p>Your audio is processed securely and never stored.</p>
           <p>
             <Link
-              className="text-orange-500 hover:underline font-medium"
+              className="font-medium text-orange-500 hover:underline"
               href="/legal/privacy"
             >
               Learn how we protect your privacy

@@ -8,10 +8,10 @@
  * Used by: React components, UI utilities
  */
 
-import { NormalizedWord } from "./domain";
+import { NormalizedWord } from './domain';
 
 export interface Chunk {
-  type: "normal" | "filler";
+  type: 'normal' | 'filler';
   fillerId?: number;
   words: NormalizedWord[];
 }

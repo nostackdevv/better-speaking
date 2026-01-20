@@ -8,7 +8,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   description: string;
-  category: BlogCategory["slug"];
+  category: BlogCategory['slug'];
   date: string; // ISO string
   coverImage: { src: string; alt: string };
   author: { name: string; role?: string };
@@ -19,46 +19,46 @@ export type BlogPost = {
 
 export const BLOG_CATEGORIES: BlogCategory[] = [
   {
-    slug: "filler-words",
-    label: "Filler Words",
-    description: "Reduce ums and likes without sounding rehearsed.",
+    slug: 'filler-words',
+    label: 'Filler Words',
+    description: 'Reduce ums and likes without sounding rehearsed.',
   },
   {
-    slug: "structure",
-    label: "Structure",
-    description: "Frameworks that make your point land fast and clean.",
+    slug: 'structure',
+    label: 'Structure',
+    description: 'Frameworks that make your point land fast and clean.',
   },
   {
-    slug: "voice-and-delivery",
-    label: "Voice & Delivery",
-    description: "Pacing, emphasis, pausing, and sounding more certain.",
+    slug: 'voice-and-delivery',
+    label: 'Voice & Delivery',
+    description: 'Pacing, emphasis, pausing, and sounding more certain.',
   },
   {
-    slug: "meetings-and-work",
-    label: "Meetings & Work",
-    description: "Updates, pushback, and clarity under time pressure.",
+    slug: 'meetings-and-work',
+    label: 'Meetings & Work',
+    description: 'Updates, pushback, and clarity under time pressure.',
   },
   {
-    slug: "product-and-research",
-    label: "Product & Research",
-    description: "How Speecha measures progress and what the science suggests.",
+    slug: 'product-and-research',
+    label: 'Product & Research',
+    description: 'How Speecha measures progress and what the science suggests.',
   },
 ];
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    slug: "stop-saying-um-5-systems-that-actually-work",
-    title: "Stop saying “um”: 5 systems that actually work",
+    slug: 'stop-saying-um-5-systems-that-actually-work',
+    title: 'Stop saying “um”: 5 systems that actually work',
     description:
-      "Most advice is “just practice.” These systems reduce filler words while keeping you natural and sharp.",
-    category: "filler-words",
-    date: "2026-01-20",
+      'Most advice is “just practice.” These systems reduce filler words while keeping you natural and sharp.',
+    category: 'filler-words',
+    date: '2026-01-20',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80",
-      alt: "Team discussion in a bright office",
+      src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Team discussion in a bright office',
     },
-    author: { name: "Speecha Team", role: "Editorial" },
-    tags: ["fillers", "pauses", "habits"],
+    author: { name: 'Speecha Team', role: 'Editorial' },
+    tags: ['fillers', 'pauses', 'habits'],
     featured: true,
     content: `
 # Stop saying “um”: 5 systems that actually work
@@ -155,18 +155,18 @@ Listen for where your planning time appears. That’s where fillers live.
   },
 
   {
-    slug: "the-30-second-meeting-answer-point-proof-next",
-    title: "The 30-second meeting answer: Point → Proof → Next",
+    slug: 'the-30-second-meeting-answer-point-proof-next',
+    title: 'The 30-second meeting answer: Point → Proof → Next',
     description:
-      "Confidence isn’t volume. It’s structure. Use this three-line format to sound decisive without sounding scripted.",
-    category: "meetings-and-work",
-    date: "2026-01-18",
+      'Confidence isn’t volume. It’s structure. Use this three-line format to sound decisive without sounding scripted.',
+    category: 'meetings-and-work',
+    date: '2026-01-18',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=2400&q=80",
-      alt: "Person presenting with a laptop",
+      src: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Person presenting with a laptop',
     },
-    author: { name: "Speecha Team", role: "Product" },
-    tags: ["meetings", "frameworks", "clarity"],
+    author: { name: 'Speecha Team', role: 'Product' },
+    tags: ['meetings', 'frameworks', 'clarity'],
     content: `
 # The 30-second meeting answer: Point → Proof → Next
 
@@ -214,18 +214,18 @@ Structure reduces fillers because you’re following a path.
   },
 
   {
-    slug: "pause-like-a-pro-how-to-sound-confident-without-talking-more",
-    title: "Pause like a pro: how to sound confident without talking more",
+    slug: 'pause-like-a-pro-how-to-sound-confident-without-talking-more',
+    title: 'Pause like a pro: how to sound confident without talking more',
     description:
-      "The best speakers don’t rush. They place silence. Here’s how to pause without feeling awkward.",
-    category: "voice-and-delivery",
-    date: "2026-01-16",
+      'The best speakers don’t rush. They place silence. Here’s how to pause without feeling awkward.',
+    category: 'voice-and-delivery',
+    date: '2026-01-16',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80",
-      alt: "Two people in a focused conversation",
+      src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Two people in a focused conversation',
     },
-    author: { name: "Speecha Team", role: "Coaching" },
-    tags: ["pauses", "confidence", "delivery"],
+    author: { name: 'Speecha Team', role: 'Coaching' },
+    tags: ['pauses', 'confidence', 'delivery'],
     content: `
 # Pause like a pro: how to sound confident without talking more
 
@@ -265,18 +265,18 @@ Keep the version that feels most controlled.
   },
 
   {
-    slug: "story-in-60-seconds-the-problem-turn-solution-frame",
-    title: "Story in 60 seconds: Problem → Turn → Solution",
+    slug: 'story-in-60-seconds-the-problem-turn-solution-frame',
+    title: 'Story in 60 seconds: Problem → Turn → Solution',
     description:
-      "When you ramble, it’s usually missing structure. This frame turns any update into a clean mini story.",
-    category: "structure",
-    date: "2026-01-14",
+      'When you ramble, it’s usually missing structure. This frame turns any update into a clean mini story.',
+    category: 'structure',
+    date: '2026-01-14',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=2400&q=80",
-      alt: "Person speaking into a microphone on stage",
+      src: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Person speaking into a microphone on stage',
     },
-    author: { name: "Speecha Team", role: "Editorial" },
-    tags: ["story", "structure", "clarity"],
+    author: { name: 'Speecha Team', role: 'Editorial' },
+    tags: ['story', 'structure', 'clarity'],
     content: `
 # Story in 60 seconds: Problem → Turn → Solution
 
@@ -305,18 +305,18 @@ Everything else is noise.
   },
 
   {
-    slug: "how-to-stop-saying-like-without-sounding-stiff",
-    title: "How to stop saying “like” without sounding stiff",
+    slug: 'how-to-stop-saying-like-without-sounding-stiff',
+    title: 'How to stop saying “like” without sounding stiff',
     description:
-      "“Like” often replaces precision. Swap it with specificity, not silence, using these patterns.",
-    category: "filler-words",
-    date: "2026-01-12",
+      '“Like” often replaces precision. Swap it with specificity, not silence, using these patterns.',
+    category: 'filler-words',
+    date: '2026-01-12',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=2400&q=80",
-      alt: "Close-up of someone thinking while speaking",
+      src: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Close-up of someone thinking while speaking',
     },
-    author: { name: "Speecha Team", role: "Coaching" },
-    tags: ["like", "precision", "habits"],
+    author: { name: 'Speecha Team', role: 'Coaching' },
+    tags: ['like', 'precision', 'habits'],
     content: `
 # How to stop saying “like” without sounding stiff
 
@@ -353,18 +353,18 @@ Each time “like” appears, restart the sentence with:
   },
 
   {
-    slug: "what-speecha-measures-and-why-it-helps",
-    title: "What Speecha measures (and why it helps)",
+    slug: 'what-speecha-measures-and-why-it-helps',
+    title: 'What Speecha measures (and why it helps)',
     description:
-      "Good feedback is specific. Here’s how metrics like filler rate and pacing variability translate into clearer speaking.",
-    category: "product-and-research",
-    date: "2026-01-10",
+      'Good feedback is specific. Here’s how metrics like filler rate and pacing variability translate into clearer speaking.',
+    category: 'product-and-research',
+    date: '2026-01-10',
     coverImage: {
-      src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2400&q=80",
-      alt: "Analytics dashboard on a screen",
+      src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=2400&q=80',
+      alt: 'Analytics dashboard on a screen',
     },
-    author: { name: "Speecha Team", role: "Research" },
-    tags: ["metrics", "practice", "feedback"],
+    author: { name: 'Speecha Team', role: 'Research' },
+    tags: ['metrics', 'practice', 'feedback'],
     content: `
 # What Speecha measures (and why it helps)
 

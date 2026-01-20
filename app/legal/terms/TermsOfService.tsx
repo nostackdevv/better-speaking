@@ -1,21 +1,21 @@
-"use client";
-import { Mail, AlertCircle } from "lucide-react";
-import Link from "next/link";
+'use client';
+import { Mail, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
 
-import { ExpandableSection } from "@/components/ui/ExpandableSection";
-import { ROUTES } from "@/lib/routes";
+import { ExpandableSection } from '@/components/ui/ExpandableSection';
+import { ROUTES } from '@/lib/routes';
 
 export const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 pb-24">
       {/* Header */}
-      <header className="max-w-4xl mx-auto px-4 pt-12">
+      <header className="mx-auto max-w-4xl px-4 pt-12">
         <div className="flex items-center justify-center gap-3">
           <div className="">
             <h1 className="text-2xl font-bold text-slate-900">
               Speecha Terms of Service
             </h1>
-            <p className="text-sm text-slate-500 text-center">
+            <p className="text-center text-sm text-slate-500">
               Last updated: January 8, 2026
             </p>
           </div>
@@ -23,16 +23,16 @@ export const TermsOfService = () => {
       </header>
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="mx-auto max-w-4xl px-4 py-8">
         {/* Intro Card */}
-        <div className="bg-gradient-to-br from-orange-50 to-rose-50 border border-orange-200/60 rounded-2xl p-8 mb-8">
-          <p className="text-slate-700 leading-relaxed mb-4">
+        <div className="mb-8 rounded-2xl border border-orange-200/60 bg-gradient-to-br from-orange-50 to-rose-50 p-8">
+          <p className="mb-4 leading-relaxed text-slate-700">
             Welcome to Speecha! These Terms of Service (&quot;Terms&quot;)
             govern your use of our speech analysis service. By using Speecha,
             you agree to these Terms.
           </p>
-          <div className="bg-white/60 rounded-lg p-4 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 rounded-lg bg-white/60 p-4">
+            <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-orange-500" />
             <p className="text-sm text-slate-700">
               <strong>Early Stage Notice:</strong> Speecha is currently in
               active development. Features, limits, and functionality may change
@@ -42,8 +42,12 @@ export const TermsOfService = () => {
         </div>
 
         {/* Main Content Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 p-8 space-y-6">
-          <ExpandableSection defaultOpen={true} id="acceptance" title="1. Acceptance of Terms">
+        <div className="space-y-6 rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm">
+          <ExpandableSection
+            defaultOpen={true}
+            id="acceptance"
+            title="1. Acceptance of Terms"
+          >
             <p className="mb-3">
               By accessing or using Speecha, you agree to be bound by these
               Terms and our Privacy Policy. If you don&apos;t agree, please
@@ -56,12 +60,15 @@ export const TermsOfService = () => {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection id="service-description" title="2. Service Description">
+          <ExpandableSection
+            id="service-description"
+            title="2. Service Description"
+          >
             <p className="mb-3">
-              Speecha is a web-based tool that helps you improve public
-              speaking by:
+              Speecha is a web-based tool that helps you improve public speaking
+              by:
             </p>
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>Analyzing audio recordings to detect filler words</li>
               <li>Providing transcripts with highlighted filler words</li>
               <li>Generating speaking statistics and clarity scores</li>
@@ -74,10 +81,13 @@ export const TermsOfService = () => {
             </p>
           </ExpandableSection>
 
-          <ExpandableSection id="eligibility" title="3. Eligibility & Account Requirements">
+          <ExpandableSection
+            id="eligibility"
+            title="3. Eligibility & Account Requirements"
+          >
             <div className="space-y-4">
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Age Requirements:
                 </h4>
                 <p>
@@ -88,25 +98,28 @@ export const TermsOfService = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   No Account Needed:
                 </h4>
                 <p>
-                  Currently, Speecha works without requiring account
-                  creation. All analysis happens in your browser session and is
-                  lost on close
+                  Currently, Speecha works without requiring account creation.
+                  All analysis happens in your browser session and is lost on
+                  close
                 </p>
               </div>
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="usage-limits" title="4. Usage Limits & Restrictions">
+          <ExpandableSection
+            id="usage-limits"
+            title="4. Usage Limits & Restrictions"
+          >
             <div className="space-y-4">
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                <h4 className="font-semibold text-slate-900 mb-2">
+              <div className="rounded-lg border border-orange-200 bg-orange-50 p-4">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Current Limits:
                 </h4>
-                <ul className="list-disc list-inside space-y-1 ml-2 text-sm">
+                <ul className="ml-2 list-inside list-disc space-y-1 text-sm">
                   <li>
                     <strong>10 recordings per 24 hours</strong> per user
                   </li>
@@ -115,18 +128,18 @@ export const TermsOfService = () => {
                   </li>
                   <li>Supported formats: audio files and live recordings</li>
                 </ul>
-                <p className="text-xs text-slate-600 mt-3 italic">
+                <p className="mt-3 text-xs text-slate-600 italic">
                   These limits may change as the service evolves. We&apos;ll
                   notify users of significant changes.
                 </p>
               </div>
 
               <div>
-                <h4 className="font-semibold text-slate-900 mb-2">
+                <h4 className="mb-2 font-semibold text-slate-900">
                   Prohibited Uses:
                 </h4>
                 <p className="mb-2">You agree NOT to:</p>
-                <ul className="list-disc list-inside space-y-1 ml-2">
+                <ul className="ml-2 list-inside list-disc space-y-1">
                   <li>Attempt to abuse the service</li>
                   <li>Upload content that is illegal, harmful, or offensive</li>
                   <li>Upload recordings of others without their consent</li>
@@ -137,7 +150,10 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="content-privacy" title="5. Your Content & Privacy">
+          <ExpandableSection
+            id="content-privacy"
+            title="5. Your Content & Privacy"
+          >
             <div className="space-y-3">
               <p>
                 <strong>Your Recordings:</strong> You retain all rights to your
@@ -156,11 +172,11 @@ export const TermsOfService = () => {
                 your browser&apos;s local storage on your device.
               </p>
 
-              <div className="bg-slate-50 rounded-lg p-4 mt-3">
+              <div className="mt-3 rounded-lg bg-slate-50 p-4">
                 <p className="text-sm">
-                  For details on how we handle your data, see our{" "}
+                  For details on how we handle your data, see our{' '}
                   <Link
-                    className="text-orange-600 hover:text-orange-700 font-medium"
+                    className="font-medium text-orange-600 hover:text-orange-700"
                     href={ROUTES.legal.privacy}
                   >
                     Privacy Policy
@@ -171,7 +187,10 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="service-availability" title="6. Service Availability & Changes">
+          <ExpandableSection
+            id="service-availability"
+            title="6. Service Availability & Changes"
+          >
             <div className="space-y-3">
               <p>
                 <strong>Beta Service:</strong> Speecha is currently in active
@@ -192,17 +211,17 @@ export const TermsOfService = () => {
               </p>
 
               <p>
-                <strong>Service Termination:</strong> We may discontinue
-                Speecha at any time. If possible, we&apos;ll provide
-                reasonable notice to users on our waitlist.
+                <strong>Service Termination:</strong> We may discontinue Speecha
+                at any time. If possible, we&apos;ll provide reasonable notice
+                to users on our waitlist.
               </p>
             </div>
           </ExpandableSection>
 
           <ExpandableSection id="disclaimers" title="7. Accuracy & Disclaimers">
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
-              <h4 className="font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                <AlertCircle className="w-4 h-4" />
+            <div className="mb-4 rounded-lg border border-orange-200 bg-orange-50 p-4">
+              <h4 className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
+                <AlertCircle className="h-4 w-4" />
                 Important Disclaimer
               </h4>
               <p className="text-sm">
@@ -213,7 +232,7 @@ export const TermsOfService = () => {
               </p>
             </div>
 
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>Analysis results are estimates and may contain errors</li>
               <li>
                 Clarity scores are subjective metrics for self-improvement
@@ -231,7 +250,7 @@ export const TermsOfService = () => {
 
           <ExpandableSection id="liability" title="8. Limitation of Liability">
             <div className="space-y-3">
-              <p className="uppercase text-xs font-semibold text-slate-900 mb-2">
+              <p className="mb-2 text-xs font-semibold text-slate-900 uppercase">
                 PLEASE READ CAREFULLY:
               </p>
 
@@ -250,7 +269,10 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="intellectual-property" title="9. Intellectual Property">
+          <ExpandableSection
+            id="intellectual-property"
+            title="9. Intellectual Property"
+          >
             <div className="space-y-3">
               <p>
                 <strong>Our Property:</strong> Speecha&apos;s design, code,
@@ -272,14 +294,17 @@ export const TermsOfService = () => {
             </div>
           </ExpandableSection>
 
-          <ExpandableSection id="paid-features" title="10. Future Paid Features">
+          <ExpandableSection
+            id="paid-features"
+            title="10. Future Paid Features"
+          >
             <div className="space-y-3">
               <p>
                 We may introduce paid features or subscription plans in the
                 future (&quot;Pro Plan&quot;). If we do:
               </p>
 
-              <ul className="list-disc list-inside space-y-2 ml-2">
+              <ul className="ml-2 list-inside list-disc space-y-2">
                 <li>
                   Current free features will remain available (with existing
                   limits)
@@ -297,8 +322,8 @@ export const TermsOfService = () => {
           <ExpandableSection id="termination" title="11. Termination">
             <div className="space-y-3">
               <p>
-                <strong>Your Right:</strong> You can stop using Speecha at
-                any time. Clear your browser data to remove all locally stored
+                <strong>Your Right:</strong> You can stop using Speecha at any
+                time. Clear your browser data to remove all locally stored
                 analysis results.
               </p>
 
@@ -317,11 +342,10 @@ export const TermsOfService = () => {
           </ExpandableSection>
 
           <ExpandableSection id="general-terms" title="12. General Terms">
-            <ul className="list-disc list-inside space-y-2 ml-2">
+            <ul className="ml-2 list-inside list-disc space-y-2">
               <li>
                 <strong>Entire Agreement:</strong> These Terms and our Privacy
-                Policy constitute the entire agreement between you and
-                Speecha.
+                Policy constitute the entire agreement between you and Speecha.
               </li>
               <li>
                 <strong>Severability:</strong> If any provision is found
@@ -343,12 +367,12 @@ export const TermsOfService = () => {
           </ExpandableSection>
 
           <ExpandableSection id="contact" title="13. Contact Information">
-            <div className="bg-slate-50 rounded-lg p-6">
+            <div className="rounded-lg bg-slate-50 p-6">
               <p className="mb-4">Questions about these Terms?</p>
               <div className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-orange-500" />
+                <Mail className="h-5 w-5 text-orange-500" />
                 <a
-                  className="text-orange-600 hover:text-orange-700 font-medium"
+                  className="font-medium text-orange-600 hover:text-orange-700"
                   href="mailto:legal@speecha.app"
                 >
                   legal@speecha.app
@@ -364,14 +388,14 @@ export const TermsOfService = () => {
         </div>
 
         {/* Footer Note */}
-        <div className="mt-8 text-center space-y-3">
+        <div className="mt-8 space-y-3 text-center">
           <p className="text-sm text-slate-500">
-            Thank you for using Speecha. We&apos;re excited to help you
-            improve your speaking skills!
+            Thank you for using Speecha. We&apos;re excited to help you improve
+            your speaking skills!
           </p>
           <p className="text-xs text-slate-400">
-            By using Speecha, you acknowledge that you have read and
-            understood these Terms.
+            By using Speecha, you acknowledge that you have read and understood
+            these Terms.
           </p>
         </div>
       </main>

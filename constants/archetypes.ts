@@ -1,9 +1,9 @@
 export const ARCHETYPES = {
-  PRO: { label: "The Pro Speaker", color: "#16a34a" }, // green-600
-  STORYTELLER: { label: "The Storyteller", color: "#2563eb" }, // blue-600
-  CASUAL: { label: "The Casual Speaker", color: "#d97706" }, // amber-600
-  HESITATOR: { label: "The Hesitator", color: "#f97316" }, // orange-500
-  ROOKIE: { label: "The Rookie", color: "#dc2626" }, // red-500
+  PRO: { label: 'The Pro Speaker', color: '#16a34a' }, // green-600
+  STORYTELLER: { label: 'The Storyteller', color: '#2563eb' }, // blue-600
+  CASUAL: { label: 'The Casual Speaker', color: '#d97706' }, // amber-600
+  HESITATOR: { label: 'The Hesitator', color: '#f97316' }, // orange-500
+  ROOKIE: { label: 'The Rookie', color: '#dc2626' }, // red-500
 };
 
 export const getArchetype = (score: number) => {

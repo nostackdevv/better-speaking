@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { Shuffle } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Shuffle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 import {
   practicePrompts,
   type PracticePrompt,
-} from "@/lib/constants/practicePrompts";
+} from '@/lib/constants/practicePrompts';
 
 type PromptSelectorProps = {
   className?: string;
@@ -17,7 +17,7 @@ const getRandomPrompt = () => {
   return practicePrompts[randomIndex];
 };
 
-export const PromptSelector = ({ className = "" }: PromptSelectorProps) => {
+export const PromptSelector = ({ className = '' }: PromptSelectorProps) => {
   const [selectedPrompt, setSelectedPrompt] = useState<PracticePrompt>(
     practicePrompts[0]
   );
@@ -35,20 +35,20 @@ export const PromptSelector = ({ className = "" }: PromptSelectorProps) => {
 
   return (
     <div className={`${className}`}>
-      <p className="text-xs text-slate-400 text-center mb-2">
+      <p className="mb-2 text-center text-xs text-slate-400">
         Need inspiration? Try this prompt:
       </p>
       <div className="flex items-center justify-center gap-2 px-4">
-        <p className="text-slate-500 text-center text-xs leading-relaxed flex-1 max-w-md">
+        <p className="max-w-md flex-1 text-center text-xs leading-relaxed text-slate-500">
           {selectedPrompt}
         </p>
         <button
           aria-label="Get a different prompt"
-          className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all hover:scale-105 shrink-0"
+          className="shrink-0 rounded-lg p-1.5 text-slate-400 transition-all hover:scale-105 hover:bg-slate-100 hover:text-slate-600"
           onClick={handleShuffle}
           title="Get a different prompt"
         >
-          <Shuffle className="w-4 h-4" />
+          <Shuffle className="h-4 w-4" />
         </button>
       </div>
     </div>

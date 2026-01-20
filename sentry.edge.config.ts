@@ -1,10 +1,10 @@
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.NODE_ENV,
 
-  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.2 : 1.0,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.2 : 1.0,
 
   // Filter operational errors
   beforeSend(event, hint) {
@@ -17,7 +17,7 @@ Sentry.init({
     }
     event.tags = {
       ...event.tags,
-      runtime: "edge",
+      runtime: 'edge',
     };
     return event;
   },

@@ -1,13 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
-import { BlogPost } from "@/content/blog";
-import { formatDate, readingTimeMinutes } from "@/lib/blog";
+import { BlogPost } from '@/content/blog';
+import { formatDate, readingTimeMinutes } from '@/lib/blog';
 
 export function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link
-      className="group block rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden"
+      className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
       href={`/blog/${post.category}/${post.slug}`}
     >
       <div className="relative aspect-[16/9]">
@@ -30,14 +30,14 @@ export function PostCard({ post }: { post: BlogPost }) {
         <h3 className="mt-2 text-lg font-semibold text-slate-900 group-hover:underline">
           {post.title}
         </h3>
-        <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
           {post.description}
         </p>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {post.tags.slice(0, 3).map((t) => (
             <span
-              className="text-xs px-2 py-1 rounded-full bg-slate-50 border border-slate-200 text-slate-700"
+              className="rounded-full border border-slate-200 bg-slate-50 px-2 py-1 text-xs text-slate-700"
               key={t}
             >
               {t}

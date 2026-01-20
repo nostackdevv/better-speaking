@@ -1,7 +1,7 @@
-import { createClient } from "@deepgram/sdk";
+import { createClient } from '@deepgram/sdk';
 
-import { config } from "@/lib/config";
-import { TranscriptionResult } from "@/lib/interfaces/transcription.interface";
+import { config } from '@/lib/config';
+import { TranscriptionResult } from '@/lib/interfaces/transcription.interface';
 
 const deepgramClient = createClient(config.deepgram.apiKey);
 
@@ -18,7 +18,7 @@ export async function transcribeAudio(
   );
 
   if (!result?.results?.channels?.[0]?.alternatives?.[0]) {
-    throw new Error("Invalid transcription result from Deepgram");
+    throw new Error('Invalid transcription result from Deepgram');
   }
 
   const { transcript, words } = result.results.channels[0].alternatives[0];

@@ -1,43 +1,43 @@
 const ACCEPTED_AUDIO_TYPES = new Set([
-  "audio/mpeg", // MP3, MP2
-  "audio/mp3",
-  "audio/mp4", // M4A
-  "audio/x-m4a",
-  "audio/aac",
-  "audio/aacp",
-  "audio/wav",
-  "audio/wave",
-  "audio/x-wav",
-  "audio/flac",
-  "audio/x-flac",
-  "audio/pcm",
-  "audio/l16",
-  "audio/ogg",
-  "audio/opus",
-  "audio/webm",
+  'audio/mpeg', // MP3, MP2
+  'audio/mp3',
+  'audio/mp4', // M4A
+  'audio/x-m4a',
+  'audio/aac',
+  'audio/aacp',
+  'audio/wav',
+  'audio/wave',
+  'audio/x-wav',
+  'audio/flac',
+  'audio/x-flac',
+  'audio/pcm',
+  'audio/l16',
+  'audio/ogg',
+  'audio/opus',
+  'audio/webm',
 ]);
 
 const ACCEPTED_AUDIO_EXTENSIONS = new Set([
-  ".mp3",
-  ".mp4",
-  ".mp2",
-  ".aac",
-  ".wav",
-  ".flac",
-  ".pcm",
-  ".m4a",
-  ".ogg",
-  ".oga",
-  ".opus",
-  ".webm",
+  '.mp3',
+  '.mp4',
+  '.mp2',
+  '.aac',
+  '.wav',
+  '.flac',
+  '.pcm',
+  '.m4a',
+  '.ogg',
+  '.oga',
+  '.opus',
+  '.webm',
 ]);
 
 // Combined accept string for file inputs (iOS compatibility)
 // Using explicit extensions alongside audio/* for better iOS Safari support
 export const AUDIO_ACCEPT_STRING = [
-  "audio/*",
+  'audio/*',
   ...Array.from(ACCEPTED_AUDIO_EXTENSIONS),
-].join(",");
+].join(',');
 
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
@@ -61,7 +61,7 @@ export function validateClientAudioFile(
   const hasValidExtension = hasValidAudioExtension(file.name);
 
   if (!hasValidType && !hasValidExtension) {
-    return "Invalid file type. Please upload MP3, MP4, MP2, AAC, WAV, FLAC, PCM, M4A, Ogg, Opus, or WebM.";
+    return 'Invalid file type. Please upload MP3, MP4, MP2, AAC, WAV, FLAC, PCM, M4A, Ogg, Opus, or WebM.';
   }
 
   return null;

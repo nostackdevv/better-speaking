@@ -1,6 +1,6 @@
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next';
 
-import { APP_URL } from "@/lib/constants";
+import { APP_URL } from '@/lib/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = APP_URL;
@@ -9,19 +9,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${baseUrl}/legal/privacy`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.5,
     },
     {
       url: `${baseUrl}/legal/terms`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.5,
     },
   ];

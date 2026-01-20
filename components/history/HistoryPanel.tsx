@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { X, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { X, Trash2 } from 'lucide-react';
+import { useState } from 'react';
 
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
-import { cn } from "@/lib/utils";
-import { StoredSession } from "@/types/domain";
-import { getScoreGradient } from "@/utils/scoreGradient";
+import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
+import { cn } from '@/lib/utils';
+import { StoredSession } from '@/types/domain';
+import { getScoreGradient } from '@/utils/scoreGradient';
 
 type HistoryPanelProps = {
   isOpen: boolean;
@@ -17,18 +17,18 @@ type HistoryPanelProps = {
 
 function formatDate(isoDate: string): string {
   const date = new Date(isoDate);
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
   });
 }
 
 function formatTime24(isoDate: string): string {
   const date = new Date(isoDate);
-  return date.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
+  return date.toLocaleTimeString('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
     hour12: false,
   });
 }
@@ -48,7 +48,7 @@ export function HistoryPanel({
 
   const handleClearHistory = () => {
     track((inherited) => ({
-      name: "history_cleared",
+      name: 'history_cleared',
       properties: {
         ...inherited,
         sessionCount: sessions.length,
@@ -62,49 +62,49 @@ export function HistoryPanel({
     <AnalyticsContextProvider
       getProperties={(inherited) => ({
         ...inherited,
-        source: [...(inherited.source ?? []), "History Panel"],
+        source: [...(inherited.source ?? []), 'History Panel'],
       })}
     >
       <div
-        className="fixed inset-0 bg-slate-950/30 backdrop-blur-sm z-40"
+        className="fixed inset-0 z-40 bg-slate-950/30 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b border-slate-100">
+      <div className="fixed top-0 right-0 z-50 flex h-full w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl">
+        <div className="flex items-center justify-between border-b border-slate-100 p-4">
           <h2 className="text-lg font-bold text-slate-900">Practice History</h2>
           <div className="flex items-center gap-1">
             {sessions.length > 0 && (
               <button
-                className="p-2 text-slate-400 hover:text-red-500 cursor-pointer rounded-lg hover:bg-red-50 transition-colors"
+                className="cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
                 onClick={() => setShowConfirm(true)}
                 title="Clear history"
               >
-                <Trash2 className="w-5 h-5" />
+                <Trash2 className="h-5 w-5" />
               </button>
             )}
             <button
-              className="p-2 text-slate-400 hover:text-slate-600 cursor-pointer rounded-lg hover:bg-slate-100 transition-colors"
+              className="cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
               onClick={onClose}
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
           </div>
         </div>
 
         {showConfirm && (
-          <div className="p-4 bg-red-50 border-b border-red-100">
-            <p className="text-sm text-red-700 mb-3">
+          <div className="border-b border-red-100 bg-red-50 p-4">
+            <p className="mb-3 text-sm text-red-700">
               Clear all session history? This cannot be undone.
             </p>
             <div className="flex gap-2">
               <button
-                className="px-3 py-1.5 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors cursor-pointer"
+                className="cursor-pointer rounded-lg bg-red-500 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-600"
                 onClick={handleClearHistory}
               >
                 Clear All
               </button>
               <button
-                className="px-3 py-1.5 text-sm font-medium text-slate-600 bg-white hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                className="cursor-pointer rounded-lg bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-100"
                 onClick={() => setShowConfirm(false)}
               >
                 Cancel
@@ -113,11 +113,11 @@ export function HistoryPanel({
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 space-y-4 overflow-y-auto p-4">
           {sortedSessions.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="py-12 text-center">
               <p className="text-slate-400">No sessions yet</p>
-              <p className="text-sm text-slate-300 mt-2">
+              <p className="mt-2 text-sm text-slate-300">
                 Complete a practice session to see your history
               </p>
             </div>
@@ -128,10 +128,10 @@ export function HistoryPanel({
 
               return (
                 <div
-                  className="bg-slate-50 hover:bg-slate-100 rounded-2xl transition-colors p-4"
+                  className="rounded-2xl bg-slate-50 p-4 transition-colors hover:bg-slate-100"
                   key={session.id}
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="mb-3 flex items-start justify-between">
                     <div>
                       <div className="flex items-baseline gap-2">
                         <span className="font-semibold text-slate-900">
@@ -145,13 +145,13 @@ export function HistoryPanel({
                     <div className="text-right">
                       <span
                         className={cn(
-                          "text-3xl font-bold bg-linear-to-r bg-clip-text text-transparent",
+                          'bg-linear-to-r bg-clip-text text-3xl font-bold text-transparent',
                           getScoreGradient(clarityScore)
                         )}
                       >
                         {clarityScore}
                       </span>
-                      <span className="text-xs text-slate-400 ml-1">
+                      <span className="ml-1 text-xs text-slate-400">
                         clarity
                       </span>
                     </div>
@@ -167,11 +167,11 @@ export function HistoryPanel({
                       </span>
                     </div>
                     {mostUsedFiller ? (
-                      <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-md text-xs font-semibold">
+                      <span className="rounded-md bg-orange-100 px-2 py-1 text-xs font-semibold text-orange-700">
                         {mostUsedFiller}
                       </span>
                     ) : (
-                      <span className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-md text-xs font-semibold">
+                      <span className="rounded-md bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">
                         Perfect! 🎉
                       </span>
                     )}
