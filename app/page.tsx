@@ -1,20 +1,16 @@
 'use client';
 
-import { Share2, Shuffle, MessageCircle, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useState } from 'react';
 
 import { EmptyRecordingState } from '@/components/analysis/EmptyRecordingState';
-import { FillerStats } from '@/components/analysis/FillerStats';
-import { FillerStatsSkeleton } from '@/components/analysis/FillerStatsSkeleton';
-import { TabbedResults } from '@/components/analysis/TabbedResults';
+import { ResultsView } from '@/components/analysis/ResultsView';
 import { AudioInput } from '@/components/audio/AudioInput';
 import { ChallengePrompts } from '@/components/challenges/ChallengePrompts';
 import { HistoryPanel } from '@/components/history/HistoryPanel';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { Navbar } from '@/components/layout/Navbar';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
 import { ConfirmModal } from '@/components/ui/ConfirmModal';
 import { ShareModal } from '@/components/ui/ShareModal';
 import { WaitlistModal } from '@/components/waitlist/WaitlistModal';
@@ -192,6 +188,29 @@ function HomeContent() {
             </div>
           )}
 
+          {isNoSpeech && <EmptyRecordingState onRetry={handleConfirmReset} />}
+
+          {transcriptResponse.transcript &&
+            transcriptResponse.words &&
+            transcriptResponse.duration !== undefined && (
+              <ResultsView
+                activePrompt={activePrompt}
+                audioFile={audioFile}
+                isComplete={isComplete}
+                onNewPrompt={handleNewPrompt}
+                onShare={handleShareClick}
+                onTryAgain={handleTryAgain}
+                transcriptResponse={{
+                  transcript: transcriptResponse.transcript,
+                  words: transcriptResponse.words,
+                  duration: transcriptResponse.duration,
+                  fillers: transcriptResponse.fillers ?? null,
+                  fillerStats: transcriptResponse.fillerStats ?? null,
+                  clarityScore: transcriptResponse.clarityScore ?? null,
+                }}
+              />
+            )}
+
           {!transcriptResponse.transcript && !isNoSpeech && (
             <>
               <AudioInput isAnalyzing={isPending} onUpload={handleUpload} />
@@ -201,86 +220,6 @@ function HomeContent() {
               />
             </>
           )}
-
-          {isNoSpeech && <EmptyRecordingState onRetry={handleConfirmReset} />}
-
-          {transcriptResponse.transcript &&
-            transcriptResponse.words &&
-            transcriptResponse.duration !== undefined && (
-              <AnalyticsContextProvider
-                getProperties={(inherited) => ({
-                  ...inherited,
-                  source: [...(inherited.source ?? []), 'Results'],
-                })}
-              >
-                <div className="pb-32">
-                  {activePrompt && (
-                    <Card className="mb-4 border-teal-200 bg-teal-50 p-4">
-                      <div className="flex items-center gap-3">
-                        <MessageCircle className="h-5 w-5 text-teal-600" />
-                        <p className="text-sm text-teal-700">
-                          <span className="font-medium">Prompt:</span>{' '}
-                          {activePrompt}
-                        </p>
-                      </div>
-                    </Card>
-                  )}
-
-                  {transcriptResponse.fillerStats && (
-                    <FillerStats
-                      clarityScore={transcriptResponse.clarityScore ?? null}
-                      fillerStats={transcriptResponse.fillerStats}
-                    />
-                  )}
-
-                  {!transcriptResponse.fillerStats && <FillerStatsSkeleton />}
-
-                  {isComplete && (
-                    <div className="mt-4 mb-6 flex gap-3">
-                      <Button
-                        className="flex-1"
-                        onClick={handleShareClick}
-                        variant="outline"
-                      >
-                        <Share2 className="h-4 w-4" />
-                        Share
-                      </Button>
-                      {activePrompt && (
-                        <Button
-                          className="flex-1"
-                          onClick={handleNewPrompt}
-                          variant="accent"
-                        >
-                          <Shuffle className="h-4 w-4" />
-                          New Prompt
-                        </Button>
-                      )}
-                      <Button className="flex-1" onClick={handleTryAgain}>
-                        Try Again
-                      </Button>
-                    </div>
-                  )}
-
-                  <TabbedResults
-                    audioSrc={audioFile}
-                    duration={transcriptResponse.duration}
-                    fillers={transcriptResponse.fillers ?? []}
-                    fillerStats={
-                      transcriptResponse.fillerStats ?? {
-                        totalFillers: 0,
-                        totalWords: 0,
-                        fillerPercentage: 0,
-                        fillersPerMinute: 0,
-                        topFillers: [],
-                      }
-                    }
-                    onSeekAudio={() => {}}
-                    transcriptText={transcriptResponse.transcript}
-                    words={transcriptResponse.words}
-                  />
-                </div>
-              </AnalyticsContextProvider>
-            )}
         </main>
       </div>
       <div className="mt-20">
