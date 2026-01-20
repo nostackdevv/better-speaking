@@ -26,7 +26,6 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
   return (
     <nav className="fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 z-40">
       <div className="max-w-6xl mx-auto h-full px-4 flex items-center justify-between">
-        {/* Logo */}
         <div className="flex items-center gap-3">
           <Link
             aria-label="Speecha home"
@@ -40,34 +39,36 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
           </Link>
         </div>
 
-        {/* Right side */}
         <div className="flex items-center gap-2">
-          {/* Streak */}
           {/* <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 rounded-full mr-2">
             <Flame className="w-4 h-4 text-amber-500" />
             <span className="text-sm font-semibold text-amber-700">{user.streak}</span>
           </div> */}
 
-          {/* History */}
-          <button
-            className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
-            onClick={onHistoryClick}
-          >
-            <History className="w-5 h-5" />
-          </button>
+          {onHistoryClick && (
+            <button
+              className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+              onClick={onHistoryClick}
+              type="button"
+            >
+              <History className="w-5 h-5" />
+            </button>
+          )}
 
-          <button
-            className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
-            onClick={onWaitlistClick}
-          >
-            <Crown className="w-4 h-4 text-amber-500" />
-            <span className="text-sm font-semibold text-slate-700">Pro</span>
-            <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
-              SOON
-            </Badge>
-          </button>
+          {onWaitlistClick && (
+            <button
+              className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors cursor-pointer"
+              onClick={onWaitlistClick}
+              type="button"
+            >
+              <Crown className="w-4 h-4 text-amber-500" />
+              <span className="text-sm font-semibold text-slate-700">Pro</span>
+              <Badge className="text-[10px] px-1.5 py-0.5" variant="comingSoon">
+                SOON
+              </Badge>
+            </button>
+          )}
 
-          {/* User menu */}
           {/* <div className="relative">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
