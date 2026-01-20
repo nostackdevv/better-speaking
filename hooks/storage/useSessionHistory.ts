@@ -1,6 +1,7 @@
+import { useCallback } from "react";
+
 import { useLocalStorage } from "@/hooks/ui/useLocalStorage";
 import { StoredSession } from "@/types/domain";
-import { useCallback } from "react";
 
 const MAX_SESSIONS = 25;
 const STORAGE_KEY = "practice-sessions";

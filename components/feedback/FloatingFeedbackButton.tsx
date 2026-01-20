@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { X } from "lucide-react";
+import { useState } from "react";
+
 import { FeedbackModal } from "./FeedbackModal";
 
 export function FloatingFeedbackButton() {

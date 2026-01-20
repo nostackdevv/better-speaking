@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+
 import { APP_DOMAIN } from "@/lib/constants";
 
 interface ShareResultsParams {

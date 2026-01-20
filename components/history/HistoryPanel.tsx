@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { X, Trash2 } from "lucide-react";
+import { useState } from "react";
+
+import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { StoredSession } from "@/types/domain";
 import { getScoreGradient } from "@/utils/scoreGradient";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
 
 type HistoryPanelProps = {
   isOpen: boolean;

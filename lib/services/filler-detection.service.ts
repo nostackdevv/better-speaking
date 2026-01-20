@@ -1,10 +1,11 @@
 import OpenAI from "openai";
+
 import { config } from "@/lib/config";
-import { Filler } from "@/schema/filler";
-import { FillerDetectionInput } from "@/lib/interfaces/filler-detector.interface";
 import { IdentifyFillerResponseSchema } from "@/lib/filler/classifier";
-import { normalizeFillerResponse } from "@/lib/utils/transformers";
+import { FillerDetectionInput } from "@/lib/interfaces/filler-detector.interface";
 import { FILLER_DETECTION_SYSTEM_PROMPT_V2 } from "@/lib/prompts/filler-detection.prompts";
+import { normalizeFillerResponse } from "@/lib/utils/transformers";
+import { Filler } from "@/schema/filler";
 
 const openaiClient = new OpenAI({ apiKey: config.openai.apiKey });
 

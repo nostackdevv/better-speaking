@@ -1,11 +1,12 @@
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
 import { BlogShell } from "@/components/blog/BlogShell";
 import { Markdown } from "@/components/blog/Markdown";
 import { getAllPosts, getPost, formatDate, readingTimeMinutes } from "@/lib/blog";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export const dynamicParams = false;
 
@@ -49,10 +50,10 @@ export default async function BlogPostPage({
     <BlogShell size="md">
       <div className="flex items-center justify-between gap-4">
         <Link
-          href={`/blog/${post.category}`}
           className="inline-flex items-center rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-sm font-semibold text-slate-900 hover:bg-white transition"
+          href={`/blog/${post.category}`}
         >
-          <ArrowLeft className="mr-2 h-4 w-4" aria-hidden="true" />
+          <ArrowLeft aria-hidden="true" className="mr-2 h-4 w-4" />
           Back
         </Link>
 
@@ -79,20 +80,20 @@ export default async function BlogPostPage({
 
         <div className="mt-8 relative aspect-[16/9] overflow-hidden rounded-3xl border border-slate-200 bg-white/70">
           <Image
-            src={post.coverImage.src}
             alt={post.coverImage.alt}
-            fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 900px"
+            fill
             priority
+            sizes="(max-width: 768px) 100vw, 900px"
+            src={post.coverImage.src}
           />
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {post.tags.map((t) => (
             <span
-              key={t}
               className="rounded-full border border-slate-200 bg-white/70 px-2.5 py-1 text-xs font-semibold text-slate-700"
+              key={t}
             >
               {t}
             </span>
@@ -118,11 +119,11 @@ export default async function BlogPostPage({
           </p>
 
           <Link
-            href="/"
             className="mt-6 inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-white/90 transition"
+            href="/"
           >
             Try Speecha
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
           </Link>
         </div>
       </section>

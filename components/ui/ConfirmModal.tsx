@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
 import { AlertCircle } from "lucide-react";
+import { useEffect, useRef } from "react";
+
 import { Button } from "./Button";
 
 type ConfirmModalProps = {

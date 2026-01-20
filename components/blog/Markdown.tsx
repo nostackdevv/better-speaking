@@ -1,18 +1,13 @@
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 export function Markdown({ content }: { content: string }) {
   return (
     <article className="prose max-w-none">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[
-          rehypeSlug,
-          [rehypeAutolinkHeadings, { behavior: "wrap" }],
-        ]}
         components={{
           a: ({ href, children }) => {
             const url = href ?? "";
@@ -20,7 +15,7 @@ export function Markdown({ content }: { content: string }) {
             if (!url) return <span>{children}</span>;
             if (isExternal) {
               return (
-                <a href={url} target="_blank" rel="noreferrer">
+                <a href={url} rel="noreferrer" target="_blank">
                   {children}
                 </a>
               );
@@ -30,9 +25,9 @@ export function Markdown({ content }: { content: string }) {
           img: ({ alt, src }) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={src ?? ""}
               alt={alt ?? ""}
               className="rounded-2xl border border-slate-200 shadow-sm"
+              src={src ?? ""}
             />
           ),
           table: ({ children }) => (
@@ -41,6 +36,11 @@ export function Markdown({ content }: { content: string }) {
             </div>
           ),
         }}
+        rehypePlugins={[
+          rehypeSlug,
+          [rehypeAutolinkHeadings, { behavior: "wrap" }],
+        ]}
+        remarkPlugins={[remarkGfm]}
       >
         {content}
       </ReactMarkdown>

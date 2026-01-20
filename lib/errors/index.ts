@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
+import { NextResponse } from "next/server";
 
 // Base custom error with status code
 export class AppError extends Error {

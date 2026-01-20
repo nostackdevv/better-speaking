@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { cn } from "@/lib/utils";
 import { Upload, FileAudio, Trash, AlertCircle, Loader2 } from "lucide-react";
-import { formatBytesToSize } from "@/utils/formatters";
+import React, { useState, useRef, useEffect } from "react";
+
+import { AudioItemCard } from "@/components/history/AudioItemCard";
+import { Button } from "@/components/ui/Button";
+import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import {
   validateClientAudioFile,
   MAX_FILE_SIZE,
   AUDIO_ACCEPT_STRING,
 } from "@/utils/audio/validators";
-import { Button } from "@/components/ui/Button";
-import { AudioItemCard } from "@/components/history/AudioItemCard";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { formatBytesToSize } from "@/utils/formatters";
 
 type AudioFileUploadProps = {
   isAnalyzing?: boolean;

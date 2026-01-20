@@ -1,9 +1,11 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+
 import { BlogShell } from "@/components/blog/BlogShell";
-import { PostCard } from "@/components/blog/PostCard";
 import { CategoryPills } from "@/components/blog/CategoryPills";
+import { PostCard } from "@/components/blog/PostCard";
 import {
   getAllPosts,
   getCategories,
@@ -11,7 +13,6 @@ import {
   formatDate,
   readingTimeMinutes,
 } from "@/lib/blog";
-import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -44,11 +45,11 @@ export default function BlogIndexPage() {
 
         <div className="mt-8 flex items-center justify-center gap-3">
           <Link
-            href="/"
             className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition"
+            href="/"
           >
             Try Speecha
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+            <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
           </Link>
 
         </div>
@@ -59,18 +60,18 @@ export default function BlogIndexPage() {
       {featured && (
         <section className="mt-12">
           <Link
-            href={`/blog/${featured.category}/${featured.slug}`}
             className="group block overflow-hidden rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-sm hover:bg-white transition"
+            href={`/blog/${featured.category}/${featured.slug}`}
           >
             <div className="grid md:grid-cols-12">
               <div className="relative md:col-span-7 min-h-[260px]">
                 <Image
-                  src={featured.coverImage.src}
                   alt={featured.coverImage.alt}
-                  fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 900px"
+                  fill
                   priority
+                  sizes="(max-width: 768px) 100vw, 900px"
+                  src={featured.coverImage.src}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
                 <div className="absolute left-5 bottom-5 right-5">
@@ -101,7 +102,7 @@ export default function BlogIndexPage() {
 
                 <div className="mt-6 inline-flex items-center text-sm font-semibold text-slate-900">
                   Read article
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                 </div>
               </div>
             </div>

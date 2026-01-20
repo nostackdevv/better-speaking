@@ -1,5 +1,6 @@
-import { TermsOfService } from "./TermsOfService";
 import { APP_URL } from "@/lib/constants";
+
+import { TermsOfService } from "./TermsOfService";
 
 export const metadata = {
   title: "Terms of Service",

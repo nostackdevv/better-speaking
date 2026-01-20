@@ -1,5 +1,6 @@
-import { ApiError, WaitlistResponse } from "@/types/api";
 import { useMutation } from "@tanstack/react-query";
+
+import { ApiError, WaitlistResponse } from "@/types/api";
 
 export function useJoinWaitlist() {
   return useMutation<WaitlistResponse, ApiError, string>({

@@ -1,13 +1,15 @@
 "use client";
 
 import { Mic, Square, AlertCircle, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { WaveForm } from "./WaveForm";
-import { formatSecondsToTimestamp } from "@/utils/formatters";
-import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
+
 import { AudioItemCard } from "@/components/history/AudioItemCard";
-import { PromptSelector } from "./PromptSelector";
+import { Button } from "@/components/ui/Button";
+import { useAudioRecorder } from "@/hooks/audio/useAudioRecorder";
 import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { formatSecondsToTimestamp } from "@/utils/formatters";
+
+import { PromptSelector } from "./PromptSelector";
+import { WaveForm } from "./WaveForm";
 
 type AudioRecorderProps = {
   isAnalyzing?: boolean;

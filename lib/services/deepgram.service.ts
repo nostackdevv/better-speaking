@@ -1,4 +1,5 @@
 import { createClient } from "@deepgram/sdk";
+
 import { config } from "@/lib/config";
 import { TranscriptionResult } from "@/lib/interfaces/transcription.interface";
 

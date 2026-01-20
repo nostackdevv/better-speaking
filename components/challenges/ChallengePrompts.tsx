@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Zap, Crown, Shuffle, Target, MessageCircle, User } from "lucide-react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+import { useState } from "react";
+
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 
 const questionPrompts = {

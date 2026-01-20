@@ -1,5 +1,6 @@
 "use client";
 import { Mail } from "lucide-react";
+
 import { ExpandableSection } from "@/components/ui/ExpandableSection";
 
 export function PrivacyPolicyContent() {

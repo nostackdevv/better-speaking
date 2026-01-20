@@ -1,8 +1,8 @@
 "use client";
 
+import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react";
-import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense } from "react";
 
 function initPostHog() {

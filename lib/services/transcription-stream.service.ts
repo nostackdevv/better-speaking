@@ -1,11 +1,14 @@
+import * as Sentry from "@sentry/nextjs";
+
+import { TRANSCRIPT_DUMMY } from "@/dummy";
+import { calculateClarityScore } from "@/lib/filler/clarity-score";
+import { computeFillerStats } from "@/lib/filler/filler-stats";
+import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
 import { TranscriptionStreamData } from "@/types/api";
+
 import { transcribeAudio } from "./deepgram.service";
 import { detectFillers } from "./filler-detection.service";
-import { normalizeDeepgramTranscript } from "@/lib/utils/transformers";
-import { computeFillerStats } from "@/lib/filler/filler-stats";
-import { calculateClarityScore } from "@/lib/filler/clarity-score";
-import { TRANSCRIPT_DUMMY } from "@/dummy";
-import * as Sentry from "@sentry/nextjs";
+
 
 export function processAudioTranscriptionStream(audioFile: Blob) {
   const encoder = new TextEncoder();

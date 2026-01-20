@@ -1,24 +1,25 @@
 "use client";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { AudioInput } from "@/components/audio/AudioInput";
-import { Navbar } from "@/components/layout/Navbar";
-import { ChallengePrompts } from "@/components/challenges/ChallengePrompts";
-import { HistoryPanel } from "@/components/history/HistoryPanel";
-import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
-
+import { Share2, Shuffle, MessageCircle, Clock } from "lucide-react";
 import { useState } from "react";
-import { useTranscribeAudioStream } from "@/hooks/transcription/useTranscribeAudioStream";
-import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
+
+import { EmptyRecordingState } from "@/components/analysis/EmptyRecordingState";
 import { FillerStats } from "@/components/analysis/FillerStats";
 import { FillerStatsSkeleton } from "@/components/analysis/FillerStatsSkeleton";
-import { EmptyRecordingState } from "@/components/analysis/EmptyRecordingState";
-import { Button } from "@/components/ui/Button";
-import { Share2, Shuffle, MessageCircle, Clock } from "lucide-react";
-import { ShareModal } from "@/components/ui/ShareModal";
 import { TabbedResults } from "@/components/analysis/TabbedResults";
-import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { AudioInput } from "@/components/audio/AudioInput";
+import { ChallengePrompts } from "@/components/challenges/ChallengePrompts";
+import { HistoryPanel } from "@/components/history/HistoryPanel";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { Navbar } from "@/components/layout/Navbar";
+import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { ShareModal } from "@/components/ui/ShareModal";
+import { WaitlistModal } from "@/components/waitlist/WaitlistModal";
+
+import { useTranscribeAudioStream } from "@/hooks/transcription/useTranscribeAudioStream";
+import { useSessionHistory } from "@/hooks/storage/useSessionHistory";
 import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
 import { getArchetype } from "@/constants/archetypes";
 

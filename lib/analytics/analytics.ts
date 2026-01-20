@@ -1,4 +1,5 @@
 import posthog from "posthog-js";
+
 import type { EventProperties } from "./types";
 
 function isAvailable(): boolean {

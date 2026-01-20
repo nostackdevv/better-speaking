@@ -1,9 +1,10 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
-import { useEffect } from "react";
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
 import Link from "next/link";
+import { useEffect } from "react";
+
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ROUTES } from "@/lib/routes";

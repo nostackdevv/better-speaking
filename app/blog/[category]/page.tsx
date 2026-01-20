@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+
 import { BlogShell } from "@/components/blog/BlogShell";
-import { PostCard } from "@/components/blog/PostCard";
 import { CategoryPills } from "@/components/blog/CategoryPills";
+import { PostCard } from "@/components/blog/PostCard";
 import { getCategories, getPostsByCategory } from "@/lib/blog";
 
 export const dynamicParams = false;
@@ -55,7 +56,7 @@ export default async function BlogCategoryPage({
           </p>
         )}
 
-        <CategoryPills categories={getCategories()} activeSlug={cat.slug} />
+        <CategoryPills activeSlug={cat.slug} categories={getCategories()} />
       </header>
 
       <section className="mt-12">

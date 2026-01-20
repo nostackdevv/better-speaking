@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import React, { useState } from "react";
 
 type ExpandableSectionProps = {
   title: string;

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { MessageSquare, Check, Loader2, AlertCircle, X } from "lucide-react";
+import { useState } from "react";
+
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
 import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 type FeedbackModalProps = {
   isOpen: boolean;

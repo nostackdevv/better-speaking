@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+
+import { BadRequestError, handleError } from "@/lib/errors";
+import { checkLimit, addRateLimitHeaders } from "@/lib/middleware/rate-limit";
 import {
   processAudioTranscriptionStream,
   getDummyTranscriptionStream,
 } from "@/lib/services/transcription-stream.service";
-import { checkLimit, addRateLimitHeaders } from "@/lib/middleware/rate-limit";
-import { BadRequestError, handleError } from "@/lib/errors";
 
 export async function POST(request: NextRequest) {
   const rateLimit = await checkLimit(request, "transcribe");

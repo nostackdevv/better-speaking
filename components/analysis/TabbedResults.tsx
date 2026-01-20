@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
+
+import { HistoryTab } from "@/components/history/HistoryTab";
+import { Transcript } from "@/components/transcription/Transcript";
+import { CustomTabs } from "@/components/ui/CustomTabs";
 import { Filler } from "@/schema/filler";
 import type { FillerStatsType, NormalizedWord } from "@/types/domain";
-import { useEffect, useState } from "react";
-import { CustomTabs } from "@/components/ui/CustomTabs";
-import { Transcript } from "@/components/transcription/Transcript";
+
 import { BreakdownTab } from "./BreakdownTab";
-import { HistoryTab } from "@/components/history/HistoryTab";
+
 
 const TABS = [
   { id: "breakdown", label: "Breakdown" },

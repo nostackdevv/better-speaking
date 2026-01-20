@@ -1,5 +1,6 @@
-import { PrivacyPolicyContent } from "./PrivacyPolicyContest";
 import { APP_URL } from "@/lib/constants";
+
+import { PrivacyPolicyContent } from "./PrivacyPolicyContest";
 
 export const metadata = {
   title: "Privacy Policy",

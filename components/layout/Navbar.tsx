@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Mic,
   History,
@@ -11,8 +10,10 @@ import {
   LogOut,
   Flame,
 } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
+import { useState } from "react";
+
+import { Badge } from "@/components/ui/Badge";
 import { ROUTES } from "@/lib/routes";
 
 type NavbarProps = {

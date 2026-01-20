@@ -1,10 +1,12 @@
+import { useMemo } from "react";
+
+import { AudioPlayerCompact } from "@/components/audio/AudioPlayerCompact";
 import { Card } from "@/components/ui/Card";
-import { splitTranscriptIntoChunks } from "@/utils/transcription/chunking";
 import { Filler } from "@/schema/filler";
 import { NormalizedWord } from "@/types/domain";
+import { splitTranscriptIntoChunks } from "@/utils/transcription/chunking";
+
 import { TranscriptDisplay } from "./TranscriptDisplay";
-import { AudioPlayerCompact } from "@/components/audio/AudioPlayerCompact";
-import { useMemo } from "react";
 
 type TranscriptProps = {
   transcriptText: string;

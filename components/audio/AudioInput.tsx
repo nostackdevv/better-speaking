@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { Mic, Upload } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
 import { Card } from "@/components/ui/Card";
+import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+
 import { AudioFileUpload } from "./AudioFileUpload";
 import { AudioRecorder } from "./AudioRecorder";
-import Link from "next/link";
-import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
 
 export function AudioInput({
   isAnalyzing = false,

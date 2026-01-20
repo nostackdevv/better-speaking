@@ -1,7 +1,8 @@
 "use client";
 import { Mail, AlertCircle } from "lucide-react";
-import { ExpandableSection } from "@/components/ui/ExpandableSection";
 import Link from "next/link";
+
+import { ExpandableSection } from "@/components/ui/ExpandableSection";
 import { ROUTES } from "@/lib/routes";
 
 export const TermsOfService = () => {

@@ -1,11 +1,12 @@
 "use client";
 
 import { Shuffle } from "lucide-react";
+import { useState, useEffect } from "react";
+
 import {
   practicePrompts,
   type PracticePrompt,
 } from "@/lib/constants/practicePrompts";
-import { useState, useEffect } from "react";
 
 type PromptSelectorProps = {
   className?: string;

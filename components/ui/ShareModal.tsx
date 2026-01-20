@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { X, Download, Mic, Share2, Check } from "lucide-react";
-import type { FillerStatsType, ClarityResult } from "@/types/domain";
+import { useEffect, useState } from "react";
+
+import { getArchetype } from "@/constants/archetypes";
 import { useShareResults } from "@/hooks/share/useShareResults";
 import { useIsMobile } from "@/hooks/ui/useIsMobile";
-import { getArchetype } from "@/constants/archetypes";
 import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import type { FillerStatsType, ClarityResult } from "@/types/domain";
 
 type ShareModalProps = {
   isOpen: boolean;

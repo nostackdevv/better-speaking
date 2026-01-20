@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { FeedbackModal } from "@/components/feedback/FeedbackModal";
 import { Mic, Heart } from "lucide-react";
-import { ROUTES } from "@/lib/routes";
 import Link from "next/link";
+import { useState } from "react";
+
+import { FeedbackModal } from "@/components/feedback/FeedbackModal";
+import { ROUTES } from "@/lib/routes";
+
+
 import { WaitlistModal } from "../waitlist/WaitlistModal";
 
 export function Footer() {
@@ -13,7 +16,7 @@ export function Footer() {
 
   return (
     <footer className="relative">
-      <div className="absolute inset-0 bg-slate-900"></div>
+      <div className="absolute inset-0 bg-slate-900" />
       <div className="absolute inset-0 opacity-10">
         <div
           className="absolute inset-0"
@@ -22,7 +25,7 @@ export function Footer() {
               "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
             backgroundSize: "32px 32px",
           }}
-        ></div>
+         />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 py-16">

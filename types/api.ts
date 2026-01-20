@@ -8,6 +8,7 @@
  */
 
 import { Filler } from "@/schema/filler";
+
 import { NormalizedWord, FillerStatsType, ClarityResult } from "./domain";
 
 export interface TranscribeResponse {

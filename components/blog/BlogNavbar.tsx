@@ -1,7 +1,8 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
 import { useRouter } from "next/navigation";
+
+import { Navbar } from "@/components/layout/Navbar";
 
 export function BlogNavbar() {
   const router = useRouter();

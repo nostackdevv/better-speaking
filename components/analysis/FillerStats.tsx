@@ -1,8 +1,10 @@
 import { Check } from "lucide-react";
-import { FillerStatsType, ClarityResult } from "@/types/domain";
-import { FillerStatCard } from "./FillerStatsCard";
+
 import { Card } from "@/components/ui/Card";
 import { getArchetype } from "@/constants/archetypes";
+import { FillerStatsType, ClarityResult } from "@/types/domain";
+
+import { FillerStatCard } from "./FillerStatsCard";
 
 type FillerStatsProps = {
   fillerStats: FillerStatsType;

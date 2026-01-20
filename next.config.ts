@@ -1,5 +1,6 @@
-import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
+import type { NextConfig } from "next";
+
 import { securityHeaders, corsHeaders } from "./config/http-headers";
 
 const nextConfig: NextConfig = {

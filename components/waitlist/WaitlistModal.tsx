@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Crown,
   Check,
@@ -10,11 +9,13 @@ import {
   AlertCircle,
   X,
 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { useState, useEffect } from "react";
+
 import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { useJoinWaitlist } from "@/hooks/waitlist/useJoinWaitlist";
-import { cn } from "@/lib/utils";
 import { AnalyticsContextProvider, useAnalyticsContext } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 
 type WaitlistModalProps = {
   isOpen: boolean;

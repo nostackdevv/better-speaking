@@ -1,6 +1,7 @@
 import { AlertCircle, Mic } from "lucide-react";
-import { Card } from "@/components/ui/Card";
+
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 
 interface EmptyRecordingStateProps {
   onRetry: () => void;
@@ -34,7 +35,7 @@ export function EmptyRecordingState({ onRetry }: EmptyRecordingStateProps) {
               "The audio was too quiet to pick up",
               "The recording was mostly silence",
             ].map((reason, i) => (
-              <div key={i} className="flex items-start gap-3">
+              <div className="flex items-start gap-3" key={i}>
                 <div className="w-1.5 h-1.5 bg-slate-400 rounded-full mt-2 flex-shrink-0" />
                 <span className="text-slate-600 text-sm">{reason}</span>
               </div>
@@ -43,7 +44,7 @@ export function EmptyRecordingState({ onRetry }: EmptyRecordingStateProps) {
         </div>
 
         {/* CTA */}
-        <Button onClick={onRetry} size="lg" className="w-full sm:w-auto">
+        <Button className="w-full sm:w-auto" onClick={onRetry} size="lg">
           <Mic className="w-5 h-5" />
           Try Recording Again
         </Button>
