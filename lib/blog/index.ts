@@ -1,4 +1,9 @@
-import { BLOG_CATEGORIES, BLOG_POSTS } from '@/content/blog';
+import fs from 'fs';
+import path from 'path';
+
+import { BLOG_CATEGORIES, BLOG_POSTS, BlogPost } from '@/content/blog';
+
+export type BlogPostWithContent = BlogPost & { content: string };
 
 export function getCategories() {
   return BLOG_CATEGORIES;
@@ -18,10 +23,19 @@ export function getPostsByCategory(category: string) {
   return getAllPosts().filter((p) => p.category === category);
 }
 
-export function getPost(category: string, slug: string) {
-  return (
-    BLOG_POSTS.find((p) => p.category === category && p.slug === slug) ?? null
+export function getPost(
+  category: string,
+  slug: string
+): BlogPostWithContent | null {
+  const post = BLOG_POSTS.find(
+    (p) => p.category === category && p.slug === slug
   );
+  if (!post) return null;
+
+  const filePath = path.join(process.cwd(), 'content/blog/posts', `${slug}.md`);
+  const content = fs.readFileSync(filePath, 'utf-8');
+
+  return { ...post, content };
 }
 
 export function formatDate(iso: string) {
@@ -31,17 +45,6 @@ export function formatDate(iso: string) {
     month: 'short',
     day: 'numeric',
   });
-}
-
-export function readingTimeMinutes(markdown: string) {
-  const words = markdown
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/[#>*_\-\[\]\(\)`]/g, '')
-    .split(/\s+/)
-    .filter(Boolean).length;
-
-  const wpm = 220;
-  return Math.max(1, Math.round(words / wpm));
 }
 
 export function buildBlogPostUrl(post: { category: string; slug: string }) {
@@ -56,7 +59,11 @@ export function getCategoryBySlug(slug: string) {
   return BLOG_CATEGORIES.find((c) => c.slug === slug) ?? null;
 }
 
-export function getRelatedPosts(post: { category: string; slug: string }) {
+export function getRelatedPosts(post: {
+  category: string;
+  slug: string;
+  tags: string[];
+}) {
   const sameCategory = getPostsByCategory(post.category).filter(
     (p) => p.slug !== post.slug
   );
@@ -64,7 +71,7 @@ export function getRelatedPosts(post: { category: string; slug: string }) {
   const byTagScore = sameCategory
     .map((p) => ({
       post: p,
-      score: p.tags.reduce((acc, t) => acc + (p.tags.includes(t) ? 1 : 0), 0),
+      score: p.tags.filter((t) => post.tags.includes(t)).length,
     }))
     .sort((a, b) => b.score - a.score)
     .map((x) => x.post);

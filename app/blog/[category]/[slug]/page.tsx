@@ -6,12 +6,7 @@ import { notFound } from 'next/navigation';
 
 import { BlogShell } from '@/components/blog/BlogShell';
 import { Markdown } from '@/components/blog/Markdown';
-import {
-  getAllPosts,
-  getPost,
-  formatDate,
-  readingTimeMinutes,
-} from '@/lib/blog';
+import { getAllPosts, getPost, formatDate } from '@/lib/blog';
 
 export const dynamicParams = false;
 
@@ -84,7 +79,7 @@ export default async function BlogPostPage({
             <span className="opacity-60">{post.author.role}</span>
           )}
           <span className="opacity-40">/</span>
-          <span>{readingTimeMinutes(post.content)} min read</span>
+          <span>{post.readingTime} min read</span>
         </div>
 
         <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-3xl border border-slate-200 bg-white/70">

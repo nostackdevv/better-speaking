@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { BlogPost } from '@/content/blog';
-import { formatDate, readingTimeMinutes } from '@/lib/blog';
+import { formatDate } from '@/lib/blog';
 
 export function PostCard({ post }: { post: BlogPost }) {
   return (
@@ -24,7 +24,7 @@ export function PostCard({ post }: { post: BlogPost }) {
         <div className="flex items-center gap-2 text-xs text-slate-600">
           <span>{formatDate(post.date)}</span>
           <span>•</span>
-          <span>{readingTimeMinutes(post.content)} min read</span>
+          <span>{post.readingTime} min read</span>
         </div>
 
         <h3 className="mt-2 text-lg font-semibold text-slate-900 group-hover:underline">

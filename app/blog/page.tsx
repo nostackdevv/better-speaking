@@ -11,7 +11,6 @@ import {
   getCategories,
   getFeaturedPost,
   formatDate,
-  readingTimeMinutes,
 } from '@/lib/blog';
 
 export const metadata: Metadata = {
@@ -84,7 +83,7 @@ export default function BlogIndexPage() {
                 <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
                   <span>{formatDate(featured.date)}</span>
                   <span className="opacity-40">/</span>
-                  <span>{readingTimeMinutes(featured.content)} min</span>
+                  <span>{featured.readingTime} min</span>
                   <span className="opacity-40">/</span>
                   <span className="font-semibold text-slate-800">
                     {featured.author.name}
