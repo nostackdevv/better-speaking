@@ -11,10 +11,34 @@ import { Filler } from '@/schema/filler';
 
 import { NormalizedWord, FillerStatsType, ClarityResult } from './domain';
 
+// Combined response (transcription + analysis)
 export interface TranscribeResponse {
   transcript: string;
   words: NormalizedWord[];
   duration: number;
+  fillers: Filler[];
+  fillerStats: FillerStatsType;
+  clarityScore: ClarityResult | null;
+  createdAt: string;
+}
+
+// Transcription-only response
+export interface TranscriptionOnlyResult {
+  transcript: string;
+  words: NormalizedWord[];
+  duration: number;
+  createdAt: string;
+}
+
+// Analysis request body
+export interface AnalyzeRequest {
+  transcript: string;
+  words: { index: number; text: string }[];
+  duration: number;
+}
+
+// Analysis-only response
+export interface AnalysisResult {
   fillers: Filler[];
   fillerStats: FillerStatsType;
   clarityScore: ClarityResult | null;

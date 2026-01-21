@@ -2,7 +2,12 @@ import { NoSpeechError } from '@/lib/errors';
 import { calculateClarityScore } from '@/lib/filler/clarity-score';
 import { computeFillerStats } from '@/lib/filler/filler-stats';
 import { normalizeDeepgramTranscript } from '@/lib/utils/transformers';
-import { TranscribeResponse } from '@/types/api';
+import {
+  AnalysisResult,
+  AnalyzeRequest,
+  TranscribeResponse,
+  TranscriptionOnlyResult,
+} from '@/types/api';
 
 import { transcribeAudio } from './deepgram.service';
 import { detectFillers } from './filler-detection.service';
@@ -47,6 +52,64 @@ export async function processAudioTranscription(
     transcript,
     words: normalizedWords,
     duration,
+    fillers,
+    fillerStats,
+    clarityScore,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Transcription only - returns transcript without filler analysis
+ */
+export async function transcribeAudioOnly(
+  audioFile: Blob
+): Promise<TranscriptionOnlyResult> {
+  const buffer = Buffer.from(await audioFile.arrayBuffer());
+  const { transcript, words, duration } = await transcribeAudio(buffer);
+
+  if (!transcript || transcript.trim().length === 0) {
+    throw new NoSpeechError();
+  }
+
+  const normalizedWords = normalizeDeepgramTranscript({ transcript, words });
+
+  return {
+    transcript,
+    words: normalizedWords,
+    duration,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Analysis only - takes transcript and returns filler analysis
+ */
+export async function analyzeTranscript(
+  input: AnalyzeRequest
+): Promise<AnalysisResult> {
+  const { transcript, words, duration } = input;
+
+  const fillers = await detectFillers({
+    text: transcript,
+    words,
+  });
+
+  const fillerStats = computeFillerStats({
+    fillers,
+    words: words.map((w, index) => ({
+      index,
+      displayText: w.text,
+      startChar: 0,
+      endChar: 0,
+      confidence: 1,
+    })),
+    duration,
+  });
+
+  const clarityScore = calculateClarityScore(fillerStats, duration);
+
+  return {
     fillers,
     fillerStats,
     clarityScore,

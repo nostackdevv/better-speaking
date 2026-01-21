@@ -20,6 +20,7 @@ function createLimiter(type: RateLimitType): Ratelimit {
 
 export const limiters: Record<RateLimitType, Ratelimit> = {
   transcribe: createLimiter('transcribe'),
-  transcribeSuccess: createLimiter('transcribeSuccess'),
+  analyze: createLimiter('analyze'),
+  analyzeSuccess: createLimiter('analyzeSuccess'),
   waitlist: createLimiter('waitlist'),
 };

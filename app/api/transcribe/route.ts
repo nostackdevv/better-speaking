@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { getDummyResponse } from '@/dummy';
+import { getDummyTranscription } from '@/dummy';
 import { BadRequestError, handleError } from '@/lib/errors';
 import { checkLimit, addRateLimitHeaders } from '@/lib/middleware/rate-limit';
-import { processAudioTranscription } from '@/lib/services/transcription.service';
+import { transcribeAudioOnly } from '@/lib/services/transcription.service';
 
 export async function POST(request: NextRequest) {
   const rateLimit = await checkLimit(request, 'transcribe');
   if (!rateLimit.success) return rateLimit.response!;
 
   if (false) {
-    return NextResponse.json(getDummyResponse());
+    return NextResponse.json(getDummyTranscription());
   }
 
   try {
@@ -21,13 +21,10 @@ export async function POST(request: NextRequest) {
       throw new BadRequestError('Invalid file upload');
     }
 
-    const successLimit = await checkLimit(request, 'transcribeSuccess');
-    if (!successLimit.success) return successLimit.response!;
-
-    const result = await processAudioTranscription(audioFile);
+    const result = await transcribeAudioOnly(audioFile);
 
     const response = NextResponse.json(result);
-    return addRateLimitHeaders(response, successLimit);
+    return addRateLimitHeaders(response, rateLimit);
   } catch (error) {
     return handleError(error);
   }

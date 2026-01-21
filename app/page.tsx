@@ -16,7 +16,7 @@ import { ShareModal } from '@/components/ui/ShareModal';
 import { WaitlistModal } from '@/components/waitlist/WaitlistModal';
 import { getArchetype } from '@/constants/archetypes';
 import { useSessionHistory } from '@/hooks/storage/useSessionHistory';
-import { useTranscribeAudio } from '@/hooks/transcription/useTranscribeAudio';
+import { useTranscribeAndAnalyze } from '@/hooks/transcription/useTranscribeAndAnalyze';
 import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
 
 function HomeContent() {
@@ -42,7 +42,7 @@ function HomeContent() {
     error,
     data: transcriptResponse,
     reset: resetTranscription,
-  } = useTranscribeAudio({
+  } = useTranscribeAndAnalyze({
     onComplete: (data) => {
       addSession({
         id: Date.now().toString(),

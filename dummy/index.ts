@@ -1,6 +1,10 @@
 import { calculateClarityScore } from '@/lib/filler/clarity-score';
 import { computeFillerStats } from '@/lib/filler/filler-stats';
-import { TranscribeResponse } from '@/types/api';
+import {
+  AnalysisResult,
+  TranscribeResponse,
+  TranscriptionOnlyResult,
+} from '@/types/api';
 
 export const TRANSCRIPT_DUMMY = {
   transcript:
@@ -738,6 +742,30 @@ export function getDummyResponse(): TranscribeResponse {
     transcript,
     words,
     duration,
+    fillers,
+    fillerStats,
+    clarityScore,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export function getDummyTranscription(): TranscriptionOnlyResult {
+  const { transcript, words, duration } = TRANSCRIPT_DUMMY;
+
+  return {
+    transcript,
+    words,
+    duration,
+    createdAt: new Date().toISOString(),
+  };
+}
+
+export function getDummyAnalysis(): AnalysisResult {
+  const { words, duration, fillers } = TRANSCRIPT_DUMMY;
+  const fillerStats = computeFillerStats({ fillers, words, duration });
+  const clarityScore = calculateClarityScore(fillerStats, duration);
+
+  return {
     fillers,
     fillerStats,
     clarityScore,

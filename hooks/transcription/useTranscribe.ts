@@ -1,19 +1,13 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 
-import { ApiError, TranscribeResponse } from '@/types/api';
+import { ApiError, TranscriptionOnlyResult } from '@/types/api';
 
 type Status = 'idle' | 'pending' | 'complete' | 'error' | 'no_speech';
 
-interface UseTranscribeAudioOptions {
-  onComplete?: (data: TranscribeResponse) => void;
-}
-
-export function useTranscribeAudio(options?: UseTranscribeAudioOptions) {
+export function useTranscribe() {
   const [status, setStatus] = useState<Status>('idle');
-  const [data, setData] = useState<TranscribeResponse | null>(null);
+  const [data, setData] = useState<TranscriptionOnlyResult | null>(null);
   const [error, setError] = useState<ApiError | null>(null);
-  const onCompleteRef = useRef(options?.onComplete);
-  onCompleteRef.current = options?.onComplete;
 
   const reset = useCallback(() => {
     setStatus('idle');
@@ -40,16 +34,16 @@ export function useTranscribeAudio(options?: UseTranscribeAudioOptions) {
 
         if (errorData.error === 'no_speech_detected') {
           setStatus('no_speech');
-          return;
+          return null;
         }
 
         throw errorData;
       }
 
-      const result: TranscribeResponse = await response.json();
+      const result: TranscriptionOnlyResult = await response.json();
       setData(result);
       setStatus('complete');
-      onCompleteRef.current?.(result);
+      return result;
     } catch (err) {
       setStatus('error');
       if (err && typeof err === 'object' && 'error' in err) {
@@ -59,6 +53,7 @@ export function useTranscribeAudio(options?: UseTranscribeAudioOptions) {
           error: err instanceof Error ? err.message : 'Transcription failed',
         });
       }
+      return null;
     }
   }, []);
 
