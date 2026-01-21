@@ -32,7 +32,11 @@ export function getPost(
   );
   if (!post) return null;
 
-  const filePath = path.join(process.cwd(), 'content/blog/posts', `${slug}.md`);
+  const filePath = path.join(
+    process.cwd(),
+    'content/blog/posts',
+    `${slug}.mdx`
+  );
   const content = fs.readFileSync(filePath, 'utf-8');
 
   return { ...post, content };
