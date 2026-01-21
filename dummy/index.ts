@@ -1,3 +1,7 @@
+import { calculateClarityScore } from '@/lib/filler/clarity-score';
+import { computeFillerStats } from '@/lib/filler/filler-stats';
+import { TranscribeResponse } from '@/types/api';
+
 export const TRANSCRIPT_DUMMY = {
   transcript:
     "Hi. My name is Samuel, and I was thinking that, you know, we could start with a simple approach and, um, see how things go over time. It's not a rush decision or anything like that, but rather a chance to, I guess, um, explore the idea properly and just adjust as needed. There's a clear goal in mind and, like, the plan is mostly solid. Even if a few details still work. So, you know, as long as, like, we stay flexible and keep communicating, it should turn out fine in the end. Thank you.",
@@ -724,3 +728,19 @@ export const TRANSCRIPT_DUMMY = {
     },
   ],
 };
+
+export function getDummyResponse(): TranscribeResponse {
+  const { transcript, words, duration, fillers } = TRANSCRIPT_DUMMY;
+  const fillerStats = computeFillerStats({ fillers, words, duration });
+  const clarityScore = calculateClarityScore(fillerStats, duration);
+
+  return {
+    transcript,
+    words,
+    duration,
+    fillers,
+    fillerStats,
+    clarityScore,
+    createdAt: new Date().toISOString(),
+  };
+}

@@ -21,28 +21,6 @@ export interface TranscribeResponse {
   createdAt: string;
 }
 
-export type TranscriptionStreamData =
-  | {
-      step: 'transcript';
-      transcript: string;
-      words: NormalizedWord[];
-      duration: number;
-    }
-  | {
-      step: 'fillers';
-      fillers: Filler[];
-    }
-  | {
-      step: 'complete';
-      fillerStats: FillerStatsType;
-      clarityScore: ClarityResult | null;
-      createdAt: string;
-    }
-  | {
-      step: 'error';
-      error: string;
-    };
-
 export interface WaitlistResponse {
   success: boolean;
   message: string;

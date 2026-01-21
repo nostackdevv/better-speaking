@@ -16,7 +16,7 @@ import { ShareModal } from '@/components/ui/ShareModal';
 import { WaitlistModal } from '@/components/waitlist/WaitlistModal';
 import { getArchetype } from '@/constants/archetypes';
 import { useSessionHistory } from '@/hooks/storage/useSessionHistory';
-import { useTranscribeAudioStream } from '@/hooks/transcription/useTranscribeAudioStream';
+import { useTranscribeAudio } from '@/hooks/transcription/useTranscribeAudio';
 import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
 
 function HomeContent() {
@@ -42,7 +42,7 @@ function HomeContent() {
     error,
     data: transcriptResponse,
     reset: resetTranscription,
-  } = useTranscribeAudioStream({
+  } = useTranscribeAudio({
     onComplete: (data) => {
       addSession({
         id: Date.now().toString(),
@@ -86,7 +86,7 @@ function HomeContent() {
   };
 
   const handleConfirmReset = () => {
-    if (transcriptResponse.clarityScore) {
+    if (transcriptResponse?.clarityScore) {
       const archetype = getArchetype(transcriptResponse.clarityScore.score);
       track((inherited) => ({
         name: 'try_again_clicked',
@@ -132,7 +132,7 @@ function HomeContent() {
   };
 
   const handleShareClick = () => {
-    const score = transcriptResponse.clarityScore?.score ?? 0;
+    const score = transcriptResponse?.clarityScore?.score ?? 0;
     const archetype = getArchetype(score);
     track((inherited) => ({
       name: 'share_modal_opened',
@@ -190,28 +190,26 @@ function HomeContent() {
 
           {isNoSpeech && <EmptyRecordingState onRetry={handleConfirmReset} />}
 
-          {transcriptResponse.transcript &&
-            transcriptResponse.words &&
-            transcriptResponse.duration !== undefined && (
-              <ResultsView
-                activePrompt={activePrompt}
-                audioFile={audioFile}
-                isComplete={isComplete}
-                onNewPrompt={handleNewPrompt}
-                onShare={handleShareClick}
-                onTryAgain={handleTryAgain}
-                transcriptResponse={{
-                  transcript: transcriptResponse.transcript,
-                  words: transcriptResponse.words,
-                  duration: transcriptResponse.duration,
-                  fillers: transcriptResponse.fillers ?? null,
-                  fillerStats: transcriptResponse.fillerStats ?? null,
-                  clarityScore: transcriptResponse.clarityScore ?? null,
-                }}
-              />
-            )}
+          {transcriptResponse && (
+            <ResultsView
+              activePrompt={activePrompt}
+              audioFile={audioFile}
+              isComplete={isComplete}
+              onNewPrompt={handleNewPrompt}
+              onShare={handleShareClick}
+              onTryAgain={handleTryAgain}
+              transcriptResponse={{
+                transcript: transcriptResponse.transcript,
+                words: transcriptResponse.words,
+                duration: transcriptResponse.duration,
+                fillers: transcriptResponse.fillers,
+                fillerStats: transcriptResponse.fillerStats,
+                clarityScore: transcriptResponse.clarityScore,
+              }}
+            />
+          )}
 
-          {!transcriptResponse.transcript && !isNoSpeech && (
+          {!transcriptResponse && !isNoSpeech && (
             <>
               <AudioInput isAnalyzing={isPending} onUpload={handleUpload} />
               <ChallengePrompts
@@ -247,19 +245,17 @@ function HomeContent() {
           onConfirm={handleConfirmReset}
         />
       )}
-      {showShareModal &&
-        transcriptResponse.duration !== undefined &&
-        transcriptResponse.fillerStats && (
-          <ShareModal
-            data={{
-              duration: transcriptResponse.duration,
-              fillerStats: transcriptResponse.fillerStats,
-              clarityScore: transcriptResponse.clarityScore ?? null,
-            }}
-            isOpen={showShareModal}
-            onClose={() => setShowShareModal(false)}
-          />
-        )}
+      {showShareModal && transcriptResponse && (
+        <ShareModal
+          data={{
+            duration: transcriptResponse.duration,
+            fillerStats: transcriptResponse.fillerStats,
+            clarityScore: transcriptResponse.clarityScore,
+          }}
+          isOpen={showShareModal}
+          onClose={() => setShowShareModal(false)}
+        />
+      )}
     </div>
   );
 }

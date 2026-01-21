@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { getDummyResponse } from '@/dummy';
 import { BadRequestError, handleError } from '@/lib/errors';
 import { checkLimit, addRateLimitHeaders } from '@/lib/middleware/rate-limit';
-import {
-  processAudioTranscriptionStream,
-  getDummyTranscriptionStream,
-} from '@/lib/services/transcription-stream.service';
+import { processAudioTranscription } from '@/lib/services/transcription.service';
 
 export async function POST(request: NextRequest) {
   const rateLimit = await checkLimit(request, 'transcribe');
   if (!rateLimit.success) return rateLimit.response!;
 
   if (false) {
-    return getDummyTranscriptionStream();
+    return NextResponse.json(getDummyResponse());
   }
 
   try {
@@ -26,14 +24,10 @@ export async function POST(request: NextRequest) {
     const successLimit = await checkLimit(request, 'transcribeSuccess');
     if (!successLimit.success) return successLimit.response!;
 
-    const response = await processAudioTranscriptionStream(audioFile);
+    const result = await processAudioTranscription(audioFile);
 
-    const nextResponse = new NextResponse(response.body, {
-      status: response.status,
-      headers: response.headers,
-    });
-
-    return addRateLimitHeaders(nextResponse, successLimit);
+    const response = NextResponse.json(result);
+    return addRateLimitHeaders(response, successLimit);
   } catch (error) {
     return handleError(error);
   }
