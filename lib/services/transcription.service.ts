@@ -1,4 +1,3 @@
-import { NoSpeechError } from '@/lib/errors';
 import { calculateClarityScore } from '@/lib/filler/clarity-score';
 import { computeFillerStats } from '@/lib/filler/filler-stats';
 import { normalizeDeepgramTranscript } from '@/lib/utils/transformers';
@@ -23,7 +22,21 @@ export async function processAudioTranscription(
 
   // Step 2: Check for empty transcript (no speech detected)
   if (!transcript || transcript.trim().length === 0) {
-    throw new NoSpeechError();
+    return {
+      transcript: '',
+      words: [],
+      duration,
+      fillers: [],
+      fillerStats: {
+        totalFillers: 0,
+        totalWords: 0,
+        fillerPercentage: 0,
+        fillersPerMinute: 0,
+        topFillers: [],
+      },
+      clarityScore: null,
+      createdAt: new Date().toISOString(),
+    };
   }
 
   // Step 3: Normalize words
@@ -69,7 +82,12 @@ export async function transcribeAudioOnly(
   const { transcript, words, duration } = await transcribeAudio(buffer);
 
   if (!transcript || transcript.trim().length === 0) {
-    throw new NoSpeechError();
+    return {
+      transcript: '',
+      words: [],
+      duration,
+      createdAt: new Date().toISOString(),
+    };
   }
 
   const normalizedWords = normalizeDeepgramTranscript({ transcript, words });

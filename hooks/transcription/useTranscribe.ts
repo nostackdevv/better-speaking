@@ -31,16 +31,16 @@ export function useTranscribe() {
 
       if (!response.ok) {
         const errorData: ApiError = await response.json();
-
-        if (errorData.error === 'no_speech_detected') {
-          setStatus('no_speech');
-          return null;
-        }
-
         throw errorData;
       }
 
       const result: TranscriptionOnlyResult = await response.json();
+
+      if (!result.transcript) {
+        setStatus('no_speech');
+        return { noSpeech: true as const };
+      }
+
       setData(result);
       setStatus('complete');
       return result;

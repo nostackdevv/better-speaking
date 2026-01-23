@@ -49,9 +49,8 @@ export function useTranscribeAndAnalyze(
       // Step 1: Transcribe
       const transcriptResult = await transcribe.mutate(file);
 
-      if (!transcriptResult) {
-        // Handle no_speech or error from transcribe
-        if (transcribe.status === 'no_speech') {
+      if (!transcriptResult || 'noSpeech' in transcriptResult) {
+        if (transcriptResult && 'noSpeech' in transcriptResult) {
           setStatus('no_speech');
         } else {
           setStatus('error');

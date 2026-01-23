@@ -62,13 +62,6 @@ export class ValidationError extends AppError {
   }
 }
 
-// 422 - No speech detected in audio
-export class NoSpeechError extends AppError {
-  constructor(message: string = 'no_speech_detected') {
-    super(message, 422);
-  }
-}
-
 // 429 - Too many requests
 export class RateLimitError extends AppError {
   constructor(message: string = 'Too many requests') {
