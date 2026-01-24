@@ -34,6 +34,7 @@ const jsonLd = {
   author: {
     '@type': 'Organization',
     name: 'Speecha',
+    url: APP_URL,
   },
 };
 
@@ -117,15 +118,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          type="application/ld+json"
+        />
+      </head>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>{children}</Providers>
         <FloatingFeedbackButton />
-        <script
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          type="application/ld+json"
-        />
       </body>
     </html>
   );

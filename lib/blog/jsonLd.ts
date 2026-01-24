@@ -13,6 +13,7 @@ export function generateArticleJsonLd(post: BlogPost) {
     author: {
       '@type': 'Person',
       name: post.author.name,
+      url: APP_URL,
     },
     publisher: {
       '@type': 'Organization',
