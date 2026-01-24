@@ -41,26 +41,15 @@ export function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     setIsSubmitting(true);
 
     try {
-      const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-      if (!accessKey) {
-        setError('Feedback service is not configured');
-        setIsSubmitting(false);
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('access_key', accessKey);
-      formData.append('message', trimmedMessage);
-      formData.append('subject', 'Speecha - User Feedback');
-
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/feedback', {
         method: 'POST',
-        body: formData,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: trimmedMessage }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success) {
         track((inherited) => ({
           name: 'feedback_submitted',
           properties: {

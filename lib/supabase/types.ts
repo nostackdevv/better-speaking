@@ -15,6 +15,24 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      feedback: {
+        Row: {
+          id: string;
+          message: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          message: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          message?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       waitlist: {
         Row: {
           id: string;
