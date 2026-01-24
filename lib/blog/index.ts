@@ -3,16 +3,34 @@ import path from 'path';
 
 import { BLOG_CATEGORIES, BLOG_POSTS, BlogPost } from '@/content/blog';
 
-export type BlogPostWithContent = BlogPost & { content: string };
+export type BlogPostWithContent = BlogPost & {
+  content: string;
+  readingTime: number;
+};
+
+const WORDS_PER_MINUTE = 238;
+
+function getReadingTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
+}
 
 export function getCategories() {
   return BLOG_CATEGORIES;
 }
 
 export function getAllPosts() {
-  return [...BLOG_POSTS].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return [...BLOG_POSTS]
+    .map((post) => {
+      const filePath = path.join(
+        process.cwd(),
+        'content/blog/posts',
+        `${post.slug}.mdx`
+      );
+      const content = fs.readFileSync(filePath, 'utf-8');
+      return { ...post, readingTime: getReadingTime(content) };
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getFeaturedPost() {
@@ -39,7 +57,7 @@ export function getPost(
   );
   const content = fs.readFileSync(filePath, 'utf-8');
 
-  return { ...post, content };
+  return { ...post, content, readingTime: getReadingTime(content) };
 }
 
 export function formatDate(iso: string) {

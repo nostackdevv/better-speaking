@@ -14,7 +14,8 @@ export type BlogPost = {
   author: { name: string; role?: string };
   tags: string[];
   featured?: boolean;
-  readingTime: number; // minutes
+  showBlogCta?: boolean; // defaults to true
+  readingTime?: number; // computed from content
 };
 
 export const BLOG_CATEGORIES: BlogCategory[] = [
@@ -47,10 +48,10 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
 
 export const BLOG_POSTS: BlogPost[] = [
   {
-    slug: 'stop-saying-um-5-systems-that-actually-work',
+    slug: 'how-to-stop-saying-um-5-systems-that-actually-work',
     title: 'Stop saying “um”: 5 systems that actually work',
     description:
-      'Most advice is “just practice.” These systems reduce filler words while keeping you natural and sharp.',
+      'Learn why you say "um". These systems reduce filler words while keeping you natural and sharp. No fluff, just practical advice.',
     category: 'filler-words',
     date: '2026-01-20',
     coverImage: {
@@ -58,9 +59,8 @@ export const BLOG_POSTS: BlogPost[] = [
       alt: 'Team discussion in a bright office',
     },
     author: { name: 'Speecha Team', role: 'Editorial' },
-    tags: ['fillers', 'pauses', 'habits'],
+    tags: ['filler words', 'public speaking', 'communication', 'confidence'],
     featured: true,
-    readingTime: 3,
   },
 
   {
@@ -76,7 +76,6 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     author: { name: 'Speecha Team', role: 'Product' },
     tags: ['meetings', 'frameworks', 'clarity'],
-    readingTime: 2,
   },
 
   {
@@ -92,7 +91,6 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     author: { name: 'Speecha Team', role: 'Coaching' },
     tags: ['pauses', 'confidence', 'delivery'],
-    readingTime: 2,
   },
 
   {
@@ -108,7 +106,6 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     author: { name: 'Speecha Team', role: 'Editorial' },
     tags: ['story', 'structure', 'clarity'],
-    readingTime: 1,
   },
 
   {
@@ -124,7 +121,6 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     author: { name: 'Speecha Team', role: 'Coaching' },
     tags: ['like', 'precision', 'habits'],
-    readingTime: 1,
   },
 
   {
@@ -140,6 +136,5 @@ export const BLOG_POSTS: BlogPost[] = [
     },
     author: { name: 'Speecha Team', role: 'Research' },
     tags: ['metrics', 'practice', 'feedback'],
-    readingTime: 1,
   },
 ];
