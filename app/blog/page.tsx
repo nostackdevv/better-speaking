@@ -3,9 +3,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { BlogPostList } from '@/components/blog/BlogPostList';
 import { BlogShell } from '@/components/blog/BlogShell';
-import { CategoryPills } from '@/components/blog/CategoryPills';
-import { PostCard } from '@/components/blog/PostCard';
 import {
   getAllPosts,
   getCategories,
@@ -59,15 +58,13 @@ export default function BlogIndexPage() {
             <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
           </Link>
         </div>
-
-        <CategoryPills categories={categories} />
       </header>
 
       {featured && (
         <section className="mt-12">
           <Link
             className="group block overflow-hidden rounded-3xl border border-slate-200 bg-white/70 backdrop-blur-sm transition hover:bg-white"
-            href={`/blog/${featured.category}/${featured.slug}`}
+            href={`/blog/${featured.slug}`}
           >
             <div className="grid md:grid-cols-12">
               <div className="relative min-h-[260px] md:col-span-7">
@@ -116,21 +113,7 @@ export default function BlogIndexPage() {
         </section>
       )}
 
-      {/* Grid */}
-      <section className="mt-12">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className="text-sm font-semibold tracking-[0.18em] text-slate-700 uppercase">
-            Latest
-          </h3>
-          <div className="h-px flex-1 bg-slate-200" />
-        </div>
-
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((p) => (
-            <PostCard key={`${p.category}/${p.slug}`} post={p} />
-          ))}
-        </div>
-      </section>
+      <BlogPostList categories={categories} posts={posts} />
     </BlogShell>
   );
 }

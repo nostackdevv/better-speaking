@@ -60,21 +60,24 @@ export function getPost(
   return { ...post, content, readingTime: getReadingTime(content) };
 }
 
-export function formatDate(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+export function getPostBySlug(slug: string): BlogPostWithContent | null {
+  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  if (!post) return null;
+
+  const filePath = path.join(
+    process.cwd(),
+    'content/blog/posts',
+    `${slug}.mdx`
+  );
+  const content = fs.readFileSync(filePath, 'utf-8');
+
+  return { ...post, content, readingTime: getReadingTime(content) };
 }
 
-export function buildBlogPostUrl(post: { category: string; slug: string }) {
-  return `/blog/${post.category}/${post.slug}`;
-}
+export { formatDate } from './formatDate';
 
-export function buildBlogCategoryUrl(category: string) {
-  return `/blog/${category}`;
+export function buildBlogPostUrl(post: { slug: string }) {
+  return `/blog/${post.slug}`;
 }
 
 export function getCategoryBySlug(slug: string) {

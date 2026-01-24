@@ -31,7 +31,7 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
     description: 'Frameworks that make your point land fast and clean.',
   },
   {
-    slug: 'voice-and-delivery',
+    slug: 'speaking',
     label: 'Voice & Delivery',
     description: 'Pacing, emphasis, pausing, and sounding more certain.',
   },
@@ -84,7 +84,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: 'Pause like a pro: how to sound confident without talking more',
     description:
       'The best speakers don’t rush. They place silence. Here’s how to pause without feeling awkward.',
-    category: 'voice-and-delivery',
+    category: 'speaking',
     date: '2026-01-16',
     coverImage: {
       src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2400&q=80',
@@ -95,18 +95,19 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 
   {
-    slug: 'story-in-60-seconds-the-problem-turn-solution-frame',
-    title: 'Story in 60 seconds: Problem → Turn → Solution',
+    slug: 'public-speaking-reduce-filler-words',
+    title:
+      'How to Reduce Filler Words: A Public Speaking Tip That Actually Works',
     description:
-      'When you ramble, it’s usually missing structure. This frame turns any update into a clean mini story.',
-    category: 'structure',
-    date: '2026-01-14',
+      "Discover why you say 'um' more than you think and learn practical techniques to reduce filler words. Record yourself and see your real filler word count instantly.",
+    category: 'speaking',
+    date: '2026-01-24',
     coverImage: {
       src: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=2400&q=80',
       alt: 'Person speaking into a microphone on stage',
     },
-    author: { name: 'Speecha Team', role: 'Editorial' },
-    tags: ['story', 'structure', 'clarity'],
+    author: { name: 'Speecha Team', role: 'Coaching' },
+    tags: ['public speaking', 'confidence', 'filler words', 'speech practice'],
   },
 
   {

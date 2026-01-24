@@ -7,29 +7,29 @@ import { notFound } from 'next/navigation';
 import { BlogCTA } from '@/components/blog/BlogCTA';
 import { BlogShell } from '@/components/blog/BlogShell';
 import { Markdown } from '@/components/blog/Markdown';
-import { getAllPosts, getPost, formatDate } from '@/lib/blog';
+import { getAllPosts, getPostBySlug, formatDate } from '@/lib/blog';
 import { generateArticleJsonLd } from '@/lib/blog/jsonLd';
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ category: p.category, slug: p.slug }));
+  return getAllPosts().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { category, slug } = await params;
-  const post = getPost(category, slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
 
   if (!post) return { title: 'Post' };
 
   return {
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/blog/${category}/${slug}` },
+    alternates: { canonical: `/blog/${slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -46,11 +46,11 @@ export async function generateMetadata({
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-  const { category, slug } = await params;
+  const { slug } = await params;
 
-  const post = getPost(category, slug);
+  const post = getPostBySlug(slug);
   if (!post) notFound();
 
   const jsonLd = generateArticleJsonLd(post);
@@ -65,7 +65,7 @@ export default async function BlogPostPage({
       <div className="flex items-center justify-between gap-4">
         <Link
           className="inline-flex items-center rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-white"
-          href={`/blog/${post.category}`}
+          href="/blog"
         >
           <ArrowLeft aria-hidden="true" className="mr-2 h-4 w-4" />
           Back

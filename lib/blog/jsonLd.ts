@@ -23,7 +23,7 @@ export function generateArticleJsonLd(post: BlogPost) {
         url: `${APP_URL}/favicon-96x96.png`,
       },
     },
-    mainEntityOfPage: `${APP_URL}/blog/${post.category}/${post.slug}`,
+    mainEntityOfPage: `${APP_URL}/blog/${post.slug}`,
   };
 }
 

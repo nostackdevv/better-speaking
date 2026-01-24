@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { BlogPost } from '@/content/blog';
-import { formatDate } from '@/lib/blog';
+import { formatDate } from '@/lib/blog/formatDate';
 
 export function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link
       className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
-      href={`/blog/${post.category}/${post.slug}`}
+      href={`/blog/${post.slug}`}
     >
       <div className="relative aspect-[16/9]">
         <Image
