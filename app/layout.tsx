@@ -17,6 +17,26 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Speecha',
+  applicationCategory: 'EducationalApplication',
+  operatingSystem: 'Web',
+  url: APP_URL,
+  description:
+    "Track and reduce filler words like 'um', 'uh', and 'like'. Become a confident speaker.",
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'Speecha',
+  },
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
   title: {
@@ -102,6 +122,10 @@ export default function RootLayout({
       >
         <Providers>{children}</Providers>
         <FloatingFeedbackButton />
+        <script
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          type="application/ld+json"
+        />
       </body>
     </html>
   );

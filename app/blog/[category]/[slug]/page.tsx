@@ -8,6 +8,7 @@ import { BlogCTA } from '@/components/blog/BlogCTA';
 import { BlogShell } from '@/components/blog/BlogShell';
 import { Markdown } from '@/components/blog/Markdown';
 import { getAllPosts, getPost, formatDate } from '@/lib/blog';
+import { generateArticleJsonLd } from '@/lib/blog/jsonLd';
 
 export const dynamicParams = false;
 
@@ -52,8 +53,15 @@ export default async function BlogPostPage({
   const post = getPost(category, slug);
   if (!post) notFound();
 
+  const jsonLd = generateArticleJsonLd(post);
+
   return (
     <BlogShell size="md">
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        type="application/ld+json"
+      />
+
       <div className="flex items-center justify-between gap-4">
         <Link
           className="inline-flex items-center rounded-xl border border-slate-200 bg-white/70 px-3 py-2 text-sm font-semibold text-slate-900 transition hover:bg-white"

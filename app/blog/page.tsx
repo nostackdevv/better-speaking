@@ -12,6 +12,7 @@ import {
   getFeaturedPost,
   formatDate,
 } from '@/lib/blog';
+import { generateWebsiteJsonLd } from '@/lib/blog/jsonLd';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -24,9 +25,15 @@ export default function BlogIndexPage() {
   const categories = getCategories();
   const posts = getAllPosts();
   const featured = getFeaturedPost();
+  const jsonLd = generateWebsiteJsonLd();
 
   return (
     <BlogShell>
+      <script
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        type="application/ld+json"
+      />
+
       <header className="text-center">
         <p className="text-xs font-semibold tracking-[0.22em] text-slate-600 uppercase">
           Speecha Journal
