@@ -15,6 +15,7 @@ export type BlogPost = {
   tags: string[];
   featured?: boolean;
   showBlogCta?: boolean; // defaults to true
+  dateModified?: string; // ISO string, defaults to date if not set
   readingTime?: number; // computed from content
 };
 

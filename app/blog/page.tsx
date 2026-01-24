@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: 'Blog',
   description:
     'Clear, confident speaking: practical drills, meeting frameworks, pacing, and filler-word reduction.',
+  alternates: { canonical: '/blog' },
 };
 
 export default function BlogIndexPage() {

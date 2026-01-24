@@ -28,11 +28,16 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
+    alternates: { canonical: `/blog/${category}/${slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
       images: [{ url: post.coverImage.src, alt: post.coverImage.alt }],
       type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.dateModified ?? post.date,
+      authors: [post.author.name],
+      tags: post.tags,
     },
   };
 }

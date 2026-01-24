@@ -26,6 +26,7 @@ export async function generateMetadata({
     description:
       cat.description ??
       'Speaking guidance: clearer structure, stronger delivery, fewer filler words.',
+    alternates: { canonical: `/blog/${category}` },
   };
 }
 
