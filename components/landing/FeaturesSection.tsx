@@ -74,7 +74,7 @@ export const FeaturesSection = () => {
         <div className="fade-up mb-20 grid items-center gap-12 md:mb-32 md:grid-cols-2 md:gap-16">
           <div className="order-2 md:order-1">
             <div className="bg-clarity-50 text-clarity-700 mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-bold">
-              AI-Powered
+              Instant Feedback
             </div>
             <h3 className="mb-4 text-2xl font-extrabold md:text-3xl">
               See your clarity score
@@ -135,17 +135,6 @@ export const FeaturesSection = () => {
               track your weekly progress, and watch filler words disappear from
               your vocabulary one session at a time.
             </p>
-            <div className="bg-surface-50 flex items-center gap-3 rounded-2xl p-4">
-              <div className="text-3xl">&#x1F525;</div>
-              <div>
-                <div className="text-grey-900 font-extrabold">
-                  Daily streaks
-                </div>
-                <div className="text-grey-500 text-sm font-medium">
-                  Stay consistent with Duolingo-style streak tracking
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

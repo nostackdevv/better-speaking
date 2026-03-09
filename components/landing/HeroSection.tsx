@@ -48,30 +48,32 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        <div className="relative mt-16 flex justify-center md:mt-24">
-          <div className="phone-frame phone-hero-left fade-up mt-12 -mr-4 hidden w-[200px] md:block md:w-[240px]">
-            <Image
-              alt="Filler word selection screen"
-              height={480}
-              src="/landing/FILLERS.png"
-              width={240}
-            />
-          </div>
-          <div className="phone-frame phone-hero-center fade-up z-10 mx-auto w-[260px] md:w-[300px]">
-            <Image
-              alt="Speecha home screen showing streak tracking and session options"
-              height={600}
-              src="/landing/HOME.png"
-              width={300}
-            />
-          </div>
-          <div className="phone-frame phone-hero-right fade-up mt-12 -ml-4 hidden w-[200px] md:block md:w-[240px]">
-            <Image
-              alt="Session results with clarity score"
-              height={480}
-              src="/landing/RESULT.png"
-              width={240}
-            />
+        <div className="relative mt-16 md:mt-24">
+          <div className="fade-up flex items-start justify-center">
+            <div className="phone-frame phone-hero-left z-10 mt-12 -mr-10 hidden w-[200px] sm:block md:-mr-16 md:w-[240px]">
+              <Image
+                alt="Filler word selection screen"
+                height={480}
+                src="/landing/FILLERS.png"
+                width={240}
+              />
+            </div>
+            <div className="phone-frame phone-hero-center relative z-20 w-[240px] md:w-[280px]">
+              <Image
+                alt="Speecha home screen showing streak tracking and session options"
+                height={600}
+                src="/landing/HOME.png"
+                width={280}
+              />
+            </div>
+            <div className="phone-frame phone-hero-right z-10 mt-12 -ml-10 hidden w-[200px] sm:block md:-ml-16 md:w-[240px]">
+              <Image
+                alt="Session results with clarity score"
+                height={480}
+                src="/landing/RESULT.png"
+                width={240}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -39,7 +39,7 @@ const steps = [
     iconBg: 'bg-momentum-50',
     title: 'Get instant feedback',
     description:
-      'AI highlights every filler word in your transcript and scores your clarity.',
+      'Every filler word gets highlighted in your transcript and scores your clarity.',
   },
   {
     icon: (

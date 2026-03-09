@@ -289,8 +289,10 @@
 
 .phone-hero-left {
   transition-delay: 0.25s;
+  transform: rotate(-6deg);
 }
 
 .phone-hero-right {
   transition-delay: 0.35s;
+  transform: rotate(6deg);
 }
