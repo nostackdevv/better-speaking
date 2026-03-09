@@ -17,6 +17,35 @@
   --color-border: var(--border);
   --color-muted-foreground: var(--muted-foreground);
   --color-destructive: var(--destructive);
+
+  /* Landing page colors */
+  --color-clarity-50: #e6f7fd;
+  --color-clarity-100: #cdeffc;
+  --color-clarity-200: #9bdef9;
+  --color-clarity-300: #33baf2;
+  --color-clarity: #00a7ef;
+  --color-clarity-600: #007fba;
+  --color-clarity-700: #00689c;
+  --color-clarity-900: #003856;
+  --color-momentum-50: #fff0e8;
+  --color-momentum-100: #ffc3a6;
+  --color-momentum-300: #ff864d;
+  --color-momentum: #ff5e07;
+  --color-momentum-600: #c94a05;
+  --color-surface-0: #ffffff;
+  --color-surface-50: #fafafa;
+  --color-surface-100: #f5f5f5;
+  --color-surface-200: #f5f6f8;
+  --color-grey-300: #d5d7da;
+  --color-grey-400: #a4a7ae;
+  --color-grey-500: #717680;
+  --color-grey-600: #535862;
+  --color-grey-700: #414651;
+  --color-grey-800: #252b37;
+  --color-grey-900: #101828;
+
+  /* Landing page font */
+  --font-family-nunito: var(--font-nunito), sans-serif;
 }
 
 :root {
@@ -180,4 +209,88 @@
 
 .animate-scaleIn {
   animation: scaleIn 0.2s ease-out;
+}
+
+/* Landing page styles */
+.phone-frame {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 44px;
+  padding: 10px;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.phone-frame img {
+  border-radius: 36px;
+  width: 100%;
+  display: block;
+}
+
+.phone-frame::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 24px;
+  background: #1a1a1a;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.faq-item input:checked ~ .faq-answer {
+  max-height: 300px;
+  padding-top: 12px;
+  opacity: 1;
+}
+
+.faq-item input:checked ~ label .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.35s ease,
+    padding-top 0.35s ease,
+    opacity 0.25s ease;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.phone-hero-center {
+  transition-delay: 0.1s;
+}
+
+.phone-hero-left {
+  transition-delay: 0.25s;
+}
+
+.phone-hero-right {
+  transition-delay: 0.35s;
 }

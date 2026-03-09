@@ -19,7 +19,7 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
           <Link
             aria-label="Speecha home"
             className="flex items-center gap-3"
-            href={ROUTES.home}
+            href={ROUTES.app}
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600 shadow-lg">
               <Mic className="h-5 w-5 text-white" />

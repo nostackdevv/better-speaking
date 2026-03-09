@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speecha — Stop Saying Um</title>
+  <meta name="description" content="Eliminate filler words in 30 days. 1 minute a day. See every um, uh, like highlighted. Join the waitlist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef8ff',
+              100: '#d8eeff',
+              200: '#b9e0ff',
+              300: '#89ceff',
+              400: '#52b4ff',
+              500: '#2f95dc',
+              600: '#1a78c2',
+              700: '#155f9d',
+              800: '#165182',
+              900: '#0f3354',
+              950: '#091e36',
+            },
+            filler: '#f97316',
+            surface: {
+              0: '#ffffff',
+              1: '#f8fafc',
+              2: '#f1f5f9',
+            }
+          },
+          fontFamily: {
+            display: ['"Cabinet Grotesk"', 'sans-serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; }
+
+    /* ─── Grain overlay ─── */
+    .grain::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ─── iPhone mockup ─── */
+    .iphone-frame {
+      position: relative;
+      background: linear-gradient(145deg, #1a1a2e, #0a0a14);
+      border-radius: 44px;
+      padding: 10px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 4px 12px rgba(0,0,0,0.3),
+        0 20px 60px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .iphone-screen {
+      background: #fff;
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+    }
+    .iphone-island {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72px;
+      height: 22px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 10;
+    }
+    .iphone-home {
+      width: 96px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      margin: 6px auto 2px;
+    }
+
+    /* ─── Filler highlight ─── */
+    .filler-mark {
+      background: linear-gradient(135deg, rgba(249,115,22,0.18), rgba(249,115,22,0.28));
+      color: #c2410c;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+      border-bottom: 2px solid rgba(249,115,22,0.4);
+    }
+
+    /* ─── Score ring ─── */
+    .score-ring { transform: rotate(-90deg); }
+    .score-ring .track { stroke: #e2e8f0; }
+    .score-ring .fill { transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+    /* ─── Animated gradient mesh ─── */
+    .mesh-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%, rgba(47,149,220,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 90% 80%, rgba(249,115,22,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 50% 0%, rgba(47,149,220,0.06) 0%, transparent 50%);
+    }
+
+    .dark-mesh {
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 30%, rgba(47,149,220,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 80% 70%, rgba(139,92,246,0.1) 0%, transparent 60%),
+        linear-gradient(180deg, #0a1628, #091320);
+    }
+
+    /* ─── Glow effects ─── */
+    .phone-glow {
+      filter: drop-shadow(0 0 80px rgba(47,149,220,0.2)) drop-shadow(0 0 40px rgba(47,149,220,0.1));
+    }
+    .phone-glow-warm {
+      filter: drop-shadow(0 0 60px rgba(249,115,22,0.12)) drop-shadow(0 0 30px rgba(47,149,220,0.15));
+    }
+
+    /* ─── Reveal animations ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* Hero entrance */
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50% { transform: translateY(-12px) rotate(-2deg); }
+    }
+    .hero-phone {
+      animation: heroFloat 6s ease-in-out infinite;
+      transform: rotate(-2deg);
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-animate {
+      opacity: 0;
+      animation: fadeSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-animate-d1 { animation-delay: 0.15s; }
+    .hero-animate-d2 { animation-delay: 0.3s; }
+    .hero-animate-d3 { animation-delay: 0.45s; }
+    .hero-animate-d4 { animation-delay: 0.6s; }
+
+    /* ─── Streak pulse ─── */
+    @keyframes streakPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(47,149,220,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(47,149,220,0); }
+    }
+    .streak-today { animation: streakPulse 2s ease-in-out infinite; }
+
+    /* ─── Stat counter ─── */
+    .stat-glow {
+      text-shadow: 0 0 40px rgba(47,149,220,0.3);
+    }
+
+    /* ─── Nav scroll state ─── */
+    .nav-scrolled {
+      background: rgba(255,255,255,0.92) !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    /* ─── Badge shimmer ─── */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .badge-shimmer {
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    /* ─── Subtle border glow on hover ─── */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(47,149,220,0.1);
+    }
+
+    /* ─── Dotted grid pattern ─── */
+    .dot-grid {
+      background-image: radial-gradient(circle, rgba(47,149,220,0.08) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-900 antialiased overflow-x-hidden">
+
+  <!-- ════════════════════════════════ NAVBAR ════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/60 backdrop-blur-xl border-b border-transparent transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-9 h-9 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center shadow-md shadow-brand-500/20 group-hover:shadow-brand-500/30 transition-shadow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+          </svg>
+        </div>
+        <span class="text-lg font-display font-bold tracking-tight text-slate-900">Speecha</span>
+      </a>
+      <a href="#waitlist" class="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-full hover:bg-slate-800 transition-all hover:shadow-lg hover:shadow-slate-900/10">
+        <span class="hidden sm:inline">Get Early Access</span>
+        <span class="sm:hidden">Join</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════ HERO ════════════════════════════════ -->
+  <section class="relative pt-28 sm:pt-40 pb-20 sm:pb-32 px-5 sm:px-8 mesh-bg grain overflow-hidden">
+    <div class="relative z-10 max-w-6xl mx-auto">
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+        <!-- Left: Copy -->
+        <div class="flex-1 text-center lg:text-left max-w-xl">
+          <!-- iOS badge -->
+          <div class="hero-animate inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 border border-brand-200/60 mb-8">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-brand-500"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.81-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83" fill="currentColor"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11" fill="currentColor"/></svg>
+            <span class="text-sm font-semibold text-brand-700 tracking-tight">Coming Soon on iOS</span>
+          </div>
+
+          <h1 class="hero-animate hero-animate-d1 font-display text-5xl sm:text-6xl lg:text-[4.5rem] font-black tracking-tight leading-[1.02]">
+            Stop Saying
+            <span class="relative inline-block">
+              <span class="relative z-10 text-brand-500">Um.</span>
+              <span class="absolute -bottom-1.5 left-0 right-0 h-3 bg-brand-200/40 rounded-full -z-0"></span>
+            </span>
+          </h1>
+
+          <p class="hero-animate hero-animate-d2 mt-6 text-lg sm:text-xl text-slate-500 max-w-md mx-auto lg:mx-0 leading-relaxed font-medium">
+            Record yourself for 1 minute a day. See every filler word highlighted. Transform your speaking in 30 days.
+          </p>
+
+          <!-- Email form -->
+          <form id="hero-form" class="hero-animate hero-animate-d3 mt-10 max-w-md mx-auto lg:mx-0" onsubmit="handleSubmit(event, this)">
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="relative flex-1">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <input
+                  type="email"
+                  placeholder="you@email.com"
+                  required
+                  class="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-200 bg-white text-base focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10 transition-all placeholder:text-slate-400"
+                />
+              </div>
+              <button type="submit" class="px-7 py-4 bg-gradient-to-b from-brand-500 to-brand-600 text-white font-bold rounded-2xl hover:from-brand-400 hover:to-brand-500 transition-all shadow-lg shadow-brand-500/25 hover:shadow-brand-500/35 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+                Get Early Access
+              </button>
+            </div>
+            <p class="mt-3 text-sm text-slate-400 flex items-center gap-1.5 justify-center lg:justify-start">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+              Free to join. No spam — just a launch notification.
+            </p>
+          </form>
+          <!-- Success state (hidden by default) -->
+          <div id="hero-success" class="hidden mt-10 max-w-md mx-auto lg:mx-0">
+            <div class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200">
+              <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div>
+                <p class="font-bold text-emerald-900">You're on the list!</p>
+                <p class="text-sm text-emerald-600">We'll email you when Speecha launches.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: iPhone Mockup -->
+        <div class="hero-animate hero-animate-d4 flex-shrink-0 hero-phone phone-glow">
+          <div class="iphone-frame w-[270px] sm:w-[300px]">
+            <div class="iphone-island"></div>
+            <div class="iphone-screen">
+              <div class="pt-10 pb-5 px-4">
+                <p class="text-[10px] font-mono font-medium text-slate-400 text-center mb-4 uppercase tracking-widest">Today's Session</p>
+
+                <!-- Clarity Score -->
+                <div class="flex flex-col items-center mb-4">
+                  <div class="relative w-[100px] h-[100px]">
+                    <svg class="score-ring w-full h-full" viewBox="0 0 120 120">
+                      <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="7"/>
+                      <circle class="fill" cx="60" cy="60" r="52" fill="none" stroke="#2f95dc" stroke-width="7"
+                        stroke-dasharray="327" stroke-dashoffset="49" stroke-linecap="round"/>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                      <span class="text-2xl font-display font-black text-slate-900">85</span>
+                      <span class="text-[8px] font-medium text-slate-400 uppercase tracking-wider">Clarity</span>
+                    </div>
+                  </div>
+                  <span class="mt-1.5 text-[10px] font-semibold text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full">The Storyteller</span>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="grid grid-cols-3 gap-1.5 mb-4">
+                  <div class="bg-slate-50 rounded-lg py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">4</p>
+                    <p class="text-[8px] font-medium text-slate-400 uppercase tracking-wider">Fillers</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-lg py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">62s</p>
+                    <p class="text-[8px] font-medium text-slate-400 uppercase tracking-wider">Duration</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-lg py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">142</p>
+                    <p class="text-[8px] font-medium text-slate-400 uppercase tracking-wider">Words</p>
+                  </div>
+                </div>
+
+                <!-- Mini transcript -->
+                <div class="bg-slate-50 rounded-xl p-3 text-[10px] leading-[1.7] text-slate-500 font-body">
+                  So I was thinking about <span class="filler-mark">um</span> the project and I believe we should <span class="filler-mark">like</span> focus on the core features first and then <span class="filler-mark">you know</span> expand from there because <span class="filler-mark">uh</span> that makes more sense for our timeline.
+                </div>
+              </div>
+            </div>
+            <div class="iphone-home"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative elements -->
+    <div class="absolute top-20 right-[10%] w-72 h-72 bg-brand-400/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 left-[5%] w-96 h-96 bg-orange-300/8 rounded-full blur-3xl pointer-events-none"></div>
+  </section>
+
+  <!-- ════════════════════════════════ HOW IT WORKS ════════════════════════════════ -->
+  <section class="relative py-24 sm:py-32 px-5 sm:px-8 dot-grid">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <p class="text-sm font-mono font-semibold text-brand-500 uppercase tracking-widest mb-3">How It Works</p>
+        <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight">
+          Three steps.<br class="sm:hidden"/> One minute. Every day.
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Step 1 -->
+        <div class="reveal reveal-delay-1 card-hover bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-red-50 to-transparent rounded-bl-[3rem] opacity-80"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-gradient-to-br from-red-100 to-red-50 rounded-2xl flex items-center justify-center mb-6 border border-red-200/50">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="22"/>
+              </svg>
+            </div>
+            <span class="inline-block font-mono text-xs font-bold text-brand-500 bg-brand-50 px-2.5 py-1 rounded-lg mb-4">01</span>
+            <h3 class="font-display text-xl font-bold mb-2 tracking-tight">Record</h3>
+            <p class="text-slate-500 text-[15px] leading-relaxed">Hit record and speak for 1 minute. Use a prompt or talk freely — your choice.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="reveal reveal-delay-2 card-hover bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-brand-50 to-transparent rounded-bl-[3rem] opacity-80"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-gradient-to-br from-brand-100 to-brand-50 rounded-2xl flex items-center justify-center mb-6 border border-brand-200/50">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2f95dc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <span class="inline-block font-mono text-xs font-bold text-brand-500 bg-brand-50 px-2.5 py-1 rounded-lg mb-4">02</span>
+            <h3 class="font-display text-xl font-bold mb-2 tracking-tight">See Your Fillers</h3>
+            <p class="text-slate-500 text-[15px] leading-relaxed">Every <em class="text-filler font-semibold not-italic">um</em>, <em class="text-filler font-semibold not-italic">uh</em>, <em class="text-filler font-semibold not-italic">like</em> gets highlighted. Impossible to unsee.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="reveal reveal-delay-3 card-hover bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-orange-50 to-transparent rounded-bl-[3rem] opacity-80"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-gradient-to-br from-orange-100 to-orange-50 rounded-2xl flex items-center justify-center mb-6 border border-orange-200/50">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+              </svg>
+            </div>
+            <span class="inline-block font-mono text-xs font-bold text-brand-500 bg-brand-50 px-2.5 py-1 rounded-lg mb-4">03</span>
+            <h3 class="font-display text-xl font-bold mb-2 tracking-tight">Track Your Streak</h3>
+            <p class="text-slate-500 text-[15px] leading-relaxed">Build a daily habit. Watch your clarity score climb over 30 days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ RESULTS SHOWCASE ════════════════════════════════ -->
+  <section class="relative py-24 sm:py-32 px-5 sm:px-8 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+        <!-- Left: Detailed iPhone -->
+        <div class="reveal flex-shrink-0 phone-glow-warm">
+          <div class="iphone-frame w-[280px] sm:w-[310px]">
+            <div class="iphone-island"></div>
+            <div class="iphone-screen">
+              <div class="pt-10 pb-4 px-4">
+                <div class="flex items-center justify-between mb-4">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                  <p class="text-[11px] font-display font-bold text-slate-900">Session Results</p>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                </div>
+
+                <!-- Large score -->
+                <div class="flex flex-col items-center mb-4">
+                  <div class="relative w-[110px] h-[110px]">
+                    <svg class="score-ring w-full h-full" viewBox="0 0 120 120">
+                      <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="8"/>
+                      <circle class="fill" cx="60" cy="60" r="52" fill="none" stroke="#2f95dc" stroke-width="8"
+                        stroke-dasharray="327" stroke-dashoffset="49" stroke-linecap="round"/>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                      <span class="text-3xl font-display font-black text-slate-900">85</span>
+                      <span class="text-[8px] font-medium text-slate-400 uppercase tracking-wider">Clarity</span>
+                    </div>
+                  </div>
+                  <div class="mt-2 flex items-center gap-1.5">
+                    <span class="text-[10px] font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full">The Storyteller</span>
+                    <span class="text-[9px] text-emerald-600 font-semibold">+12 from last</span>
+                  </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-1.5 mb-4">
+                  <div class="bg-slate-50 rounded-xl py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">4</p>
+                    <p class="text-[7px] font-semibold text-slate-400 uppercase tracking-wider">Fillers</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-xl py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">3.9</p>
+                    <p class="text-[7px] font-semibold text-slate-400 uppercase tracking-wider">Per Min</p>
+                  </div>
+                  <div class="bg-slate-50 rounded-xl py-2 text-center">
+                    <p class="text-sm font-display font-bold text-slate-900">142</p>
+                    <p class="text-[7px] font-semibold text-slate-400 uppercase tracking-wider">Words</p>
+                  </div>
+                </div>
+
+                <!-- Filler breakdown -->
+                <p class="text-[9px] font-mono font-semibold text-slate-400 uppercase tracking-widest mb-2">Breakdown</p>
+                <div class="space-y-1.5 mb-4">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-semibold text-slate-600 w-14">um</span>
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full" style="width:50%"></div></div>
+                    <span class="text-[10px] font-mono font-bold text-orange-600">2</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-semibold text-slate-600 w-14">like</span>
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full" style="width:25%"></div></div>
+                    <span class="text-[10px] font-mono font-bold text-orange-600">1</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-semibold text-slate-600 w-14">you know</span>
+                    <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-orange-400 to-orange-500 rounded-full" style="width:25%"></div></div>
+                    <span class="text-[10px] font-mono font-bold text-orange-600">1</span>
+                  </div>
+                </div>
+
+                <!-- Transcript -->
+                <p class="text-[9px] font-mono font-semibold text-slate-400 uppercase tracking-widest mb-2">Transcript</p>
+                <div class="bg-slate-50 rounded-xl p-2.5 text-[9px] leading-[1.8] text-slate-500">
+                  So I was thinking about <span class="filler-mark">um</span> the project and I believe we should <span class="filler-mark">like</span> focus on core features first and then <span class="filler-mark">you know</span> expand from there because <span class="filler-mark">uh</span> that makes more sense.
+                </div>
+              </div>
+            </div>
+            <div class="iphone-home"></div>
+          </div>
+        </div>
+
+        <!-- Right: Text -->
+        <div class="flex-1 text-center lg:text-left">
+          <div class="reveal">
+            <p class="text-sm font-mono font-semibold text-brand-500 uppercase tracking-widest mb-3">The Result</p>
+            <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
+              See exactly where<br/>you hesitate
+            </h2>
+            <p class="mt-5 text-lg text-slate-500 leading-relaxed max-w-md mx-auto lg:mx-0">
+              Your transcript lights up with every filler word. A clarity score tells you how you did. An archetype gives you a name to beat.
+            </p>
+          </div>
+
+          <div class="mt-10 space-y-5 reveal reveal-delay-2">
+            <div class="flex items-start gap-4 justify-center lg:justify-start">
+              <div class="w-10 h-10 rounded-2xl bg-brand-50 border border-brand-200/50 flex items-center justify-center flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2f95dc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <p class="font-display font-bold text-slate-900">Instant Analysis</p>
+                <p class="text-sm text-slate-500 mt-0.5">Clarity score from 0–100 the moment you stop recording</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 justify-center lg:justify-start">
+              <div class="w-10 h-10 rounded-2xl bg-orange-50 border border-orange-200/50 flex items-center justify-center flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></svg>
+              </div>
+              <div>
+                <p class="font-display font-bold text-slate-900">Highlighted Transcript</p>
+                <p class="text-sm text-slate-500 mt-0.5">Every <span class="filler-mark">um</span>, <span class="filler-mark">like</span>, <span class="filler-mark">you know</span> impossible to miss</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 justify-center lg:justify-start">
+              <div class="w-10 h-10 rounded-2xl bg-violet-50 border border-violet-200/50 flex items-center justify-center flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+              </div>
+              <div>
+                <p class="font-display font-bold text-slate-900">Filler Breakdown</p>
+                <p class="text-sm text-slate-500 mt-0.5">Know exactly which filler words are your worst habits</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ 30-DAY CHALLENGE ════════════════════════════════ -->
+  <section class="relative py-24 sm:py-32 px-5 sm:px-8 dark-mesh grain text-white overflow-hidden">
+    <div class="relative z-10 max-w-5xl mx-auto text-center">
+      <div class="reveal">
+        <p class="text-sm font-mono font-semibold text-brand-400 uppercase tracking-widest mb-3">The Challenge</p>
+        <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
+          30 Days to Change<br/>How You Speak
+        </h2>
+        <p class="mt-5 text-lg text-slate-400 max-w-lg mx-auto leading-relaxed">
+          Most people say "um" 5–8 times per minute without realizing. One minute of daily practice makes it impossible to ignore — then impossible to keep doing.
+        </p>
+      </div>
+
+      <!-- Streak Grid -->
+      <div class="reveal reveal-delay-2 mt-14">
+        <div class="inline-grid grid-cols-10 gap-2 sm:gap-2.5" id="streak-grid"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="reveal reveal-delay-3 mt-16 grid sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
+        <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-7 border border-white/10 overflow-hidden">
+          <div class="absolute inset-0 badge-shimmer"></div>
+          <p class="relative font-display text-4xl font-black text-white stat-glow">60s</p>
+          <p class="relative text-slate-400 text-sm mt-1 font-medium">Per day. That's it.</p>
+        </div>
+        <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-7 border border-white/10 overflow-hidden">
+          <div class="absolute inset-0 badge-shimmer" style="animation-delay:1s"></div>
+          <div class="relative flex items-center justify-center gap-3">
+            <span class="font-display text-3xl font-black text-filler">23</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="font-display text-3xl font-black text-emerald-400">3</span>
+          </div>
+          <p class="relative text-slate-400 text-sm mt-1 font-medium">Fillers: Day 1 → Day 30</p>
+        </div>
+        <div class="relative bg-white/5 backdrop-blur-sm rounded-3xl p-7 border border-white/10 overflow-hidden">
+          <div class="absolute inset-0 badge-shimmer" style="animation-delay:2s"></div>
+          <div class="relative flex items-center justify-center gap-2 text-brand-400">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span class="font-display text-3xl font-black">Friends</span>
+          </div>
+          <p class="relative text-slate-400 text-sm mt-1 font-medium">Challenge friends. Compare streaks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
+  </section>
+
+  <!-- ════════════════════════════════ BEFORE / AFTER ════════════════════════════════ -->
+  <section class="relative py-24 sm:py-32 px-5 sm:px-8 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <p class="text-sm font-mono font-semibold text-brand-500 uppercase tracking-widest mb-3">The Transformation</p>
+        <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight">
+          The Difference 30 Days Makes
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-3xl mx-auto items-start">
+        <!-- Day 1 -->
+        <div class="reveal reveal-delay-1 bg-white rounded-3xl border-2 border-red-200/80 overflow-hidden shadow-sm shadow-red-500/5">
+          <div class="bg-gradient-to-r from-red-50 to-red-100/50 px-6 py-5 border-b border-red-200/60">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-display text-sm font-black text-red-700 uppercase tracking-wide">Day 1</p>
+                <p class="text-xs text-red-400 font-medium mt-0.5">Your starting point</p>
+              </div>
+              <div class="relative w-[60px] h-[60px]">
+                <svg class="score-ring w-full h-full" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#fecaca" stroke-width="7"/>
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#ef4444" stroke-width="7"
+                    stroke-dasharray="327" stroke-dashoffset="173" stroke-linecap="round"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-lg font-display font-black text-red-600">47</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-6 mb-5">
+              <div><p class="font-display text-xl font-bold text-slate-900">23</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Fillers</p></div>
+              <div><p class="font-display text-xl font-bold text-slate-900">58s</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Duration</p></div>
+              <div><p class="font-display text-xl font-bold text-slate-900">97</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Words</p></div>
+            </div>
+            <div class="bg-red-50/60 rounded-2xl p-4 text-[12px] leading-[1.8] text-slate-600">
+              So <span class="filler-mark">um</span> I wanted to talk about <span class="filler-mark">like</span> the importance of <span class="filler-mark">uh</span> communication skills and <span class="filler-mark">you know</span> how <span class="filler-mark">like</span> speaking clearly can <span class="filler-mark">um</span> really help in <span class="filler-mark">like</span> your career and <span class="filler-mark">uh</span> personal life because <span class="filler-mark">you know</span> people <span class="filler-mark">like</span> judge you based on <span class="filler-mark">um</span> how you <span class="filler-mark">uh</span> present yourself...
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 30 -->
+        <div class="reveal reveal-delay-2 bg-white rounded-3xl border-2 border-emerald-200/80 overflow-hidden shadow-sm shadow-emerald-500/5">
+          <div class="bg-gradient-to-r from-emerald-50 to-emerald-100/50 px-6 py-5 border-b border-emerald-200/60">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-display text-sm font-black text-emerald-700 uppercase tracking-wide">Day 30</p>
+                <p class="text-xs text-emerald-500 font-medium mt-0.5">After the challenge</p>
+              </div>
+              <div class="relative w-[60px] h-[60px]">
+                <svg class="score-ring w-full h-full" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#bbf7d0" stroke-width="7"/>
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="#10b981" stroke-width="7"
+                    stroke-dasharray="327" stroke-dashoffset="29" stroke-linecap="round"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <span class="text-lg font-display font-black text-emerald-600">91</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="flex gap-6 mb-5">
+              <div><p class="font-display text-xl font-bold text-slate-900">3</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Fillers</p></div>
+              <div><p class="font-display text-xl font-bold text-slate-900">64s</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Duration</p></div>
+              <div><p class="font-display text-xl font-bold text-slate-900">168</p><p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Words</p></div>
+            </div>
+            <div class="bg-emerald-50/60 rounded-2xl p-4 text-[12px] leading-[1.8] text-slate-600">
+              Communication skills are fundamental to career growth and personal development. Speaking clearly and confidently helps you make stronger impressions in meetings, interviews, and everyday conversations. When you eliminate filler words, your message becomes more powerful and <span class="filler-mark">um</span> people perceive you as more credible. The key is consistent daily practice, even just <span class="filler-mark">like</span> one minute, combined with awareness of your speaking patterns. Over time this <span class="filler-mark">uh</span> becomes second nature.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow / connector between cards on desktop -->
+      <div class="hidden md:flex items-center justify-center mt-8 reveal reveal-delay-3">
+        <div class="flex items-center gap-3 px-6 py-3 bg-slate-50 rounded-full border border-slate-200">
+          <span class="font-mono text-sm font-bold text-red-500">23 fillers</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <span class="font-mono text-sm font-bold text-emerald-500">3 fillers</span>
+          <span class="text-sm text-slate-400 font-medium ml-1">in 30 days</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ BOTTOM CTA ════════════════════════════════ -->
+  <section id="waitlist" class="relative py-24 sm:py-32 px-5 sm:px-8 dark-mesh grain text-white overflow-hidden">
+    <div class="relative z-10 max-w-xl mx-auto text-center">
+      <div class="reveal">
+        <div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-lg shadow-brand-500/30">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+          </svg>
+        </div>
+
+        <h2 class="font-display text-3xl sm:text-5xl font-black tracking-tight leading-[1.1]">
+          Ready to stop<br/>saying <span class="text-brand-400">um</span>?
+        </h2>
+        <p class="mt-5 text-lg text-slate-400 leading-relaxed">
+          Join the waitlist. Be first to try Speecha when it launches on iOS.
+        </p>
+
+        <form id="bottom-form" class="mt-10 max-w-md mx-auto" onsubmit="handleSubmit(event, this)">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input
+                type="email"
+                placeholder="you@email.com"
+                required
+                class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 border-2 border-white/10 text-white placeholder-slate-500 text-base focus:outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-500/20 transition-all backdrop-blur-sm"
+              />
+            </div>
+            <button type="submit" class="px-7 py-4 bg-gradient-to-b from-brand-500 to-brand-600 text-white font-bold rounded-2xl hover:from-brand-400 hover:to-brand-500 transition-all shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap">
+              Get Early Access
+            </button>
+          </div>
+        </form>
+        <!-- Bottom success state -->
+        <div id="bottom-success" class="hidden mt-10 max-w-md mx-auto">
+          <div class="flex items-center gap-3 px-6 py-4 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/20">
+            <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="text-left">
+              <p class="font-bold text-emerald-300">You're on the list!</p>
+              <p class="text-sm text-emerald-400/80">We'll email you when Speecha launches.</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="mt-4 text-sm text-slate-500 flex items-center gap-1.5 justify-center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+          No spam. Just a launch notification.
+        </p>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+  </section>
+
+  <!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
+  <footer class="py-10 px-5 sm:px-8 bg-slate-950 text-slate-500">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+            </svg>
+          </div>
+          <span class="text-sm text-slate-400">&copy; 2026 Speecha. All rights reserved.</span>
+        </div>
+        <div class="flex gap-8 text-sm">
+          <a href="#" class="text-slate-500 hover:text-slate-300 transition-colors">Privacy</a>
+          <a href="#" class="text-slate-500 hover:text-slate-300 transition-colors">Terms</a>
+          <a href="#" class="text-slate-500 hover:text-slate-300 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════ SCRIPTS ════════════════════════════════ -->
+  <script>
+    // ─── Scroll reveal ───
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ─── Nav scroll effect ───
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('nav-scrolled', window.scrollY > 20);
+    });
+
+    // ─── Streak grid ───
+    const grid = document.getElementById('streak-grid');
+    for (let i = 0; i < 30; i++) {
+      const day = i + 1;
+      const completed = day <= 18;
+      const isToday = day === 19;
+      const dot = document.createElement('div');
+
+      let classes = 'w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-mono font-bold transition-all duration-300';
+
+      if (completed) {
+        classes += ' bg-gradient-to-br from-brand-400 to-brand-500 text-white shadow-sm shadow-brand-500/30';
+        dot.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      } else if (isToday) {
+        classes += ' bg-brand-500/20 text-brand-300 ring-2 ring-brand-400/60 streak-today';
+        dot.textContent = day;
+      } else {
+        classes += ' bg-white/5 text-slate-600 border border-white/10';
+        dot.textContent = day;
+      }
+
+      dot.className = classes;
+      grid.appendChild(dot);
+    }
+
+    // ─── Form handler (persistent success state) ───
+    function handleSubmit(e, form) {
+      e.preventDefault();
+      const id = form.id;
+      const successEl = document.getElementById(id === 'hero-form' ? 'hero-success' : 'bottom-success');
+
+      form.classList.add('hidden');
+      successEl.classList.remove('hidden');
+      successEl.style.opacity = '0';
+      successEl.style.transform = 'translateY(8px)';
+      requestAnimationFrame(() => {
+        successEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        successEl.style.opacity = '1';
+        successEl.style.transform = 'translateY(0)';
+      });
+    }
+  </script>
+</body>
+</html>

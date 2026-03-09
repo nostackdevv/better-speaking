@@ -33,7 +33,7 @@ export function Footer() {
             <Link
               aria-label="Speecha home"
               className="inline-flex items-center gap-3"
-              href={ROUTES.home}
+              href={ROUTES.app}
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-600">
                 <Mic className="h-6 w-6 text-white" />
