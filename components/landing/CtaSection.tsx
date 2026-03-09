@@ -1,6 +1,6 @@
-import Link from 'next/link';
+'use client';
 
-import { ROUTES } from '@/lib/routes';
+import { useLandingWaitlist } from '@/components/landing/LandingWaitlistContext';
 
 const AppleIcon = () => (
   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -9,6 +9,8 @@ const AppleIcon = () => (
 );
 
 export const CtaSection = () => {
+  const { openModal } = useLandingWaitlist();
+
   return (
     <section className="py-20 md:py-32">
       <div className="fade-up mx-auto max-w-5xl px-6 text-center">
@@ -20,13 +22,13 @@ export const CtaSection = () => {
         <p className="text-grey-500 mx-auto mb-10 max-w-md text-lg font-medium">
           Join thousands improving their speech clarity one minute at a time.
         </p>
-        <Link
-          className="bg-clarity shadow-clarity/20 hover:bg-clarity-600 inline-flex items-center gap-3 rounded-full px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
-          href={ROUTES.app}
+        <button
+          className="bg-clarity shadow-clarity/20 hover:bg-clarity-600 inline-flex cursor-pointer items-center gap-3 rounded-full px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+          onClick={openModal}
         >
           <AppleIcon />
           Download on the App Store
-        </Link>
+        </button>
       </div>
     </section>
   );

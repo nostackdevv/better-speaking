@@ -1,7 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
+'use client';
 
-import { ROUTES } from '@/lib/routes';
+import Image from 'next/image';
+
+import { useLandingWaitlist } from '@/components/landing/LandingWaitlistContext';
 
 const AppleIcon = () => (
   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
@@ -10,6 +11,8 @@ const AppleIcon = () => (
 );
 
 export const HeroSection = () => {
+  const { openModal } = useLandingWaitlist();
+
   return (
     <section className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-32">
       <div className="blob bg-clarity top-0 -right-40 h-[500px] w-[500px]" />
@@ -29,13 +32,13 @@ export const HeroSection = () => {
             how you speak.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              className="bg-grey-900 hover:bg-grey-800 inline-flex items-center gap-3 rounded-full px-8 py-4 text-lg font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
-              href={ROUTES.app}
+            <button
+              className="bg-grey-900 hover:bg-grey-800 inline-flex cursor-pointer items-center gap-3 rounded-full px-8 py-4 text-lg font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
+              onClick={openModal}
             >
               <AppleIcon />
               Download on the App Store
-            </Link>
+            </button>
             <a
               className="text-grey-500 hover:text-grey-900 font-bold transition-colors"
               href="#how-it-works"

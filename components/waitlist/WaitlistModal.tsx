@@ -11,8 +11,6 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { useJoinWaitlist } from '@/hooks/waitlist/useJoinWaitlist';
 import { AnalyticsContextProvider, useAnalyticsContext } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
@@ -102,11 +100,11 @@ export function WaitlistModal({
         onClick={handleClose}
       >
         <div
-          className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
+          className="animate-scaleIn relative w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           <button
-            className="absolute top-4 right-4 z-10 cursor-pointer rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+            className="text-grey-400 absolute top-4 right-4 z-10 cursor-pointer rounded-lg p-2 transition-colors hover:bg-white/10 hover:text-white"
             disabled={isPending}
             onClick={handleClose}
           >
@@ -115,36 +113,35 @@ export function WaitlistModal({
 
           {isSuccess ? (
             <div className="p-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100">
-                <Check className="h-8 w-8 text-green-600" />
+              <div className="bg-clarity-100 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl">
+                <Check className="text-clarity h-8 w-8" />
               </div>
-              <h2 className="mb-2 text-2xl font-bold text-slate-900">
+              <h2 className="text-grey-900 mb-2 text-2xl font-bold">
                 You&apos;re on the list!
               </h2>
-              <p className="mb-6 text-slate-500">
+              <p className="text-grey-500 mb-6">
                 We&apos;ll email you when Pro is ready. Get excited for
                 unlimited sessions, detailed analytics, and more.
               </p>
-              <Button className="w-full" onClick={handleClose}>
+              <button
+                className="bg-grey-900 hover:bg-grey-800 w-full cursor-pointer rounded-full px-5 py-3 font-bold text-white transition-colors"
+                onClick={handleClose}
+              >
                 Got it!
-              </Button>
+              </button>
             </div>
           ) : (
             <>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-center text-white">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-amber-400 to-orange-400 shadow-lg">
+              <div className="from-grey-900 to-grey-800 bg-gradient-to-br p-8 text-center text-white">
+                <div className="bg-clarity mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl shadow-lg">
                   <Crown className="h-8 w-8 text-white" />
                 </div>
                 <div className="mb-2 flex items-center justify-center gap-2">
-                  <h2 className="text-2xl font-bold">Pro Launch</h2>
-                  <Badge
-                    className="px-2 py-0.5 text-[10px]"
-                    variant="comingSoon"
-                  >
-                    COMING SOON
-                  </Badge>
+                  <h2 className="text-2xl font-bold">
+                    We&apos;re launching soon
+                  </h2>
                 </div>
-                <p className="text-slate-400">
+                <p className="text-grey-400">
                   Be the first to know when we launch
                 </p>
               </div>
@@ -174,11 +171,11 @@ export function WaitlistModal({
                     },
                   ].map((feature, i) => (
                     <div className="flex items-center gap-3" key={i}>
-                      <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-green-100">
-                        <Check className="h-3 w-3 text-green-600" />
+                      <div className="bg-clarity-100 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full">
+                        <Check className="text-clarity-700 h-3 w-3" />
                       </div>
-                      <span className="text-sm text-slate-600">
-                        <strong className="font-semibold text-slate-900">
+                      <span className="text-grey-600 text-sm">
+                        <strong className="text-grey-900 font-semibold">
                           {feature.title}:
                         </strong>{' '}
                         {feature.description}
@@ -190,13 +187,13 @@ export function WaitlistModal({
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
                     <div className="relative">
-                      <Mail className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-slate-400" />
+                      <Mail className="text-grey-400 absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
                       <input
                         className={cn(
-                          'w-full rounded-xl border-2 py-3.5 pr-4 pl-12 text-slate-900 transition-colors placeholder:text-slate-400 focus:border-orange-500 focus:outline-none',
+                          'text-grey-900 placeholder:text-grey-400 focus:border-clarity w-full rounded-xl border-2 py-3.5 pr-4 pl-12 transition-colors focus:outline-none',
                           localError || errorMessage
                             ? 'border-red-300 bg-red-50'
-                            : 'border-slate-200'
+                            : 'border-grey-200'
                         )}
                         disabled={isPending}
                         onChange={(e) => {
@@ -216,10 +213,9 @@ export function WaitlistModal({
                     )}
                   </div>
 
-                  <Button
-                    className="w-full"
+                  <button
+                    className="bg-grey-900 hover:bg-grey-800 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full px-8 py-4 text-lg font-bold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                     disabled={isPending || !email.trim()}
-                    size="lg"
                     type="submit"
                   >
                     {isPending ? (
@@ -233,13 +229,13 @@ export function WaitlistModal({
                         Notify Me
                       </>
                     )}
-                  </Button>
+                  </button>
                 </form>
 
-                <p className="mt-3 w-full cursor-pointer pt-3 pb-1 text-center text-sm text-slate-500 transition-colors hover:text-slate-700">
+                <p className="text-grey-500 hover:text-grey-700 mt-3 w-full cursor-pointer pt-3 pb-1 text-center text-sm transition-colors">
                   Join 200+ users on the waitlist.
                 </p>
-                <p className="w-full cursor-pointer text-center text-xs text-slate-500 transition-colors hover:text-slate-700">
+                <p className="text-grey-500 hover:text-grey-700 w-full cursor-pointer text-center text-xs transition-colors">
                   Get 50% off when Pro launches!
                 </p>
               </div>

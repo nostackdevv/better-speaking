@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/landing/HeroSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
 import { LandingNav } from '@/components/landing/LandingNav';
+import { LandingWaitlistProvider } from '@/components/landing/LandingWaitlistContext';
 import { ScrollAnimator } from '@/components/landing/ScrollAnimator';
 
 export const metadata: Metadata = {
@@ -17,15 +18,17 @@ export const metadata: Metadata = {
 
 export default function LandingPage() {
   return (
-    <div className="font-nunito text-grey-900 overflow-x-hidden bg-white antialiased">
-      <LandingNav />
-      <HeroSection />
-      <HowItWorksSection />
-      <FeaturesSection />
-      <FaqSection />
-      <CtaSection />
-      <LandingFooter />
-      <ScrollAnimator />
-    </div>
+    <LandingWaitlistProvider>
+      <div className="font-nunito text-grey-900 overflow-x-hidden bg-white antialiased">
+        <LandingNav />
+        <HeroSection />
+        <HowItWorksSection />
+        <FeaturesSection />
+        <FaqSection />
+        <CtaSection />
+        <LandingFooter />
+        <ScrollAnimator />
+      </div>
+    </LandingWaitlistProvider>
   );
 }

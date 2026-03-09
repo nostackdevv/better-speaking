@@ -1,6 +1,7 @@
 'use client';
 
-import { Mic, History, Crown } from 'lucide-react';
+import { History, Crown } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Badge } from '@/components/ui/Badge';
@@ -21,9 +22,13 @@ export function Navbar({ onHistoryClick, onWaitlistClick }: NavbarProps) {
             className="flex items-center gap-3"
             href={ROUTES.app}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600 shadow-lg">
-              <Mic className="h-5 w-5 text-white" />
-            </div>
+            <Image
+              alt="Speecha"
+              className="rounded-xl shadow-lg"
+              height={40}
+              src="/logo.svg"
+              width={40}
+            />
             <span className="text-xl font-bold text-slate-900">Speecha</span>
           </Link>
         </div>

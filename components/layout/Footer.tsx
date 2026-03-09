@@ -1,6 +1,7 @@
 'use client';
 
-import { Mic, Heart } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -35,9 +36,13 @@ export function Footer() {
               className="inline-flex items-center gap-3"
               href={ROUTES.app}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-600">
-                <Mic className="h-6 w-6 text-white" />
-              </div>
+              <Image
+                alt="Speecha"
+                className="rounded-2xl"
+                height={48}
+                src="/logo.svg"
+                width={48}
+              />
               <span className="text-2xl font-bold text-white">Speecha</span>
             </Link>
             <p className="mb-6 leading-relaxed text-slate-400">

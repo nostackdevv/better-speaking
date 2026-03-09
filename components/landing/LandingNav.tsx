@@ -1,5 +1,9 @@
+'use client';
+
+import Image from 'next/image';
 import Link from 'next/link';
 
+import { useLandingWaitlist } from '@/components/landing/LandingWaitlistContext';
 import { ROUTES } from '@/lib/routes';
 
 const AppleIcon = () => (
@@ -9,14 +13,23 @@ const AppleIcon = () => (
 );
 
 export const LandingNav = () => {
+  const { openModal } = useLandingWaitlist();
+
   return (
     <nav className="border-grey-300/30 fixed top-0 right-0 left-0 z-50 border-b bg-white/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         <Link
-          className="text-grey-900 text-xl font-extrabold tracking-tight"
+          className="text-grey-900 flex items-center gap-2 text-xl font-extrabold tracking-tight"
           href={ROUTES.home}
         >
-          speecha
+          <Image
+            alt="Speecha"
+            className="rounded-lg"
+            height={32}
+            src="/logo.svg"
+            width={32}
+          />
+          Speecha
         </Link>
         <div className="hidden items-center gap-8 md:flex">
           <Link
@@ -25,26 +38,20 @@ export const LandingNav = () => {
           >
             Blog
           </Link>
-          <Link
-            className="text-grey-500 hover:text-grey-900 text-sm font-semibold transition-colors"
-            href="/"
-          >
-            Feedback
-          </Link>
-          <Link
-            className="bg-grey-900 hover:bg-grey-800 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white transition-colors"
-            href={ROUTES.app}
+          <button
+            className="bg-grey-900 hover:bg-grey-800 inline-flex cursor-pointer items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white transition-colors"
+            onClick={openModal}
           >
             Download
-          </Link>
+          </button>
         </div>
-        <Link
-          className="bg-grey-900 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-white md:hidden"
-          href={ROUTES.app}
+        <button
+          className="bg-grey-900 inline-flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-white md:hidden"
+          onClick={openModal}
         >
           <AppleIcon />
           Get App
-        </Link>
+        </button>
       </div>
     </nav>
   );
